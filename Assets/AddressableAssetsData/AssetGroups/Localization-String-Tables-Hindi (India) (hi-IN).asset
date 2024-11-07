@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Localization-String-Tables-Hindi (India) (hi-IN)
+  m_EditorClassIdentifier: 
+  m_GroupName: Localization-String-Tables-Hindi (India) (hi-IN)
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 024d4836a87b85c47b9fe44988cc852a
+  m_SerializeEntries:
+  - m_GUID: 65c1bc9060b5baf43bd3abe81667fff9
+    m_Address: New Table_hi-IN
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-hi-IN
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 74ad251db66e3c54a9ca5ca22e59a9ce
+    m_Address: Language Change Key_hi-IN
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-hi-IN
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 1
+  m_Settings: {fileID: 11400000, guid: 95cd482967f2d87468774398cb68a8ff, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: ae0c810fd3e383140b294d77c5c5008f, type: 2}
+    - {fileID: 11400000, guid: 83cc4e4795959e64b928729edef53dd6, type: 2}
