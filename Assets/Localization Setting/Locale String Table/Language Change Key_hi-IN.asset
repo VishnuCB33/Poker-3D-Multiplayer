@@ -19,11 +19,11 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 20468789248
-    m_Localized: "\u0938\u0902\u0917\u0940\u0924"
+    m_Localized: sangeet
     m_Metadata:
       m_Items: []
   - m_Id: 1158836449280
-    m_Localized: "\u092C\u094B\u0932\u0940"
+    m_Localized: bolee
     m_Metadata:
       m_Items: []
   references:
