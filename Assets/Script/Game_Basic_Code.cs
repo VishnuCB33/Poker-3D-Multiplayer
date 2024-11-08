@@ -41,7 +41,7 @@ public class Game_Basic_Code : MonoBehaviour
 
     public List<GameObject> Cards = new List<GameObject>();
     public players players = new players();
-   
+
     public player_details player_details = new player_details();
   
     public int Player_turn;
@@ -60,16 +60,19 @@ public class Game_Basic_Code : MonoBehaviour
     public Slider player_time_3;
     public Slider player_time_4;
     public GameObject raise_panel;
-    public GameObject raise_button_object, fold_button_object, check_button_object;
+    public GameObject raise_button_object, fold_button_object, check_button_object,call_button_object;
     public TextMeshProUGUI raise_text;
     public TextMeshProUGUI raise_change_text;
     public Slider raise_slider;
+    public TextMeshProUGUI Call_text;
+    int call_amount_referance;
 
     public void Start()
     {
        Player_turn = 1;
-       
-        
+       player_details.player_setected = player_details.setected.none;
+
+
     }
     public void Update()
     {
@@ -78,6 +81,25 @@ public class Game_Basic_Code : MonoBehaviour
         clock();
         raise_function();
         display_player_details_alltime_funtion();
+        call_funtion();
+        fold_funtion();
+
+
+    }
+    public void fold_funtion()
+    {
+        if(player_details.player_setected==player_details.setected.Fold)
+        {
+            raise_button_object.SetActive(false);
+            fold_button_object.SetActive(false);
+            check_button_object.SetActive(false);
+            call_button_object.SetActive(false);
+            raise_panel.SetActive(false);
+        }
+        if(Player_turn==1&& player_details.player_setected == player_details.setected.Fold)
+        {
+            Player_turn = 2;
+        }
     }
     public void display_player_details_alltime_funtion()
     {
@@ -93,6 +115,39 @@ public class Game_Basic_Code : MonoBehaviour
         player_name_4.text = player_name_backend_4;
         player_amount_4.text = amount_backend_4.ToString();
     }
+    public void call_funtion()
+    {
+        if ((Raise_amount_1 != 0 || Raise_amount_2 != 0 || Raise_amount_3 != 0 || Raise_amount_4 != 0)&& Player_turn == 1)
+        {
+            call_button_object.SetActive(true);
+            if (Raise_amount_2 < Raise_amount_3 && Raise_amount_4 < Raise_amount_3)
+            {
+                Call_text.text = "CALL[" + Raise_amount_3 + "]";
+                call_amount_referance = Raise_amount_3;
+            }
+            else if (Raise_amount_3 < Raise_amount_4 && Raise_amount_2 < Raise_amount_4)
+            {
+
+                Call_text.text = "CALL[" + Raise_amount_4 + "]";
+                call_amount_referance = Raise_amount_4;
+
+            }
+            else
+            {
+
+                Call_text.text = "CALL[" + Raise_amount_2 + "]";
+                call_amount_referance = Raise_amount_2;
+
+            }
+
+        }
+        else 
+        {
+
+            call_button_object.SetActive(false);
+
+        }
+    }
     public void raise_function()
     {
         if(Player_turn==1)
@@ -100,18 +155,22 @@ public class Game_Basic_Code : MonoBehaviour
             raise_button_object.SetActive(true);
             fold_button_object.SetActive(true);
             check_button_object.SetActive(true);
+         
         }
         else
         {
             raise_button_object.SetActive(false);
             fold_button_object.SetActive(false);
             check_button_object.SetActive(false);
+            call_button_object.SetActive(false);
+            raise_panel.SetActive(false);
         }
         raise_text.text = "Raise[" + Raise_amount_1 + "]";
         raise_change_text.text =  Raise_change_1.ToString();
         raise_slider.maxValue = amount_backend_1;
         raise_slider.value = Raise_amount_1;
     }
+  
     public void clock()
     {
         player_time_1.value = Time1;
@@ -121,22 +180,22 @@ public class Game_Basic_Code : MonoBehaviour
     }
     public void time_turn_funtion()
     {
-        if(Time1<0)
+        if(Time1<0&&Time2==10)
         {
             Player_turn = 2;
             Time4 = 10;
         }
-        if(Time2<0)
+        if(Time2<0 && Time3 == 10)
         {
             Player_turn = 3;
             Time1 = 10;
         }
-        if(Time3<0)
+        if(Time3<0 && Time4 == 10)
         {
             Player_turn = 4;
             Time2 = 10;
         }
-        if(Time4<0)
+        if(Time4<0 && Time1 == 10)
         {
             Player_turn = 1;
             Time3 = 10;
@@ -198,6 +257,12 @@ public class Game_Basic_Code : MonoBehaviour
 
     }
     //UI button funtion
+
+    public void fold_button()
+    {
+        player_details.player_setected = player_details.setected.Fold;
+
+    }
     public void raise_panel_button()
     {
         raise_panel.SetActive(true);
@@ -206,7 +271,8 @@ public class Game_Basic_Code : MonoBehaviour
     public void raise_button()
     {
         raise_panel.SetActive(false);
-
+        Player_turn = 2;
+        player_details.player_setected = player_details.setected.Raise;
 
         amount_backend_1 -= Raise_amount_1;
         Raise_amount_1 = 0;
@@ -259,7 +325,15 @@ public class Game_Basic_Code : MonoBehaviour
         Raise_change_1 = 1000;
 
     }
+    public void call_button()
+    {
+        amount_backend_1 -= call_amount_referance;
+        
+            Player_turn = 2;
 
+        player_details.player_setected = player_details.setected.call;
+
+    }
 
 }
 [System.Serializable]
@@ -273,6 +347,7 @@ public class player_details
 {
     public role player_role = new role();
     public setected player_setected = new setected();
+
     [Header("player details")]
     public int player_num;
     public string player_name;
@@ -280,7 +355,7 @@ public class player_details
     public int raise_smount;
     public enum setected
     {
-        Fold, Check, Raise, 
+        none,Fold, Check, Raise,call 
         
     }public enum role
     {
