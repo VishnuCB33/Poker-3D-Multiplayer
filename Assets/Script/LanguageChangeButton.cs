@@ -8,16 +8,14 @@ public class LanguageChangeButton : MonoBehaviour
     public bool isActive = false;
     public TMP_FontAsset hindFont;     
     public TMP_FontAsset arvoText;
-    public TextMeshProUGUI languageText; 
+    public TextMeshProUGUI languageText;
 
 
-   /* private void Update()
+    private void Start()
     {
-
-        if(Input.GetKeyDown(KeyCode.Escape)) {
-            ChangeFont();
-        }
-    }*/
+        int ID = PlayerPrefs.GetInt("LocaleKey", 0);
+        ChangeLocale(ID);
+    }
 
     public void ChangeFont()
     {
@@ -50,6 +48,7 @@ public class LanguageChangeButton : MonoBehaviour
         isActive = true;
         yield return LocalizationSettings.InitializationOperation;
         LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[_localeID];
+        PlayerPrefs.GetInt("LocaleKey", _localeID);
         isActive = false;
     }
 }
