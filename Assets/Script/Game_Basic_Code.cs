@@ -60,28 +60,16 @@ public class Game_Basic_Code : MonoBehaviour
     public Slider player_time_3;
     public Slider player_time_4;
     public GameObject raise_panel;
+    public GameObject raise_button_object, fold_button_object, check_button_object;
     public TextMeshProUGUI raise_text;
     public TextMeshProUGUI raise_change_text;
     public Slider raise_slider;
 
     public void Start()
     {
-       /* Player_turn = 1;
-        player_details.player_name = player_name_backend_1;
-        player_details.player_num = player_num_backend_1;
-        player_details.amount = amount_backend_1;
+       Player_turn = 1;
+       
         
-        player_details.player_name = player_name_backend_2;
-        player_details.player_num = player_num_backend_2;
-        player_details.amount = amount_backend_2;
-        
-        player_details.player_name = player_name_backend_3;
-        player_details.player_num = player_num_backend_3;
-        player_details.amount = amount_backend_3;
-        
-        player_details.player_name = player_name_backend_4;
-        player_details.player_num = player_num_backend_4;
-        player_details.amount = amount_backend_4;*/
     }
     public void Update()
     {
@@ -89,9 +77,36 @@ public class Game_Basic_Code : MonoBehaviour
         time_turn_funtion();
         clock();
         raise_function();
+        display_player_details_alltime_funtion();
+    }
+    public void display_player_details_alltime_funtion()
+    {
+        player_name_1.text = player_name_backend_1;
+        player_amount_1.text = amount_backend_1.ToString();
+
+        player_name_2.text = player_name_backend_2;
+        player_amount_2.text = amount_backend_2.ToString();
+
+        player_name_3.text = player_name_backend_3;
+        player_amount_3.text = amount_backend_3.ToString();
+
+        player_name_4.text = player_name_backend_4;
+        player_amount_4.text = amount_backend_4.ToString();
     }
     public void raise_function()
     {
+        if(Player_turn==1)
+        {
+            raise_button_object.SetActive(true);
+            fold_button_object.SetActive(true);
+            check_button_object.SetActive(true);
+        }
+        else
+        {
+            raise_button_object.SetActive(false);
+            fold_button_object.SetActive(false);
+            check_button_object.SetActive(false);
+        }
         raise_text.text = "Raise[" + Raise_amount_1 + "]";
         raise_change_text.text =  Raise_change_1.ToString();
         raise_slider.maxValue = amount_backend_1;
