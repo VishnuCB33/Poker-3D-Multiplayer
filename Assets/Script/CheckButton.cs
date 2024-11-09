@@ -1,38 +1,63 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 public class CheckButton : MonoBehaviour
 {
-    public AllCards allCards=new AllCards();
-    [System.Serializable]
+    [Header("Card Comparison")]
+    //V
+    public List<GameObject> playerOneCard;
+    public List<GameObject> playerTwoCard;
+    public List<GameObject> playerThreeCard;
+    public List<GameObject> playerFourCard;
+   
+    public List<GameObject> finalCheckFiveCard;
+    [Header("Card Series")]
 
+    public List<GameObject> clubs;
+    public List<GameObject> diamonds;
+    public List<GameObject> hearts;
+    public List<GameObject> spades;
+    [Header("Royal Flush")]
+    public List<GameObject> clubsRoyalFlush;
 
-    public struct AllCards
+    [SerializeField] private int changeCards;
+    [SerializeField] private int count;
+    [SerializeField] private List<GameObject> duplicateCheck;
+   
+
+  private void Start()
     {
-        [Header("Card Series")]
-
-        public List<GameObject> clubs;
-        public List<GameObject> diamonds;
-        public List<GameObject> hearts;
-        public List<GameObject> spades;
-
-      /*  [Header("Winner Combinations")]
-
-        public List<GameObject> royalFlush;
-        public List<GameObject> straightFlush;
-        public List<GameObject> fourOfKing;
-        public List <GameObject> fullHouse;
-        public List<GameObject> flush;
-        public List<GameObject> straight;
-        public List<GameObject> threeOfKind;
-        public List<GameObject> twoPair;
-        public List<GameObject> onePair;
-        public List<GameObject> highCard;
-     */
-
+       
     }
     private void Update()
     {
-     
+
+
+        RoyalFlush();
+
+
+    }
+    public bool RoyalFlush()
+    {
+        bool isA = false;
+        int count;
+       List<GameObject>merge=finalCheckFiveCard.Concat(playerOneCard).ToList();
+       for(int i=0;i<merge.Count;i++)
+        {
+           for(int j = 0; j < 5; j++)
+            {
+                switch(merge[i].GetComponent<CardsAttached>().properties.allCards )
+                {
+                    case CardSeries.A: isA = true;
+                        break;
+
+                }
+               
+               
+            }
+        }
+        return isA;
+
     }
 }

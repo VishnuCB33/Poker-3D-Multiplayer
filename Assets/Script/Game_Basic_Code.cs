@@ -13,7 +13,7 @@ public class Game_Basic_Code : MonoBehaviour
     public float Time1=10f;
     public int Raise_amount_1;
     public int Raise_change_1=10;
-
+ 
 
     [Header("player two")]
     public int player_num_backend_2;
@@ -21,7 +21,7 @@ public class Game_Basic_Code : MonoBehaviour
     public int amount_backend_2;
     public float Time2=10f;
     public int Raise_amount_2;
-
+   
 
     [Header("player three")]
     public int player_num_backend_3;
@@ -29,7 +29,7 @@ public class Game_Basic_Code : MonoBehaviour
     public int amount_backend_3;
     public float Time3=10f;
     public int Raise_amount_3;
-
+ 
 
     [Header("player four")]
     public int player_num_backend_4;
@@ -37,6 +37,7 @@ public class Game_Basic_Code : MonoBehaviour
     public int amount_backend_4;
     public float Time4=10f;
     public int Raise_amount_4;
+  
 
 
     public List<GameObject> Cards = new List<GameObject>();
@@ -83,8 +84,7 @@ public class Game_Basic_Code : MonoBehaviour
         display_player_details_alltime_funtion();
         call_funtion();
         fold_funtion();
-
-
+      
     }
     public void fold_funtion()
     {
@@ -256,7 +256,7 @@ public class Game_Basic_Code : MonoBehaviour
         }
 
     }
-    //UI button funtion
+    //UI button function
 
     public void fold_button()
     {
@@ -334,6 +334,8 @@ public class Game_Basic_Code : MonoBehaviour
         player_details.player_setected = player_details.setected.call;
 
     }
+    //Card Spawn Random(Vishnu)
+
 
 }
 [System.Serializable]
@@ -364,3 +366,4 @@ public class player_details
     }
    
 }
+
