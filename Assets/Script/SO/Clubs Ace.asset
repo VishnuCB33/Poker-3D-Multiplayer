@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeb67730d55476b418108d6de4bcd9d2, type: 3}
   m_Name: Clubs Ace
   m_EditorClassIdentifier: 
-  cardLetters: 0
-  CardLetters: 0
-  CardSymbolName: 
+  allCards: 0
+  symbols: 0
+  value: 1
