@@ -90,7 +90,35 @@ public class CheckButton : MonoBehaviour
 
             if (isA == true && isK == true && isQ == true && isJ == true && isTen == true)
             {
-               
+
+                while (7 > x)
+                {
+                    if (finalCheckFiveCard[x].layer == 6)
+                    {
+                        flush_Club_count++;
+                    }
+                    if (finalCheckFiveCard[x].layer == 7)
+                    {
+                        flush_Diamonds_count++;
+                    }
+                    if (finalCheckFiveCard[x].layer == 8)
+                    {
+                        flush_Heart_count++;
+                    }
+                    if (finalCheckFiveCard[x].layer == 9)
+                    {
+                        flush_Spades_count++;
+                    }
+
+                    x++;
+                }
+                if (flush_Club_count >= 5 || flush_Diamonds_count >= 5 || flush_Heart_count >= 5 || flush_Spades_count >= 5)
+                {
+                    Debug.Log("player_one_have_flush");
+                    winnerlist[4] = true;
+
+                    x = 0;
+                }
             }
         }
        
