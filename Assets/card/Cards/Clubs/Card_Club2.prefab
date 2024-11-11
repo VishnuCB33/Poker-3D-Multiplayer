@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6500903374584246335}
   - component: {fileID: 5617761753054702781}
   - component: {fileID: 6942822490033966937}
+  - component: {fileID: 4482690625102447660}
   m_Layer: 6
   m_Name: Card_Club2
   m_TagString: 2
@@ -133,3 +134,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4482690625102447660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4699265818613305834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b74664694c839346a2570873b6e5e41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  properties: {fileID: 0}

@@ -34,18 +34,21 @@ public class CheckButton : MonoBehaviour
     int royalFleshDiamondCount;
     int royalFleshHeartCount;
     int royalFleshSpadesCount;
+    //PAir Values
+    int pairCounts;
+   
     private void Start()
     {
        
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
+       /* if (Input.GetKeyDown(KeyCode.A))
         {
             RoyalFlush();
-        }
+        }*/
 
-        
+
         /*if (Input.GetKeyDown(KeyCode.Space))//A
         {
             flush();
@@ -53,7 +56,10 @@ public class CheckButton : MonoBehaviour
             Three_of_a_kind();
         }
 */
-
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            Pair();
+        }
 
 
         if (Input.GetKeyDown(KeyCode.A))//A
@@ -266,7 +272,21 @@ public class CheckButton : MonoBehaviour
         }
 
     }
-
+    public void Pair()
+    {
+        for(int i=0;i< finalCheckFiveCard.Count;i++)
+        {
+           for(int j = 1; i < finalCheckFiveCard.Count; j++)
+            {
+                if(finalCheckFiveCard[i].tag== finalCheckFiveCard[j].tag)
+                {
+                    pairCounts++;
+                    Debug.Log(pairCounts);
+                }
+                   
+            }
+        }
+    }
 
 }
  
