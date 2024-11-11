@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 8972382507093366348}
   - component: {fileID: 6584466150064284294}
   - component: {fileID: 5521743761224826428}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Card_Heart10
-  m_TagString: Untagged
+  m_TagString: 10
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

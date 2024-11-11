@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 6135419372069389432}
   - component: {fileID: 8269053258508529842}
   - component: {fileID: 7277818652543249460}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Card_HeartAce
-  m_TagString: Untagged
+  m_TagString: 14
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

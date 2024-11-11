@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 3927225543982934195}
   - component: {fileID: 1253330670745394297}
   - component: {fileID: 478837567656231163}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Card_HeartJack
-  m_TagString: Untagged
+  m_TagString: 11
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
