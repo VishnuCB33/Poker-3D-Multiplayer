@@ -35,12 +35,31 @@ public class CheckButton : MonoBehaviour
     }
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+
+        //RoyalFlush();
+        if (Input.GetKeyDown(KeyCode.Space))//A
         {
-            RoyalFlush();
+            flush();
+            Four_of_a_kind();
+            Three_of_a_kind();
         }
 
-      
+
+
+
+        if (Input.GetKeyDown(KeyCode.A))//A
+        {
+            flush_Diamonds_count = 0;
+            flush_Club_count = 0;
+            flush_Heart_count = 0;
+            flush_Spades_count = 0;
+            x = 0;
+            y = 0;
+            count_four_of_a_kind = 0;
+            count_three_of_a_kind = 0;
+        }
+
+
 
 
     }
