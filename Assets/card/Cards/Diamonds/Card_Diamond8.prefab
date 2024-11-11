@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 4567175043671366403}
   - component: {fileID: 1766865471373537225}
   - component: {fileID: 1100214667243811635}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Card_Diamond8
-  m_TagString: Untagged
+  m_TagString: 8
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

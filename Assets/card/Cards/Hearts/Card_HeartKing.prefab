@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 6100213967622832821}
   - component: {fileID: 8308199037075060351}
   - component: {fileID: 7245503041417997049}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Card_HeartKing
-  m_TagString: Untagged
+  m_TagString: 13
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

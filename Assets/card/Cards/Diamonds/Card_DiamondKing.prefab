@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 4175487680002914363}
   - component: {fileID: 2168123293469969649}
   - component: {fileID: 709084962110148723}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Card_DiamondKing
-  m_TagString: Untagged
+  m_TagString: 13
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

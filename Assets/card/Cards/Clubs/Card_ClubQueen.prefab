@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 3344727303483854147}
   - component: {fileID: 688536768557119881}
   - component: {fileID: 2184167937861412595}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Card_ClubQueen
-  m_TagString: Untagged
+  m_TagString: 11
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

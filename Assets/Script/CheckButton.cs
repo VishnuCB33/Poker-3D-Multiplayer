@@ -4,6 +4,9 @@ using System.Linq;
 using UnityEngine;
 public class CheckButton : MonoBehaviour
 {
+    [Header("Win")]
+    public bool[] winnerlist;
+
     [Header("Card Comparison")]
     //V
     public List<GameObject> playerOneCard;
@@ -32,9 +35,30 @@ public class CheckButton : MonoBehaviour
     }
     private void Update()
     {
+      
 
+        //RoyalFlush();
+       if(Input.GetKeyDown(KeyCode.Space))//A
+        {
+             flush();
+            Four_of_a_kind();
+            Three_of_a_kind();
+        }
+        
 
-        RoyalFlush();
+          
+        
+        if(Input.GetKeyDown(KeyCode.A))//A
+        {
+            flush_Diamonds_count = 0;
+            flush_Club_count = 0;
+            flush_Heart_count = 0;
+            flush_Spades_count = 0;
+            x = 0;
+            y = 0;
+            count_four_of_a_kind = 0;
+            count_three_of_a_kind = 0;
+        } 
 
 
     }
@@ -60,4 +84,116 @@ public class CheckButton : MonoBehaviour
         return isA;
 
     }
+   
+    int x = 0; 
+    int flush_Club_count, flush_Diamonds_count, flush_Heart_count, flush_Spades_count;
+    public void flush()//A
+    {
+
+       
+        while(7>x)
+        {
+            if (finalCheckFiveCard[x].layer== 6)
+            {
+             flush_Club_count++;
+            }
+            if(finalCheckFiveCard[x].layer == 7)
+            {
+                flush_Diamonds_count++;
+            }
+            if(finalCheckFiveCard[x].layer == 8)
+            {
+                flush_Heart_count++;
+            }
+            if(finalCheckFiveCard[x].layer == 9)
+            {
+                flush_Spades_count++;
+            }
+           
+            x++;
+        }
+        if(flush_Club_count >= 5|| flush_Diamonds_count >= 5|| flush_Heart_count >= 5|| flush_Spades_count >= 5)
+        {
+            Debug.Log("player_one_have_flush");
+            winnerlist[4] = true;
+
+            x = 0;
+        }
+        else
+        {
+            Debug.Log("Dont_player_one_have_flush");
+           
+            x = 0;
+        }
+    }
+    int y;
+    public int count_four_of_a_kind;
+    public void Four_of_a_kind()//A
+    {
+        Debug.Log("hi");
+        x = 0;
+        y = 0;
+        while(7>x)
+        {
+
+            if(finalCheckFiveCard[x].tag== finalCheckFiveCard[y].tag)
+            {
+                count_four_of_a_kind++;
+            }
+            x++;
+        }
+        if(count_four_of_a_kind<4)
+        {
+            x = 0;
+            y++;
+            count_four_of_a_kind = 0;
+        }
+        else if(count_four_of_a_kind >= 4)
+        {
+            Debug.Log("player one have Four_of_a_kind");
+            winnerlist[2] = true;
+        }
+        else 
+        {
+            Debug.Log("not have Four_of_a_kind");
+        }
+
+    }
+    public int count_three_of_a_kind;
+
+    public void Three_of_a_kind()//A
+    {
+        Debug.Log("hi");
+        x = 0;
+        y = 0;
+        while(7>x)
+        {
+
+            if(finalCheckFiveCard[x].tag== finalCheckFiveCard[y].tag)
+            {
+                count_three_of_a_kind++;
+            }
+            x++;
+        }
+        if(count_three_of_a_kind < 3)
+        {
+            x = 0;
+            y++;
+            count_three_of_a_kind = 0;
+        }
+        else if(count_three_of_a_kind >= 3)
+        {
+            Debug.Log("player one have three_of_a_kind");
+            winnerlist[6] = true;
+
+        }
+        else 
+        {
+            Debug.Log("not have three_of_a_kind");
+        }
+
+    }
+
+
 }
+ 

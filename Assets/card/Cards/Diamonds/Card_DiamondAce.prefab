@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 4896630420940163460}
   - component: {fileID: 7210443483559132494}
   - component: {fileID: -6718962049940145176}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Card_DiamondAce
-  m_TagString: Untagged
+  m_TagString: 14
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
