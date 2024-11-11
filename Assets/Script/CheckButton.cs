@@ -27,23 +27,32 @@ public class CheckButton : MonoBehaviour
     [SerializeField] private int changeCards;
     [SerializeField] private int count;
     [SerializeField] private List<GameObject> duplicateCheck;
-   
-
+    [Header("check Variables")]
+    int checkClubs = 0;
+    [SerializeField] private List<GameObject> royalFlushMerge;
+    int royalFleshClubCount;
+    int royalFleshDiamondCount;
+    int royalFleshHeartCount;
+    int royalFleshSpadesCount;
     private void Start()
     {
        
     }
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            RoyalFlush();
+        }
 
-        //RoyalFlush();
-        if (Input.GetKeyDown(KeyCode.Space))//A
+        
+        /*if (Input.GetKeyDown(KeyCode.Space))//A
         {
             flush();
             Four_of_a_kind();
             Three_of_a_kind();
         }
-
+*/
 
 
 
@@ -84,23 +93,28 @@ public class CheckButton : MonoBehaviour
                 {
                     case CardSeries.A: isA = true;
                         countA++;
+                    royalFlushMerge.Add(merge[i]);
                         Debug.Log(countA);
                         break;
                    case CardSeries.K: isK = true;
                         countK++;
-                        Debug.Log(countK);
+                    royalFlushMerge.Add(merge[i]);
+                    Debug.Log(countK);
                         break;
                     case CardSeries.Q: isQ = true;
                         countQ++;
-                        Debug.Log(countQ);
+                    royalFlushMerge.Add(merge[i]);
+                    Debug.Log(countQ);
                         break;
                     case CardSeries.J: isJ = true;
                         countJ++;
-                        Debug.Log(countJ);
+                    royalFlushMerge.Add(merge[i]);
+                    Debug.Log(countJ);
                         break;
                     case CardSeries.Ten: isTen = true;
                         countTen++;
-                        Debug.Log(countTen);
+                    royalFlushMerge.Add(merge[i]);
+                    Debug.Log(countTen);
                         break;
                          
                        
@@ -109,35 +123,34 @@ public class CheckButton : MonoBehaviour
 
             if (isA == true && isK == true && isQ == true && isJ == true && isTen == true)
             {
-
-                while (7 > x)
+                Debug.Log("ppp");
+                int o = 0;
+                while (5 > o)
                 {
-                    if (finalCheckFiveCard[x].layer == 6)
+                    if (royalFlushMerge[o].layer == 6)
                     {
-                        flush_Club_count++;
+                        royalFleshClubCount++;
                     }
-                    if (finalCheckFiveCard[x].layer == 7)
+                    if (royalFlushMerge[o].layer == 7)
                     {
-                        flush_Diamonds_count++;
+                        royalFleshDiamondCount++;
                     }
-                    if (finalCheckFiveCard[x].layer == 8)
+                    if(royalFlushMerge[o].layer == 8)
                     {
-                        flush_Heart_count++;
+                        royalFleshHeartCount++;
                     }
-                    if (finalCheckFiveCard[x].layer == 9)
+                   if (royalFlushMerge[0].layer == 7)
                     {
-                        flush_Spades_count++;
+                        royalFleshSpadesCount++;   
+                      
                     }
-
-                    x++;
+                    o++;
                 }
-                if (flush_Club_count >= 5 || flush_Diamonds_count >= 5 || flush_Heart_count >= 5 || flush_Spades_count >= 5)
+               if(royalFleshSpadesCount >= 5 || royalFleshHeartCount >= 5 || royalFleshDiamondCount >= 5 || royalFleshClubCount >= 5)
                 {
-                    Debug.Log("player_one_have_flush");
-                    winnerlist[4] = true;
-
-                    x = 0;
+                    Debug.Log("RoyalFlush");
                 }
+                
             }
         }
        

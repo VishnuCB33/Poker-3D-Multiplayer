@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -20626,6 +20626,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08d53d19a0125184ca2d40b32964331e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  winnerlist: 00000000000000000000
   playerOneCard:
   - {fileID: 853861476}
   - {fileID: 1300001418}
@@ -20643,6 +20644,8 @@ MonoBehaviour:
   - {fileID: 2045193746}
   - {fileID: 220945027}
   - {fileID: 122521747}
+  - {fileID: 1731898332}
+  - {fileID: 1731898332}
   - {fileID: 1731898332}
   clubs:
   - {fileID: 4107913866523956425, guid: 3c7827269bdf2ba4b9c1f07269a3617d, type: 3}
@@ -20666,6 +20669,7 @@ MonoBehaviour:
   count: 0
   duplicateCheck: []
   count_four_of_a_kind: 0
+  count_three_of_a_kind: 0
 --- !u!4 &2112251263
 Transform:
   m_ObjectHideFlags: 0
