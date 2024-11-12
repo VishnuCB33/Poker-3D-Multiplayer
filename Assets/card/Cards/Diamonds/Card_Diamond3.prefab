@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7759470940025835843}
   - component: {fileID: 5497728548336838025}
   - component: {fileID: 6596171866590066955}
+  - component: {fileID: -6732981429724941346}
   m_Layer: 7
   m_Name: Card_Diamond3
   m_TagString: 3
@@ -105,3 +106,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.13320123, y: 0.19488752, z: 0.00035491234}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-6732981429724941346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6290163690470343772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b74664694c839346a2570873b6e5e41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  properties: {fileID: 0}

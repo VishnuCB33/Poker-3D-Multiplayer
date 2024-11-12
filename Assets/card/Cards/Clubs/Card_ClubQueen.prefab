@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 3344727303483854147}
   - component: {fileID: 688536768557119881}
   - component: {fileID: 2184167937861412595}
+  - component: {fileID: -932796724805185535}
   m_Layer: 6
   m_Name: Card_ClubQueen
-  m_TagString: 11
+  m_TagString: 12
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -105,3 +106,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.13320136, y: 0.19488756, z: 0.00035491597}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-932796724805185535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1337235916737730652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b74664694c839346a2570873b6e5e41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  properties: {fileID: 0}

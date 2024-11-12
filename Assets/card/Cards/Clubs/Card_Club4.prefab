@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3184490606159412792}
   - component: {fileID: 852695578476530418}
   - component: {fileID: 2023514526703507048}
+  - component: {fileID: -1041156151966605484}
   m_Layer: 6
   m_Name: Card_Club4
   m_TagString: 4
@@ -105,3 +106,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.13320126, y: 0.19488756, z: 0.00035491906}
   m_Center: {x: 0.000000029802322, y: -1.7763568e-15, z: -1.936856e-15}
+--- !u!114 &-1041156151966605484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1213049862783527719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b74664694c839346a2570873b6e5e41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  properties: {fileID: 0}
