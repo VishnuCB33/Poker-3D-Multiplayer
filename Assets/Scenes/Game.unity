@@ -19614,8 +19614,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   winnerlist: 00000000000000000000
   playerOneCard:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 385550109368088674, guid: e24405f1246673b4ab926b57fcb208ed, type: 3}
+  - {fileID: 1990851046391045254, guid: 6f213911946f2184baaadbf3e00eeca3, type: 3}
   playerTwoCard:
   - {fileID: 1055205628213336658, guid: b2092b6f8a97f5b4999b5db5971ca85d, type: 3}
   - {fileID: 8816023348059597911, guid: 4c8aafa92e8173947b4ee2add433d99b, type: 3}
@@ -19626,35 +19626,21 @@ MonoBehaviour:
   - {fileID: 6290163690470343772, guid: 276a581c69768684e8a0fef01f93077a, type: 3}
   - {fileID: 4699265818613305834, guid: 9b1450ad91edbd64199dee0d33d9c9a2, type: 3}
   finalCheckFiveCard:
-  - {fileID: 4699265818613305834, guid: 9b1450ad91edbd64199dee0d33d9c9a2, type: 3}
-  - {fileID: 1055205628213336658, guid: b2092b6f8a97f5b4999b5db5971ca85d, type: 3}
-  - {fileID: 3935840920983308708, guid: 6355a5e4b343a0f4f88854099a35e7da, type: 3}
-  - {fileID: 8678477582111002781, guid: 622932214f41b5f4991ddf56e8795153, type: 3}
-  - {fileID: 4193939009279460354, guid: 31165ab1c9ffb1b4393a869ca8d9c607, type: 3}
-  - {fileID: 9043505585276897684, guid: d9cf5bcb0390da349a9956421105f799, type: 3}
-  - {fileID: 3935840920983308708, guid: 6355a5e4b343a0f4f88854099a35e7da, type: 3}
-  clubs:
-  - {fileID: 4107913866523956425, guid: 3c7827269bdf2ba4b9c1f07269a3617d, type: 3}
-  - {fileID: 5193355229928930190, guid: 16ee3d16d985a9d4f9275ef7691e0e43, type: 3}
-  - {fileID: 1337235916737730652, guid: 60fe154d0d5302e429e647a07712a783, type: 3}
-  - {fileID: 4193939009279460354, guid: 31165ab1c9ffb1b4393a869ca8d9c607, type: 3}
-  - {fileID: 8678477582111002781, guid: 622932214f41b5f4991ddf56e8795153, type: 3}
-  - {fileID: 8909154684826227476, guid: 45b0da87b7aa95043ac945346660c238, type: 3}
-  - {fileID: 3631630423275414307, guid: 18c6a9a978394df4596d3f6ec9c6f6fb, type: 3}
-  - {fileID: 9043505585276897684, guid: d9cf5bcb0390da349a9956421105f799, type: 3}
-  - {fileID: 2957822907216399208, guid: bf75833717328c748bbbef20e8986a16, type: 3}
-  - {fileID: 7589586389822857447, guid: d9e3c74f8d6625445af8dbcf82cf1dab, type: 3}
-  - {fileID: 1213049862783527719, guid: c88d2bc2e8a4e0f4a94e90b25657eca8, type: 3}
-  - {fileID: 3935840920983308708, guid: 6355a5e4b343a0f4f88854099a35e7da, type: 3}
-  - {fileID: 4699265818613305834, guid: 9b1450ad91edbd64199dee0d33d9c9a2, type: 3}
-  diamonds: []
-  hearts: []
-  spades: []
+  - {fileID: 3316657677096730328, guid: 3e1f9ffc03a99d2428fff3b964b7bed6, type: 3}
+  - {fileID: 3527180655520433047, guid: 9defad6cdbd457847b84ca41a5a8136a, type: 3}
+  - {fileID: 2837282519608362209, guid: da3691f3b1c2063418e130793cabc85a, type: 3}
+  - {fileID: 8947273938133433633, guid: c90ee74bb6bf4b340b806b10fde80ac0, type: 3}
+  - {fileID: 1193570578033609579, guid: e1cbb65c4382cc84299841dab5bc7125, type: 3}
+  - {fileID: 385550109368088674, guid: e24405f1246673b4ab926b57fcb208ed, type: 3}
+  - {fileID: 365533638141246642, guid: 7833baf930fc67548806a7cc15578f18, type: 3}
   clubsRoyalFlush: []
   changeCards: 0
   count: 0
   duplicateCheck: []
   royalFlushMerge: []
+  duplicatePair: []
+  straightCheck: []
+  temp: 0
   count_four_of_a_kind: 0
   count_three_of_a_kind: 0
 --- !u!4 &2112251263

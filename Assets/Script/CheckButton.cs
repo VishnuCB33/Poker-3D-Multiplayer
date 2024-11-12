@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+
 public class CheckButton : MonoBehaviour
 {
     [Header("Win")]
@@ -15,12 +16,12 @@ public class CheckButton : MonoBehaviour
     public List<GameObject> playerFourCard;
    
     public List<GameObject> finalCheckFiveCard;
-    [Header("Card Series")]
+   /* [Header("Card Series")]
 
     public List<GameObject> clubs;
     public List<GameObject> diamonds;
     public List<GameObject> hearts;
-    public List<GameObject> spades;
+    public List<GameObject> spades;*/
     [Header("Royal Flush")]
     public List<GameObject> clubsRoyalFlush;
 
@@ -36,7 +37,11 @@ public class CheckButton : MonoBehaviour
     int royalFleshSpadesCount;
     //PAir Values
     int pairCounts;
-   
+    [SerializeField]private List<GameObject> duplicatePair=new List<GameObject>();
+    //straight
+    [SerializeField]
+    private List<GameObject> straightCheck;
+    [SerializeField] int temp;
     private void Start()
     {
        
@@ -74,7 +79,10 @@ public class CheckButton : MonoBehaviour
             count_three_of_a_kind = 0;
         }
 
-
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            Straight();
+        }
 
 
     }
@@ -276,17 +284,68 @@ public class CheckButton : MonoBehaviour
     {
         for(int i=0;i< finalCheckFiveCard.Count;i++)
         {
-           for(int j = 1; i < finalCheckFiveCard.Count; j++)
+           for(int j = i+1; j < finalCheckFiveCard.Count; j++)
             {
-                if(finalCheckFiveCard[i].tag== finalCheckFiveCard[j].tag)
+               
+
+                if (finalCheckFiveCard[i].tag == finalCheckFiveCard[j].tag)
                 {
                     pairCounts++;
+                    duplicatePair.Add(finalCheckFiveCard[i]);
                     Debug.Log(pairCounts);
+                   
                 }
                    
             }
         }
+        if(pairCounts == 1)
+        {
+            Debug.Log("PAIR.....");
+        }
     }
+    void TwoPair()
+    {
+        for (int i = 0; i < finalCheckFiveCard.Count; i++)
+        {
+            for (int j = i + 1; j < finalCheckFiveCard.Count; j++)
+            {
 
+
+                if (finalCheckFiveCard[i].tag == finalCheckFiveCard[j].tag)
+                {
+                    pairCounts++;
+                    duplicatePair.Add(finalCheckFiveCard[i]);
+                    Debug.Log(pairCounts);
+                   
+                }
+
+            }
+        }
+        if (pairCounts == 2)
+        {
+            Debug.Log("TwoPair.....");
+        }
+    }
+    void Straight()
+    {
+     
+        
+        for(int i=0 ; i< finalCheckFiveCard.Count-1; i++)
+        {
+            for(int j=0;j< finalCheckFiveCard.Count - 1-i; j++)
+            {
+               // Debug.Log("fdd");
+                if (finalCheckFiveCard[j].GetComponent<CardsAttached>().properties.value > finalCheckFiveCard[j + 1].GetComponent<CardsAttached>().properties.value)
+                {
+                    temp = finalCheckFiveCard[j].GetComponent<CardsAttached>().properties.value;
+                    finalCheckFiveCard[j].GetComponent<CardsAttached>().properties.value = finalCheckFiveCard[j + 1].GetComponent<CardsAttached>().properties.value;
+                    Debug.Log(temp);    
+                    finalCheckFiveCard[j + 1].GetComponent<CardsAttached>().properties.value=temp;
+                    Debug.Log("f");
+                }
+            }
+        }
+        
+    }
 }
  

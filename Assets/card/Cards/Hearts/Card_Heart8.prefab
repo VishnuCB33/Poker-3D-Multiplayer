@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7020149429980662330}
   - component: {fileID: 5082422129546788592}
   - component: {fileID: 5857483675781489270}
+  - component: {fileID: 2366316001784977766}
   m_Layer: 8
   m_Name: Card_Heart8
   m_TagString: 8
@@ -105,3 +106,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.13320136, y: 0.19488758, z: 0.00035494438}
   m_Center: {x: 0.000000014901167, y: 0.0000076293945, z: -1.4406675e-15}
+--- !u!114 &2366316001784977766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6739812281180741413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b74664694c839346a2570873b6e5e41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  properties: {fileID: 0}
