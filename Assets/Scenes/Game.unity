@@ -19626,13 +19626,13 @@ MonoBehaviour:
   - {fileID: 6290163690470343772, guid: 276a581c69768684e8a0fef01f93077a, type: 3}
   - {fileID: 4699265818613305834, guid: 9b1450ad91edbd64199dee0d33d9c9a2, type: 3}
   finalCheckFiveCard:
-  - {fileID: 3316657677096730328, guid: 3e1f9ffc03a99d2428fff3b964b7bed6, type: 3}
-  - {fileID: 3527180655520433047, guid: 9defad6cdbd457847b84ca41a5a8136a, type: 3}
-  - {fileID: 2837282519608362209, guid: da3691f3b1c2063418e130793cabc85a, type: 3}
-  - {fileID: 8947273938133433633, guid: c90ee74bb6bf4b340b806b10fde80ac0, type: 3}
-  - {fileID: 1193570578033609579, guid: e1cbb65c4382cc84299841dab5bc7125, type: 3}
-  - {fileID: 385550109368088674, guid: e24405f1246673b4ab926b57fcb208ed, type: 3}
-  - {fileID: 365533638141246642, guid: 7833baf930fc67548806a7cc15578f18, type: 3}
+  - {fileID: 1777122498799293233, guid: aa869137935846e44811ed2e199a0ccc, type: 3}
+  - {fileID: 1390288806503772898, guid: f73435dab24fc1545a994a4d714e6410, type: 3}
+  - {fileID: 559996473704597992, guid: 2bb022608bf9aad48b8e5f03db311177, type: 3}
+  - {fileID: 5379738121089812459, guid: 36220ef1d892fa0479606aa979b63421, type: 3}
+  - {fileID: 5160800886197328547, guid: 4111918a8e317724db8e545bba23954f, type: 3}
+  - {fileID: 5719683410421075355, guid: 34fa9290d9b5c254e8191560fa78021f, type: 3}
+  - {fileID: 7026005134679962567, guid: 2f7e7a4a0ed587e43951edb91fc28ded, type: 3}
   clubsRoyalFlush: []
   changeCards: 0
   count: 0
@@ -19641,6 +19641,7 @@ MonoBehaviour:
   duplicatePair: []
   straightCheck: []
   temp: 0
+  values: 00000000000000000000000000000000000000000000000000000000
   count_four_of_a_kind: 0
   count_three_of_a_kind: 0
 --- !u!4 &2112251263

@@ -42,25 +42,29 @@ public class CheckButton : MonoBehaviour
     [SerializeField]
     private List<GameObject> straightCheck;
     [SerializeField] int temp;
+    [SerializeField] List<int> values;
+    private int flushChecker = 0;
     private void Start()
     {
        
     }
     private void Update()
     {
+
+       
        /* if (Input.GetKeyDown(KeyCode.A))
         {
             RoyalFlush();
         }*/
 
 
-        /*if (Input.GetKeyDown(KeyCode.Space))//A
+        if (Input.GetKeyDown(KeyCode.Space))//A
         {
             flush();
             Four_of_a_kind();
             Three_of_a_kind();
         }
-*/
+
         if (Input.GetKeyDown(KeyCode.S))
         {
             Pair();
@@ -83,7 +87,10 @@ public class CheckButton : MonoBehaviour
         {
             Straight();
         }
-
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            StraightFlush();
+        }
 
     }
     public bool RoyalFlush()
@@ -203,7 +210,7 @@ public class CheckButton : MonoBehaviour
         {
             Debug.Log("player_one_have_flush");
             winnerlist[4] = true;
-
+            flushChecker = 1;
             x = 0;
         }
         else
@@ -328,24 +335,47 @@ public class CheckButton : MonoBehaviour
     }
     void Straight()
     {
-     
-        
-        for(int i=0 ; i< finalCheckFiveCard.Count-1; i++)
+
+       
+        int y = 0;
+       for(int i = 0;i< finalCheckFiveCard.Count; i++)
         {
-            for(int j=0;j< finalCheckFiveCard.Count - 1-i; j++)
+            values[y] = finalCheckFiveCard[i].GetComponent<CardsAttached>().properties.value;
+            y++;
+
+        }
+      
+      values.Sort();
+      int check1 = values[0] - values[1];
+        int check2=values[1] - values[2];
+        int check3=values[2] - values[3];
+      int check4=values[3] - values[4];
+
+        if(check1==-1)
+        {
+            Debug.Log("1stFAce....");
+            if(check2==-1)
             {
-               // Debug.Log("fdd");
-                if (finalCheckFiveCard[j].GetComponent<CardsAttached>().properties.value > finalCheckFiveCard[j + 1].GetComponent<CardsAttached>().properties.value)
+                Debug.Log("2ndFAce");
+                if (check3==-1)
                 {
-                    temp = finalCheckFiveCard[j].GetComponent<CardsAttached>().properties.value;
-                    finalCheckFiveCard[j].GetComponent<CardsAttached>().properties.value = finalCheckFiveCard[j + 1].GetComponent<CardsAttached>().properties.value;
-                    Debug.Log(temp);    
-                    finalCheckFiveCard[j + 1].GetComponent<CardsAttached>().properties.value=temp;
-                    Debug.Log("f");
+                    Debug.Log("3ndFAce");
+                    if (check4 == -1)
+                    {
+                        Debug.Log("Straight.....");
+                    }
                 }
             }
         }
-        
+    }
+    void StraightFlush()
+    {
+        if (flushChecker == 1)
+        {
+            Straight();
+            Debug.Log("StraightFlush...");
+            winnerlist[1] = true;
+        }
     }
 }
  
