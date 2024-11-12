@@ -44,6 +44,7 @@ public class CheckButton : MonoBehaviour
     [SerializeField] int temp;
     [SerializeField] List<int> values;
     private int flushChecker = 0;
+    private int twoPairChecker = 0;
     private void Start()
     {
        
@@ -68,6 +69,7 @@ public class CheckButton : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.S))
         {
             Pair();
+            TwoPair();  
         }
 
 
@@ -299,16 +301,17 @@ public class CheckButton : MonoBehaviour
                 {
                     pairCounts++;
                     duplicatePair.Add(finalCheckFiveCard[i]);
-                    Debug.Log(pairCounts);
                    
+                    if (pairCounts == 4)
+                    {
+                        Debug.Log(pairCounts);
+                        Debug.Log("PAIR.....");
+                    }
                 }
-                   
+              
             }
         }
-        if(pairCounts == 1)
-        {
-            Debug.Log("PAIR.....");
-        }
+      
     }
     void TwoPair()
     {
@@ -328,7 +331,7 @@ public class CheckButton : MonoBehaviour
 
             }
         }
-        if (pairCounts == 2)
+        if (pairCounts == 8)
         {
             Debug.Log("TwoPair.....");
         }
@@ -376,6 +379,10 @@ public class CheckButton : MonoBehaviour
             Debug.Log("StraightFlush...");
             winnerlist[1] = true;
         }
+    }
+    void FullHouse()
+    {
+
     }
 }
  
