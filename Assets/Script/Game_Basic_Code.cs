@@ -13,7 +13,8 @@ public class Game_Basic_Code : MonoBehaviour
     public float Time1=10f;
     public int Raise_amount_1;
     public int Raise_change_1=10;
- 
+   
+
 
     [Header("player two")]
     public int player_num_backend_2;
@@ -50,12 +51,16 @@ public class Game_Basic_Code : MonoBehaviour
 
     public TextMeshProUGUI player_name_1;
     public TextMeshProUGUI player_amount_1;
+    public TextMeshProUGUI visible_amount_1;
     public TextMeshProUGUI player_name_2;
     public TextMeshProUGUI player_amount_2;
+    public TextMeshProUGUI visible_amount_2;
     public TextMeshProUGUI player_name_3;
     public TextMeshProUGUI player_amount_3;
+    public TextMeshProUGUI visible_amount_3;
     public TextMeshProUGUI player_name_4;
     public TextMeshProUGUI player_amount_4;
+    public TextMeshProUGUI visible_amount_4;
     public Slider player_time_1;
     public Slider player_time_2;
     public Slider player_time_3;
@@ -67,7 +72,10 @@ public class Game_Basic_Code : MonoBehaviour
     public Slider raise_slider;
     public TextMeshProUGUI Call_text;
     int call_amount_referance;
-
+    int bet_add_amt = 0;
+    public TextMeshProUGUI bet_add_amount;
+    int bet_ttl_amt=0;
+    public TextMeshProUGUI bet_total_amount;
     public void Start()
     {
        Player_turn = 1;
@@ -226,6 +234,9 @@ public class Game_Basic_Code : MonoBehaviour
             player_name_2.text = player_name_backend_2;
             player_amount_2.text = amount_backend_2.ToString();
             Time2 -= Time.deltaTime * 1;
+            visible_amount_2.text = Raise_amount_2.ToString();
+            bet_add_amt += Raise_amount_2;
+            bet_add_amount.text = bet_add_amt.ToString();
 
         }
         if (Player_turn==3 && Time3 > 0)
@@ -239,7 +250,9 @@ public class Game_Basic_Code : MonoBehaviour
             player_name_3.text = player_name_backend_3;
             player_amount_3.text = amount_backend_3.ToString();
             Time3 -= Time.deltaTime * 1;
-
+            visible_amount_3.text = Raise_amount_3.ToString();
+            bet_add_amt += Raise_amount_3;
+            bet_add_amount.text = bet_add_amt.ToString();
         }
         if (Player_turn==4 && Time4 > 0)
         {
@@ -252,6 +265,9 @@ public class Game_Basic_Code : MonoBehaviour
             player_name_4.text = player_name_backend_4;
             player_amount_4.text = amount_backend_4.ToString();
             Time4 -= Time.deltaTime * 1;
+            visible_amount_4.text = Raise_amount_4.ToString();
+            bet_add_amt += Raise_amount_4;
+            bet_add_amount.text = bet_add_amt.ToString();
 
         }
 
@@ -275,7 +291,10 @@ public class Game_Basic_Code : MonoBehaviour
         player_details.player_setected = player_details.setected.Raise;
 
         amount_backend_1 -= Raise_amount_1;
-        Raise_amount_1 = 0;
+        // Raise_amount_1 = 0;
+        visible_amount_1.text = Raise_amount_1.ToString();
+        bet_add_amt+=Raise_amount_1;
+        bet_add_amount.text=bet_add_amt.ToString();
 
     }
     public void raise_back_button()
