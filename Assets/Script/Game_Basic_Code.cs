@@ -74,7 +74,11 @@ public class Game_Basic_Code : MonoBehaviour
     int call_amount_referance;
     int bet_add_amt = 0;
     public TextMeshProUGUI bet_add_amount;
-    int bet_ttl_amt=0;
+    int bet_raise_amt_1;
+    int bet_raise_amt_2;
+    int bet_raise_amt_3;
+    int bet_raise_amt_4;
+    int bet_total_amt;
     public TextMeshProUGUI bet_total_amount;
     public void Start()
     {
@@ -222,6 +226,7 @@ public class Game_Basic_Code : MonoBehaviour
             player_name_1.text = player_name_backend_1;
             player_amount_1.text = amount_backend_1.ToString();
             Time1 -= Time.deltaTime * 1;
+           
         }
         if(Player_turn==2 && Time2 > 0)
         {
@@ -234,9 +239,12 @@ public class Game_Basic_Code : MonoBehaviour
             player_name_2.text = player_name_backend_2;
             player_amount_2.text = amount_backend_2.ToString();
             Time2 -= Time.deltaTime * 1;
-            visible_amount_2.text = Raise_amount_2.ToString();
-            bet_add_amt += Raise_amount_2;
+            //t
+            bet_raise_amt_2=Raise_amount_2;
+            visible_amount_2.text = bet_raise_amt_2.ToString();
+            bet_add_amt = bet_raise_amt_2 + bet_raise_amt_1;
             bet_add_amount.text = bet_add_amt.ToString();
+            //t
 
         }
         if (Player_turn==3 && Time3 > 0)
@@ -250,9 +258,12 @@ public class Game_Basic_Code : MonoBehaviour
             player_name_3.text = player_name_backend_3;
             player_amount_3.text = amount_backend_3.ToString();
             Time3 -= Time.deltaTime * 1;
-            visible_amount_3.text = Raise_amount_3.ToString();
-            bet_add_amt += Raise_amount_3;
+            //t
+            bet_raise_amt_3 = Raise_amount_3;
+            visible_amount_3.text = bet_raise_amt_3.ToString();
+            bet_add_amt = bet_raise_amt_3 +bet_raise_amt_2+ bet_raise_amt_1;
             bet_add_amount.text = bet_add_amt.ToString();
+            //t
         }
         if (Player_turn==4 && Time4 > 0)
         {
@@ -265,11 +276,18 @@ public class Game_Basic_Code : MonoBehaviour
             player_name_4.text = player_name_backend_4;
             player_amount_4.text = amount_backend_4.ToString();
             Time4 -= Time.deltaTime * 1;
-            visible_amount_4.text = Raise_amount_4.ToString();
-            bet_add_amt += Raise_amount_4;
+            //t
+            bet_raise_amt_4= Raise_amount_4;
+            visible_amount_4.text = bet_raise_amt_4.ToString();
+            bet_add_amt = bet_raise_amt_4+bet_raise_amt_3+bet_raise_amt_2+bet_raise_amt_1;
             bet_add_amount.text = bet_add_amt.ToString();
-
+           bet_total_amt =bet_add_amt;
+            bet_total_amount.text = bet_total_amt.ToString();
+            bet_add_amt = 0;
+            bet_raise_amt_1 = 0;
+            //t
         }
+        
 
     }
     //UI button function
@@ -289,13 +307,14 @@ public class Game_Basic_Code : MonoBehaviour
         raise_panel.SetActive(false);
         Player_turn = 2;
         player_details.player_setected = player_details.setected.Raise;
-
         amount_backend_1 -= Raise_amount_1;
-        // Raise_amount_1 = 0;
-        visible_amount_1.text = Raise_amount_1.ToString();
-        bet_add_amt+=Raise_amount_1;
-        bet_add_amount.text=bet_add_amt.ToString();
-
+        //t
+        bet_raise_amt_1 = Raise_amount_1;
+        visible_amount_1.text = bet_raise_amt_1.ToString();
+        bet_add_amt = bet_raise_amt_1;
+        bet_add_amount.text = bet_add_amt.ToString();
+        //t
+         Raise_amount_1 = 0;
     }
     public void raise_back_button()
     {
