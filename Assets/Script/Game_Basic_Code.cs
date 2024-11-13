@@ -183,21 +183,33 @@ public class Game_Basic_Code : MonoBehaviour
         if(Time1<0&&Time2==10)
         {
             Player_turn = 2;
-            Time4 = 10;
         }
         if(Time2<0 && Time3 == 10)
         {
             Player_turn = 3;
-            Time1 = 10;
         }
         if(Time3<0 && Time4 == 10)
         {
             Player_turn = 4;
-            Time2 = 10;
         }
         if(Time4<0 && Time1 == 10)
         {
             Player_turn = 1;
+        }
+        if(Player_turn==1)
+        {
+            Time4 = 10;
+        }
+        if (Player_turn==2)
+        {
+            Time1 = 10;
+        }
+        if (Player_turn==3)
+        {
+            Time2 = 10;
+        }
+        if (Player_turn==4)
+        {
             Time3 = 10;
         }
     }
