@@ -281,9 +281,82 @@ public class CheckButton : MonoBehaviour
                 if(finalCheckFiveCard[i].tag== finalCheckFiveCard[j].tag)
                 {
                     pairCounts++;
+<<<<<<< Updated upstream
                     Debug.Log(pairCounts);
                 }
                    
+=======
+                    duplicatePair.Add(finalCheckFiveCard[i]);
+                   
+                    if (pairCounts == 2)
+                    {
+                        Debug.Log("PAIR.....");
+                        Debug.Log(pairCounts);
+                       
+                    }
+                }
+              
+            }
+        }
+      
+    }
+    void TwoPair()
+    {
+        for (int i = 0; i < finalCheckFiveCard.Count; i++)
+        {
+            for (int j = i + 1; j < finalCheckFiveCard.Count; j++)
+            {
+
+
+                if (finalCheckFiveCard[i].tag == finalCheckFiveCard[j].tag)
+                {
+                    pairCounts++;
+                    duplicatePair.Add(finalCheckFiveCard[i]);
+                    Debug.Log(pairCounts);
+                   if(pairCounts == 4)
+                    {
+                        Debug.Log("Two Pair..");
+                    }
+                }
+
+            }
+        }
+     
+        
+    }
+    void Straight()
+    {
+
+       
+        int y = 0;
+       for(int i = 0;i< finalCheckFiveCard.Count; i++)
+        {
+            values[y] = finalCheckFiveCard[i].GetComponent<CardsAttached>().properties.value;
+            y++;
+
+        }
+      
+      values.Sort();
+      int check1 = values[0] - values[1];
+        int check2=values[1] - values[2];
+        int check3=values[2] - values[3];
+      int check4=values[3] - values[4];
+
+        if(check1==-1)
+        {
+            Debug.Log("1stFAce....");
+            if(check2==-1)
+            {
+                Debug.Log("2ndFAce");
+                if (check3==-1)
+                {
+                    Debug.Log("3ndFAce");
+                    if (check4 == -1)
+                    {
+                        Debug.Log("Straight.....");
+                    }
+                }
+>>>>>>> Stashed changes
             }
         }
     }

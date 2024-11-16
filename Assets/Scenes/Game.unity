@@ -19667,6 +19667,7 @@ MonoBehaviour:
   - {fileID: 6290163690470343772, guid: 276a581c69768684e8a0fef01f93077a, type: 3}
   - {fileID: 4699265818613305834, guid: 9b1450ad91edbd64199dee0d33d9c9a2, type: 3}
   finalCheckFiveCard:
+<<<<<<< Updated upstream
   - {fileID: 4699265818613305834, guid: 9b1450ad91edbd64199dee0d33d9c9a2, type: 3}
   - {fileID: 1055205628213336658, guid: b2092b6f8a97f5b4999b5db5971ca85d, type: 3}
   - {fileID: 3935840920983308708, guid: 6355a5e4b343a0f4f88854099a35e7da, type: 3}
@@ -19691,6 +19692,15 @@ MonoBehaviour:
   diamonds: []
   hearts: []
   spades: []
+=======
+  - {fileID: 4540716723963630166, guid: 57256a7cbdb3c774b9006851668ee00e, type: 3}
+  - {fileID: 1653710210522951720, guid: 08f58ba0c4d2ac6419f8823b8b5e8a57, type: 3}
+  - {fileID: 2138710574712454216, guid: 9033c6f482787f747b2851058e53fc63, type: 3}
+  - {fileID: 4708101263259781344, guid: 67314e66312dc0243a79b10718432158, type: 3}
+  - {fileID: 3630086298591436864, guid: 39fd4ab2b24ed18458e81b47268eb34b, type: 3}
+  - {fileID: 772899765690588875, guid: f194ba1580acdde41ab917e606d349de, type: 3}
+  - {fileID: 7607186099051439637, guid: 4b835d4a3bb85e04ca1a608c7117d1b1, type: 3}
+>>>>>>> Stashed changes
   clubsRoyalFlush: []
   changeCards: 0
   count: 0
