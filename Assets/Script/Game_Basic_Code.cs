@@ -67,12 +67,20 @@ public class Game_Basic_Code : MonoBehaviour
     public Slider raise_slider;
     public TextMeshProUGUI Call_text;
     int call_amount_referance;
+    [Header("Dealer")]
+    public List<int> dealerSelection =new List<int>() { 1,2,3,4};
+     [SerializeField]private int dealer;
 
+    private void Awake()
+    {
+        dealer = Random.Range(1, 5);
+    }
     public void Start()
     {
        Player_turn = 1;
        player_details.player_setected = player_details.setected.none;
 
+        DealerSelect();
 
     }
     public void Update()
@@ -347,7 +355,26 @@ public class Game_Basic_Code : MonoBehaviour
 
     }
     //Card Spawn Random(Vishnu)
+    public void DealerSelect()
+    {
 
+        Debug.Log(" Dealer :" + dealer);
+        switch(dealer)
+        {
+            case 1:Debug.Log(" Small Blind :" + 2+" Big Blind: "+3);
+                break;
+            case 2:
+                Debug.Log(" Small Blind :" + 3 + " Big Blind: " + 4);
+                break;
+            case 3:
+                Debug.Log(" Small Blind :" + 4 + " Big Blind: " + 1);
+                break;
+            case 4:
+                Debug.Log(" Small Blind :" + 1 + " Big Blind: " + 2);
+                break;
+
+        }
+    }
 
 }
 [System.Serializable]
@@ -376,6 +403,7 @@ public class player_details
         Dealer, Small_Blind, Big_Blind, 
         
     }
+  
    
 }
 
