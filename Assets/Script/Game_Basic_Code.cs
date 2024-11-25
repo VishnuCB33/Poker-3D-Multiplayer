@@ -13,7 +13,8 @@ public class Game_Basic_Code : MonoBehaviour
     public float Time1=10f;
     public int Raise_amount_1;
     public int Raise_change_1=10;
- 
+    [SerializeField] private List<GameObject> playerOneCards;
+    [SerializeField] private List<int> player1GetNumCard;
 
     [Header("player two")]
     public int player_num_backend_2;
@@ -21,7 +22,8 @@ public class Game_Basic_Code : MonoBehaviour
     public int amount_backend_2;
     public float Time2=10f;
     public int Raise_amount_2;
-   
+    [SerializeField] private List<GameObject> playerTwoCards;
+    [SerializeField] private List<int> player2GetNumCard;
 
     [Header("player three")]
     public int player_num_backend_3;
@@ -29,7 +31,8 @@ public class Game_Basic_Code : MonoBehaviour
     public int amount_backend_3;
     public float Time3=10f;
     public int Raise_amount_3;
- 
+    [SerializeField] private List<GameObject> playerThreeCards;
+    [SerializeField] private List<int> player3GetNumCard;
 
     [Header("player four")]
     public int player_num_backend_4;
@@ -37,7 +40,8 @@ public class Game_Basic_Code : MonoBehaviour
     public int amount_backend_4;
     public float Time4=10f;
     public int Raise_amount_4;
-  
+    [SerializeField] private List<GameObject> playerFourCards;
+    [SerializeField] private List<int> player4GetNumCard;
 
 
     public List<GameObject> Cards = new List<GameObject>();
@@ -70,7 +74,10 @@ public class Game_Basic_Code : MonoBehaviour
     [Header("Dealer")]
     public List<int> dealerSelection =new List<int>() { 1,2,3,4};
      [SerializeField]private int dealer;
-
+    [Header("CardAllocation")]
+    public List<int> randomCards=new List<int>(8);
+    public List<GameObject>randomCardsGameObject=new List<GameObject>();
+    public List<Transform> cardPos;
     private void Awake()
     {
         dealer = Random.Range(1, 5);
@@ -81,10 +88,12 @@ public class Game_Basic_Code : MonoBehaviour
        player_details.player_setected = player_details.setected.none;
 
         DealerSelect();
+        AllCardsAllocationFirst();
 
     }
     public void Update()
     {
+       
         player_Details_funtion();
         time_turn_funtion();
         clock();
@@ -92,7 +101,7 @@ public class Game_Basic_Code : MonoBehaviour
         display_player_details_alltime_funtion();
         call_funtion();
         fold_funtion();
-      
+       
     }
     public void fold_funtion()
     {
@@ -375,7 +384,57 @@ public class Game_Basic_Code : MonoBehaviour
 
         }
     }
+    public void RandomCards()
+    {
+       
 
+        while (randomCards.Count < 8)
+        {
+            int store = Random.Range(0, 52);
+            
+           
+            if (!randomCards.Contains(store))
+            {
+                randomCards.Add(store);
+                randomCardsGameObject.Add(Cards[store]);
+              
+
+            }
+        }
+
+    }
+    //vishnu CB
+   public void AllCardsAllocationFirst()
+    {
+        RandomCards();
+        player1GetNumCard[0] = randomCards[0];
+        player1GetNumCard[1] = randomCards[1];
+        player2GetNumCard[0] = randomCards[2];
+        player2GetNumCard[1] = randomCards[3];
+        player3GetNumCard[0] = randomCards[4];
+        player3GetNumCard[1] = randomCards[5];
+        player4GetNumCard[0] = randomCards[6];
+        player4GetNumCard[1] = randomCards[7];
+        playerOneCards[0] = randomCardsGameObject[0];
+      GameObject one=  Instantiate(playerOneCards[0], cardPos[0].position, cardPos[0].transform.rotation);
+        //one.transform.rotation = new Quaternion(0, 180, 0, 0);
+        playerOneCards[1] = randomCardsGameObject[1];
+        GameObject two= Instantiate(playerOneCards[1], cardPos[1].position, cardPos[1].transform.rotation);
+       // two.transform.rotation = new Quaternion(0, 180, 0, 0);
+        playerTwoCards[0] = randomCardsGameObject[2];
+        Instantiate(playerTwoCards[0], cardPos[2].position, cardPos[2].transform.rotation);
+        playerTwoCards[1] = randomCardsGameObject[3];
+        Instantiate(playerTwoCards[1], cardPos[3].position, cardPos[3].transform.rotation);
+        playerThreeCards[0] = randomCardsGameObject[4];
+        Instantiate(playerThreeCards[0], cardPos[4].position, cardPos[4].transform.rotation);
+        playerThreeCards[1] = randomCardsGameObject[5];
+        Instantiate(playerThreeCards[1], cardPos[5].position, cardPos[5].transform.rotation);
+        playerFourCards[0] = randomCardsGameObject[6];
+        Instantiate(playerFourCards[0], cardPos[6].position, cardPos[6].transform.rotation);
+        playerFourCards[1] = randomCardsGameObject[7];
+        Instantiate(playerFourCards[1], cardPos[7].position, cardPos[7].transform.rotation);
+
+    } 
 }
 [System.Serializable]
 public enum players
