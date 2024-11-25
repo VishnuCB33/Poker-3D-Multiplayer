@@ -14,6 +14,15 @@ public class Game_Basic_Code : MonoBehaviour
     public float Time1=10f;
     public int Raise_amount_1;
     public int Raise_change_1=10;
+    public P1_setected P1__setected = new P1_setected();
+
+    public enum P1_setected
+    {
+        none, Fold, Check, Raise, call
+
+    }
+
+
     [SerializeField] private List<GameObject> playerOneCards;
     [SerializeField] private List<int> player1GetNumCard;
 
@@ -23,6 +32,13 @@ public class Game_Basic_Code : MonoBehaviour
     public int amount_backend_2;
     public float Time2=10f;
     public int Raise_amount_2;
+    public P2_setected P2__setected = new P2_setected();
+
+    public enum P2_setected
+    {
+        none, Fold, Check, Raise, call
+
+    }
     [SerializeField] private List<GameObject> playerTwoCards;
     [SerializeField] private List<int> player2GetNumCard;
 
@@ -32,6 +48,13 @@ public class Game_Basic_Code : MonoBehaviour
     public int amount_backend_3;
     public float Time3=10f;
     public int Raise_amount_3;
+    public P3_setected P3__setected = new P3_setected();
+
+    public enum P3_setected
+    {
+        none, Fold, Check, Raise, call
+
+    }
     [SerializeField] private List<GameObject> playerThreeCards;
     [SerializeField] private List<int> player3GetNumCard;
 
@@ -41,6 +64,13 @@ public class Game_Basic_Code : MonoBehaviour
     public int amount_backend_4;
     public float Time4=10f;
     public int Raise_amount_4;
+    public P4_setected P4__setected = new P4_setected();
+
+    public enum P4_setected
+    {
+        none, Fold, Check, Raise, call
+
+    }
     [SerializeField] private List<GameObject> playerFourCards;
     [SerializeField] private List<int> player4GetNumCard;
 
@@ -102,8 +132,97 @@ public class Game_Basic_Code : MonoBehaviour
         display_player_details_alltime_funtion();
         call_funtion();
         fold_funtion();
-       
+        EqualingEnum_funtion();
+        Round_selection_funtion();
+
     }
+    int round_refarance = 0;// need to reset to 0 after this round
+    public void Round_selection_funtion()
+    {
+        if (((P1__setected == P1_setected.Check || P1__setected == P1_setected.Fold) && (P2__setected == P2_setected.Check || P2__setected == P2_setected.Fold) && (P3__setected == P3_setected.Check || P3__setected == P3_setected.Fold) && (P4__setected == P4_setected.Check || P4__setected == P4_setected.Fold)) && round_refarance == 0)
+        {
+            round_1_funtion();
+        }
+        if (((P1__setected == P1_setected.Check || P1__setected == P1_setected.Fold) && (P2__setected == P2_setected.Check || P2__setected == P2_setected.Fold) && (P3__setected == P3_setected.Check || P3__setected == P3_setected.Fold) && (P4__setected == P4_setected.Check || P4__setected == P4_setected.Fold)) && round_refarance == 2)
+        {
+            round_2_funtion();
+        }
+        if (((P1__setected == P1_setected.Check || P1__setected == P1_setected.Fold) && (P2__setected == P2_setected.Check || P2__setected == P2_setected.Fold) && (P3__setected == P3_setected.Check || P3__setected == P3_setected.Fold) && (P4__setected == P4_setected.Check || P4__setected == P4_setected.Fold)) && round_refarance == 3)
+        {
+            round_3_funtion();
+        }
+        if (((P1__setected == P1_setected.Check || P1__setected == P1_setected.Fold) && (P2__setected == P2_setected.Check || P2__setected == P2_setected.Fold) && (P3__setected == P3_setected.Check || P3__setected == P3_setected.Fold) && (P4__setected == P4_setected.Check || P4__setected == P4_setected.Fold)) && round_refarance == 4)
+        {
+            round_4_funtion();
+        }
+    }
+    public void round_1_funtion()
+    {
+        if (P1__setected != P1_setected.Fold) { P1__setected = P1_setected.none; }
+        if (P2__setected != P2_setected.Fold) { P2__setected = P2_setected.none; }
+        if (P3__setected != P3_setected.Fold) { P3__setected = P3_setected.none; }
+        if (P4__setected != P4_setected.Fold) { P4__setected = P4_setected.none; }
+
+
+        round_refarance = 2;
+
+        Debug.Log("R1");
+    }
+    public void round_2_funtion()
+    {
+        Debug.Log("R2");
+        if (P1__setected != P1_setected.Fold) { P1__setected = P1_setected.none; }
+        if (P2__setected != P2_setected.Fold) { P2__setected = P2_setected.none; }
+        if (P3__setected != P3_setected.Fold) { P3__setected = P3_setected.none; }
+        if (P4__setected != P4_setected.Fold) { P4__setected = P4_setected.none; }
+        round_refarance = 3;
+
+    }
+    public void round_3_funtion()
+    {
+        Debug.Log("R3");
+        if (P1__setected != P1_setected.Fold) { P1__setected = P1_setected.none; }
+        if (P2__setected != P2_setected.Fold) { P2__setected = P2_setected.none; }
+        if (P3__setected != P3_setected.Fold) { P3__setected = P3_setected.none; }
+        if (P4__setected != P4_setected.Fold) { P4__setected = P4_setected.none; }
+        round_refarance = 4;
+
+    }
+    public void round_4_funtion()
+    {
+        Debug.Log("R4");
+        if (P1__setected != P1_setected.Fold) { P1__setected = P1_setected.none; }
+        if (P2__setected != P2_setected.Fold) { P2__setected = P2_setected.none; }
+        if (P3__setected != P3_setected.Fold) { P3__setected = P3_setected.none; }
+        if (P4__setected != P4_setected.Fold) { P4__setected = P4_setected.none; }
+        round_refarance = 5;
+
+    }
+    public void EqualingEnum_funtion()
+    {
+        if (Player_turn == 1)
+        {
+            player_details.player_setected = (setected)P1__setected;
+
+        }
+        if (Player_turn == 2)
+        {
+            player_details.player_setected = (setected)P2__setected;
+
+        }
+        if (Player_turn == 3)
+        {
+            player_details.player_setected = (setected)P3__setected;
+
+        }
+        if (Player_turn == 4)
+        {
+            player_details.player_setected = (setected)P4__setected;
+
+        }
+
+    }
+
     public void fold_funtion()
     {
         if(player_details.player_setected==player_details.setected.Fold&&Player_turn==1)
