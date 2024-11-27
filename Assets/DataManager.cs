@@ -1,19 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using PlayFab;
 using PlayFab.ClientModels;
 using Newtonsoft.Json;
+using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
-public class DataManager : MonoBehaviour
+using UnityEngine.SceneManagement;
+public class PlayfabManager : MonoBehaviour
 {
-   
-    public TextMeshProUGUI messageText;
+    [Header("UI")]
+    public TMP_Text messageText;
     public TMP_InputField emailInput;
     public TMP_InputField passwordInput;
 
+    void Start()
+    {
+        // Initialize or load any required components
+    }
+
+    #region Register/Login/Reset Password
     public void RegisterButton()
     {
         if (passwordInput.text.Length < 6)
@@ -35,10 +39,17 @@ public class DataManager : MonoBehaviour
     void OnRegisterSuccess(RegisterPlayFabUserResult result)
     {
         messageText.text = "Registered and logged in!";
+
+        Debug.Log("Registration successful.");
     }
 
     public void LoginButton()
     {
+        if (passwordInput.text.Length < 6)
+        {
+            messageText.text = "Password too short!";
+            return;
+        }
         var request = new LoginWithEmailAddressRequest
         {
             Email = emailInput.text,
@@ -50,7 +61,10 @@ public class DataManager : MonoBehaviour
 
     void OnLoginSuccess(LoginResult result)
     {
-        messageText.text = "Logged in successfully!";
+        messageText.text = "Logged in!";
+        SceneManager.LoadScene(1);
+        Debug.Log("Successful login!");
+        GetCharacters(); // Example call to fetch character data after login
     }
 
     public void ResetPasswordButton()
@@ -58,7 +72,7 @@ public class DataManager : MonoBehaviour
         var request = new SendAccountRecoveryEmailRequest
         {
             Email = emailInput.text,
-            TitleId = PlayFabSettings.TitleId // Ensure this is set in PlayFab settings
+            TitleId = "4F828"
         };
 
         PlayFabClientAPI.SendAccountRecoveryEmail(request, OnPasswordReset, OnError);
@@ -66,11 +80,12 @@ public class DataManager : MonoBehaviour
 
     void OnPasswordReset(SendAccountRecoveryEmailResult result)
     {
-        messageText.text = "Password reset email sent!";
+        messageText.text = "Password reset mail sent!";
+        Debug.Log("Password reset email sent.");
     }
+    #endregion
 
-    // Additional Methods
-
+    #region Player Data
     public void GetAppearance()
     {
         PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnDataReceived, OnError);
@@ -80,12 +95,12 @@ public class DataManager : MonoBehaviour
     {
         if (result.Data != null && result.Data.ContainsKey("Appearance"))
         {
-            string appearanceJson = result.Data["Appearance"].Value;
-            Debug.Log("Appearance data received: " + appearanceJson);
+            string appearance = result.Data["Appearance"].Value;
+            Debug.Log($"Appearance data: {appearance}");
         }
         else
         {
-            Debug.Log("No Appearance data found.");
+            Debug.Log("No appearance data found.");
         }
     }
 
@@ -93,7 +108,10 @@ public class DataManager : MonoBehaviour
     {
         var request = new UpdateUserDataRequest
         {
-            Data = new Dictionary<string, string> { { "Appearance", appearanceData } }
+            Data = new System.Collections.Generic.Dictionary<string, string>
+            {
+                { "Appearance", appearanceData }
+            }
         };
 
         PlayFabClientAPI.UpdateUserData(request, OnDataSent, OnError);
@@ -101,9 +119,11 @@ public class DataManager : MonoBehaviour
 
     void OnDataSent(UpdateUserDataResult result)
     {
-        Debug.Log("Appearance data saved successfully!");
+        Debug.Log("Appearance data saved successfully.");
     }
+    #endregion
 
+    #region Title Data
     public void GetTitleData()
     {
         PlayFabClientAPI.GetTitleData(new GetTitleDataRequest(), OnTitleDataReceived, OnError);
@@ -111,22 +131,27 @@ public class DataManager : MonoBehaviour
 
     void OnTitleDataReceived(GetTitleDataResult result)
     {
-        if (result.Data != null && result.Data.ContainsKey("GameTitle"))
+        if (result.Data != null && result.Data.ContainsKey("Key"))
         {
-            string gameTitle = result.Data["GameTitle"];
-            Debug.Log("Game title received: " + gameTitle);
+            string titleData = result.Data["Key"];
+            Debug.Log($"Title data: {titleData}");
         }
         else
         {
             Debug.Log("No title data found.");
         }
     }
+    #endregion
 
+    #region Characters Handling
     public void SaveCharacters(string characterData)
     {
         var request = new UpdateUserDataRequest
         {
-            Data = new Dictionary<string, string> { { "Characters", characterData } }
+            Data = new System.Collections.Generic.Dictionary<string, string>
+            {
+                { "Characters", characterData }
+            }
         };
 
         PlayFabClientAPI.UpdateUserData(request, OnDataSent, OnError);
@@ -141,18 +166,22 @@ public class DataManager : MonoBehaviour
     {
         if (result.Data != null && result.Data.ContainsKey("Characters"))
         {
-            string characterJson = result.Data["Characters"].Value;
-            Debug.Log("Character data received: " + characterJson);
+            string characterData = result.Data["Characters"].Value;
+            Debug.Log($"Character data: {characterData}");
         }
         else
         {
             Debug.Log("No character data found.");
         }
     }
+    #endregion
 
+    #region Error Handling
     void OnError(PlayFabError error)
     {
         messageText.text = error.ErrorMessage;
         Debug.LogError(error.GenerateErrorReport());
+        
     }
+    #endregion
 }
