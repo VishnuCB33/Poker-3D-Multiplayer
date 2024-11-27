@@ -5,13 +5,14 @@ using PlayFab;
 using PlayFab.ClientModels;
 using Newtonsoft.Json;
 using UnityEngine.UI;
+using TMPro;
 
 public class DataManager : MonoBehaviour
 {
-    [Header("UI")]
-    public Text messageText;
-    public InputField emailInput;
-    public InputField passwordInput;
+   
+    public TextMeshProUGUI messageText;
+    public TMP_InputField emailInput;
+    public TMP_InputField passwordInput;
 
     public void RegisterButton()
     {
