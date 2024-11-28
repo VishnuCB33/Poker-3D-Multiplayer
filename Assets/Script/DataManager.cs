@@ -1,33 +1,26 @@
 using PlayFab;
 using PlayFab.ClientModels;
-using Newtonsoft.Json;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class PlayfabManager : MonoBehaviour
 {
     public static PlayfabManager instance;
-    [Header("UI")]
-    public TMP_Text messageText;
-    public string playername;
-    public TMP_InputField emailInput;
-    public TMP_InputField passwordInput;
-    public bool nameWindow;
-    public TextMeshProUGUI nameInputText;
 
-    public static string PlayerDisplayName; // chat gpt: Added static variable to store Display Name globally
+    [Header("UI")]
+    public TMP_Text messageText; // Message for user feedback
+    public string playername; // Current player's name
+    public TMP_InputField emailInput; // Input field for email
+    public TMP_InputField passwordInput; // Input field for password
+    public TMP_InputField nameInputText; // Input field for display name
+
+    public static string PlayerDisplayName; // Global variable for display name
 
     void Start()
     {
         instance = this;
-        // Initialize or load any required components
-        DontDestroyOnLoad(gameObject); // chat gpt: Ensures this object persists across scenes
-    }
-
-    private void Update()
-    {
+        DontDestroyOnLoad(gameObject); // Keep this object across scenes
     }
 
     #region Register/Login/Reset Password
@@ -53,8 +46,9 @@ public class PlayfabManager : MonoBehaviour
     {
         messageText.text = "Registered and logged in!";
         Debug.Log("Registration successful!");
-        SceneManager.LoadScene(1);
-        // chat gpt: Retrieve Display Name after registration
+        SceneManager.LoadScene(1); // Load next scene
+
+        // Retrieve Display Name after registration
         var request = new GetAccountInfoRequest();
         PlayFabClientAPI.GetAccountInfo(request, OnAccountInfoReceived, OnError);
     }
@@ -65,18 +59,16 @@ public class PlayfabManager : MonoBehaviour
 
         if (string.IsNullOrEmpty(name))
         {
-            nameWindow = true; // chat gpt: Prompt user to enter Display Name
+            messageText.text = "Set a display name.";
         }
         else
         {
-            PlayerDisplayName = name; // chat gpt: Store Display Name globally
-            playername = PlayerDisplayName.ToString(); // chat gpt: Update UI
-            nameWindow=false;
+            PlayerDisplayName = name;
+            playername = PlayerDisplayName;
         }
 
         Debug.Log("Account information retrieved successfully.");
     }
-
 
     public void LoginButton()
     {
@@ -85,6 +77,7 @@ public class PlayfabManager : MonoBehaviour
             messageText.text = "Password too short!";
             return;
         }
+
         var request = new LoginWithEmailAddressRequest
         {
             Email = emailInput.text,
@@ -101,25 +94,21 @@ public class PlayfabManager : MonoBehaviour
     void OnLoginSuccess(LoginResult result)
     {
         messageText.text = "Logged in!";
-        SceneManager.LoadScene(1); // Optional: Add scene change logic here
+        SceneManager.LoadScene(1); // Load next scene
 
-        string name = null;
-        if (result.InfoResultPayload.PlayerProfile != null)
-            name = result.InfoResultPayload.PlayerProfile.DisplayName;
+        string name = result.InfoResultPayload.PlayerProfile?.DisplayName;
 
-        if (name == null)
+        if (string.IsNullOrEmpty(name))
         {
-            nameWindow=true;
+            messageText.text = "Set a display name.";
         }
         else
         {
-            PlayerDisplayName = name; // chat gpt: Store Display Name globally
-            playername = PlayerDisplayName; // chat gpt: Update UI
-            nameWindow=false;
+            PlayerDisplayName = name;
+            playername = PlayerDisplayName;
         }
 
         Debug.Log("Successful login!");
-        GetCharacters(); // Example call to fetch character data after login
     }
 
     public void ResetPasswordButton()
@@ -127,125 +116,42 @@ public class PlayfabManager : MonoBehaviour
         var request = new SendAccountRecoveryEmailRequest
         {
             Email = emailInput.text,
-            TitleId = "4F828"
+            TitleId = PlayFabSettings.TitleId
         };
 
         PlayFabClientAPI.SendAccountRecoveryEmail(request, OnPasswordReset, OnError);
     }
 
-    public void submintnameButton()
-    {
-        var request = new UpdateUserTitleDisplayNameRequest
-        {
-            DisplayName = nameInputText.text,
-        };
-        nameWindow = false;
-
-        PlayFabClientAPI.UpdateUserTitleDisplayName(request, OnDisplaynameUpdate, OnError);
-    }
-
-    void OnDisplaynameUpdate(UpdateUserTitleDisplayNameResult result) // chat gpt: Fixed parameter type
-    {
-        Debug.Log("Updated display name!");
-        PlayerDisplayName = result.DisplayName; // chat gpt: Store Display Name globally
-        playername= PlayerDisplayName; // chat gpt: Update UI
-    }
-
     void OnPasswordReset(SendAccountRecoveryEmailResult result)
     {
-        messageText.text = "Password reset mail sent!";
+        messageText.text = "Password reset email sent!";
         Debug.Log("Password reset email sent.");
     }
     #endregion
 
-    #region Player Data
-    public void GetAppearance()
+    #region Display Name
+    public void submintnameButton()
     {
-        PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnDataReceived, OnError);
-    }
-
-    void OnDataReceived(GetUserDataResult result)
-    {
-        if (result.Data != null && result.Data.ContainsKey("Appearance"))
+        if (string.IsNullOrEmpty(playername))
         {
-            string appearance = result.Data["Appearance"].Value;
-            Debug.Log($"Appearance data: {appearance}");
+            Debug.LogError("Display name is empty. Please enter a valid name.");
+            return;
         }
-        else
-        {
-            Debug.Log("No appearance data found.");
-        }
-    }
 
-    public void SaveAppearance(string appearanceData)
-    {
-        var request = new UpdateUserDataRequest
+        var request = new UpdateUserTitleDisplayNameRequest
         {
-            Data = new System.Collections.Generic.Dictionary<string, string>
-            {
-                { "Appearance", appearanceData }
-            }
+            DisplayName = playername
         };
 
-        PlayFabClientAPI.UpdateUserData(request, OnDataSent, OnError);
+        PlayFabClientAPI.UpdateUserTitleDisplayName(request, OnDisplayNameUpdate, OnError);
     }
 
-    void OnDataSent(UpdateUserDataResult result)
+    void OnDisplayNameUpdate(UpdateUserTitleDisplayNameResult result)
     {
-        Debug.Log("Appearance data saved successfully.");
-    }
-    #endregion
-
-    #region Title Data
-    public void GetTitleData()
-    {
-        PlayFabClientAPI.GetTitleData(new GetTitleDataRequest(), OnTitleDataReceived, OnError);
-    }
-
-    void OnTitleDataReceived(GetTitleDataResult result)
-    {
-        if (result.Data != null && result.Data.ContainsKey("Key"))
-        {
-            string titleData = result.Data["Key"];
-            Debug.Log($"Title data: {titleData}");
-        }
-        else
-        {
-            Debug.Log("No title data found.");
-        }
-    }
-    #endregion
-
-    #region Characters Handling
-    public void SaveCharacters(string characterData)
-    {
-        var request = new UpdateUserDataRequest
-        {
-            Data = new System.Collections.Generic.Dictionary<string, string>
-            {
-                { "Characters", characterData }
-            }
-        };
-
-        PlayFabClientAPI.UpdateUserData(request, OnDataSent, OnError);
-    }
-
-    public void GetCharacters()
-    {
-        PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnCharactersDataReceived, OnError);
-    }
-
-    void OnCharactersDataReceived(GetUserDataResult result)
-    {
-        if (result.Data != null && result.Data.ContainsKey("Characters"))
-        {
-            string characterData = result.Data["Characters"].Value;
-            Debug.Log($"Character data: {characterData}");
-        }
-        else
-        {
-            Debug.Log("No character data found.");
-        }
+        Debug.Log($"Display name updated to: {result.DisplayName}");
+        PlayerDisplayName = result.DisplayName;
+        playername = PlayerDisplayName;
+        messageText.text = "Display name updated successfully!";
     }
     #endregion
 
