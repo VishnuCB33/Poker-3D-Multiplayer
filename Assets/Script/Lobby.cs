@@ -16,8 +16,11 @@ public class Lobby : MonoBehaviour
     [Header("Lobby Active Long Time")]
     private Lobby hostLobby;
     private float heartBeatTimer;
+    private Lobby joinLobby;
     [Header("join")]
     public string playerName;
+    private string Data;
+
     private async void Start()
     {
         //Initialise unity services
@@ -29,7 +32,7 @@ public class Lobby : MonoBehaviour
         };
         //players join without any signIn Option
       await  AuthenticationService.Instance.SignInAnonymouslyAsync();
-        playerName="Vishnu CB" + UnityEngine.Random.Range(10, 99);
+        playerName="Player " + UnityEngine.Random.Range(10, 99);
         Debug.Log(playerName);
     }
 
@@ -62,13 +65,17 @@ public class Lobby : MonoBehaviour
             CreateLobbyOptions createLobbyOption = new CreateLobbyOptions
             {
                 IsPrivate = false,
-                Player = GetPlayer()
+                Player = GetPlayer(),
+                Data= new Dictionary<string, DataObject>
+                {
+                    { "GameMode",new DataObject(DataObject.VisibilityOptions.Public, "CaptureTheFlag") }
+                }
             };
             //parameter loobyname and max no.of players
             Unity.Services.Lobbies.Models.Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers,createLobbyOption);
             Unity.Services.Lobbies.Models.Lobby hostLobby = lobby;
-           
-            Debug.Log("LobbyName  !" + lobby.Name + "  " + lobby.MaxPlayers+" "+lobby.Id+" "+lobby.LobbyCode);
+            joinLobby = hostLobby;
+            Debug.Log("Created Lobbby  !" + lobby.Name + "  " + lobby.MaxPlayers+" "+lobby.Id+" "+lobby.LobbyCode);
             PrintPlayers(hostLobby);
         }
         catch (LobbyServiceException e)
@@ -91,7 +98,8 @@ public class Lobby : MonoBehaviour
                 Count = 25,
                 Filters = new List<QueryFilter>
                 {
-                    new QueryFilter(QueryFilter.FieldOptions.AvailableSlots,"0",QueryFilter.OpOptions.GT)
+                    new QueryFilter(QueryFilter.FieldOptions.AvailableSlots,"0",QueryFilter.OpOptions.GT),
+                   
                 },
                 //new lobby first 
                 Order = new List<QueryOrder>
@@ -105,7 +113,7 @@ public class Lobby : MonoBehaviour
             for (int i = 0; i < list.Count; i++)
             {
                 Lobby lobby = (Lobby)list[i];
-                Debug.Log(lobby.Name + "  " + lobby.MaxPlayers);
+                Debug.Log(lobby.Name + "  " + lobby.MaxPlayers+" "+lobby.Data);
             }
         }catch (LobbyServiceException e)
         {
@@ -122,8 +130,10 @@ public class Lobby : MonoBehaviour
                 Player = GetPlayer()
             };
             
-           await Lobbies.Instance.JoinLobbyByCodeAsync(lobbyCode,joinLobbyByCodeOptions);
+          Lobby lobby = await Lobbies.Instance.JoinLobbyByCodeAsync(lobbyCode,joinLobbyByCodeOptions);
+            joinLobby = lobby;
             Debug.Log("Joined Lobby with Code :" + lobbyCode);
+            PrintPlayers(joinLobby); 
         }
         catch (LobbyServiceException e)
         {
@@ -155,12 +165,40 @@ public class Lobby : MonoBehaviour
             }
         };
     }
+    public void PrintPlayers()
+    {
+        PrintPlayers(joinLobby);  
+    }
     private void PrintPlayers(Lobby lobby)
     {
+        //
         Debug.Log("Players in Lobby :"+lobby.Name);
         foreach(Player players in lobby.Players)
         {
             Debug.Log(players.Id+" " + players.Data["PlayerName"].Value);
         }
+    }
+    //Not Use in this game
+    public async void UpdateLobbyGameMOde(string gameMode)
+    {
+        try
+        {
+          hostLobby=await  Lobbies.Instance.UpdateLobbyAsync(hostLobby.Id, new UpdateLobbyOptions
+            {
+                Data = new Dictionary<string, DataObject>
+                {
+                    { "GameMode", new DataObject(DataObject.VisibilityOptions.Public, gameMode) }
+                }
+            });
+            joinLobby = hostLobby;
+            PrintPlayers(hostLobby);
+        }catch (LobbyServiceException e)
+        {
+            Debug.Log(e);
+        }
+    }
+    public static implicit operator Lobby(Unity.Services.Lobbies.Models.Lobby v)
+    {
+        throw new NotImplementedException();
     }
 }
