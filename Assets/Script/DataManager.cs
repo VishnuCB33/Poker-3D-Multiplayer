@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+
 public class PlayfabManager : MonoBehaviour
 {
     [Header("UI")]
@@ -14,15 +15,19 @@ public class PlayfabManager : MonoBehaviour
     public TMP_InputField passwordInput;
     public GameObject nameWindow;
     public TMP_InputField nameInputText;
+
+    public static string PlayerDisplayName; // chat gpt: Added static variable to store Display Name globally
+
     void Start()
     {
         // Initialize or load any required components
-        DontDestroyOnLoad(gameObject);
-
+        DontDestroyOnLoad(gameObject); // chat gpt: Ensures this object persists across scenes
     }
+
     private void Update()
     {
     }
+
     #region Register/Login/Reset Password
     public void RegisterButton()
     {
@@ -45,9 +50,31 @@ public class PlayfabManager : MonoBehaviour
     void OnRegisterSuccess(RegisterPlayFabUserResult result)
     {
         messageText.text = "Registered and logged in!";
+        Debug.Log("Registration successful!");
 
-        Debug.Log("Registration successful.");
+        // chat gpt: Retrieve Display Name after registration
+        var request = new GetAccountInfoRequest();
+        PlayFabClientAPI.GetAccountInfo(request, OnAccountInfoReceived, OnError);
     }
+
+    void OnAccountInfoReceived(GetAccountInfoResult result)
+    {
+        string name = result.AccountInfo.TitleInfo.DisplayName;
+
+        if (string.IsNullOrEmpty(name))
+        {
+            nameWindow.SetActive(true); // chat gpt: Prompt user to enter Display Name
+        }
+        else
+        {
+            PlayerDisplayName = name; // chat gpt: Store Display Name globally
+            playername.text = PlayerDisplayName; // chat gpt: Update UI
+            nameWindow.SetActive(false);
+        }
+
+        Debug.Log("Account information retrieved successfully.");
+    }
+
 
     public void LoginButton()
     {
@@ -72,20 +99,23 @@ public class PlayfabManager : MonoBehaviour
     void OnLoginSuccess(LoginResult result)
     {
         messageText.text = "Logged in!";
-      //  SceneManager.LoadScene(1);
+        // SceneManager.LoadScene(1); // Optional: Add scene change logic here
+
         string name = null;
         if (result.InfoResultPayload.PlayerProfile != null)
             name = result.InfoResultPayload.PlayerProfile.DisplayName;
+
         if (name == null)
         {
             nameWindow.SetActive(true);
-
         }
         else
         {
+            PlayerDisplayName = name; // chat gpt: Store Display Name globally
+            playername.text = PlayerDisplayName; // chat gpt: Update UI
             nameWindow.SetActive(false);
-
         }
+
         Debug.Log("Successful login!");
         GetCharacters(); // Example call to fetch character data after login
     }
@@ -100,21 +130,23 @@ public class PlayfabManager : MonoBehaviour
 
         PlayFabClientAPI.SendAccountRecoveryEmail(request, OnPasswordReset, OnError);
     }
-    public void submintnameButton()
-{
-    var request = new UpdateUserTitleDisplayNameRequest
-    {
-        DisplayName = nameInputText.text,
-    };
-    // chat gpt: Fixed incorrect OnDisplaynameUpdate parameter
-    PlayFabClientAPI.UpdateUserTitleDisplayName(request, OnDisplaynameUpdate, OnError);
-}
 
-void OnDisplaynameUpdate(UpdateUserTitleDisplayNameResult result) // chat gpt: Fixed parameter type
-{
-    Debug.Log("Updated display name!");
-    playername.text = result.DisplayName; // chat gpt: Changed item to result
-}
+    public void submintnameButton()
+    {
+        var request = new UpdateUserTitleDisplayNameRequest
+        {
+            DisplayName = nameInputText.text,
+        };
+
+        PlayFabClientAPI.UpdateUserTitleDisplayName(request, OnDisplaynameUpdate, OnError);
+    }
+
+    void OnDisplaynameUpdate(UpdateUserTitleDisplayNameResult result) // chat gpt: Fixed parameter type
+    {
+        Debug.Log("Updated display name!");
+        PlayerDisplayName = result.DisplayName; // chat gpt: Store Display Name globally
+        playername.text = PlayerDisplayName; // chat gpt: Update UI
+    }
 
     void OnPasswordReset(SendAccountRecoveryEmailResult result)
     {
@@ -219,7 +251,6 @@ void OnDisplaynameUpdate(UpdateUserTitleDisplayNameResult result) // chat gpt: F
     {
         messageText.text = error.ErrorMessage;
         Debug.LogError(error.GenerateErrorReport());
-        
     }
     #endregion
 }
