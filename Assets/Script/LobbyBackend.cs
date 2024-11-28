@@ -5,23 +5,18 @@ using TMPro;
 
 public class LobbyBackend : MonoBehaviour
 {
-    public TextMeshProUGUI PlayerName;
-    public TMP_InputField PlayerName_input;
-    public GameObject PlayerName_input_panel;
+    public TextMeshProUGUI PlayerName; // Text to display player's name
+    public TMP_InputField PlayerName_input; // Input field for player's name
+    public GameObject PlayerName_input_panel; // Panel to input player's name
 
-    // Update is called once per frame
     void Update()
     {
-        // Display the player's name stored in PlayfabManager
+        // Update the UI display of the player's name if PlayfabManager exists
         if (PlayfabManager.instance != null)
         {
             PlayerName.text = PlayfabManager.instance.playername; // Display the player's name
-        }
 
-        // Show or hide the name input panel based on whether the player has set a name
-        if (PlayfabManager.instance != null)
-        {
-            // If player has not set a name, show the input panel
+            // Show or hide the input panel based on whether the player's name is set
             if (string.IsNullOrEmpty(PlayfabManager.instance.playername))
             {
                 PlayerName_input_panel.SetActive(true); // Show input panel
@@ -33,27 +28,24 @@ public class LobbyBackend : MonoBehaviour
         }
     }
 
-    // Method to submit the player name
+    // Called when the submit button is clicked
     public void SubmitButton()
     {
-        // Check if PlayfabManager.instance is initialized
+        // Ensure PlayfabManager instance exists
         if (PlayfabManager.instance != null)
         {
-            string enteredName = PlayerName_input.text; // Get the entered name from the input field
-            
-            if (!string.IsNullOrEmpty(enteredName)) // Ensure the entered name is not empty
+            string enteredName = PlayerName_input.text; // Get the entered name
+
+            // Ensure the entered name is not empty
+            if (!string.IsNullOrEmpty(enteredName))
             {
-                PlayfabManager.instance.playername = enteredName; // Update the player name in PlayfabManager
-
-                // Call PlayfabManager's method to submit the name to PlayFab
-                PlayfabManager.instance.submintnameButton();
-
-                // Optionally, hide the input panel after submitting the name
-                PlayerName_input_panel.SetActive(false); // Hide input panel after name submission
+                PlayfabManager.instance.playername = enteredName; // Update playername in PlayfabManager
+                PlayfabManager.instance.submintnameButton(); // Save the name to PlayFab
+                PlayerName_input_panel.SetActive(false); // Optionally hide input panel
             }
             else
             {
-                Debug.LogWarning("Entered name is empty. Please enter a name.");
+                Debug.LogWarning("Entered name is empty. Please enter a valid name.");
             }
         }
         else

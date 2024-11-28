@@ -12929,6 +12929,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerName: {fileID: 2603653242965255112}
   PlayerName_input: {fileID: 323726488063470047}
+  PlayerName_input_data: 
   PlayerName_input_panel: {fileID: 323726488063470046}
 --- !u!4 &1510424282
 Transform:
