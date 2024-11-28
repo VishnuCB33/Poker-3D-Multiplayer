@@ -9,14 +9,20 @@ public class PlayfabManager : MonoBehaviour
 {
     [Header("UI")]
     public TMP_Text messageText;
+    public TMP_Text playername;
     public TMP_InputField emailInput;
     public TMP_InputField passwordInput;
-
+    public GameObject nameWindow;
+    public TMP_InputField nameInputText;
     void Start()
     {
         // Initialize or load any required components
-    }
+        DontDestroyOnLoad(gameObject);
 
+    }
+    private void Update()
+    {
+    }
     #region Register/Login/Reset Password
     public void RegisterButton()
     {
@@ -53,7 +59,11 @@ public class PlayfabManager : MonoBehaviour
         var request = new LoginWithEmailAddressRequest
         {
             Email = emailInput.text,
-            Password = passwordInput.text
+            Password = passwordInput.text,
+            InfoRequestParameters = new GetPlayerCombinedInfoRequestParams
+            {
+                GetPlayerProfile = true
+            }
         };
 
         PlayFabClientAPI.LoginWithEmailAddress(request, OnLoginSuccess, OnError);
@@ -62,7 +72,20 @@ public class PlayfabManager : MonoBehaviour
     void OnLoginSuccess(LoginResult result)
     {
         messageText.text = "Logged in!";
-        SceneManager.LoadScene(1);
+      //  SceneManager.LoadScene(1);
+        string name = null;
+        if (result.InfoResultPayload.PlayerProfile != null)
+            name = result.InfoResultPayload.PlayerProfile.DisplayName;
+        if (name == null)
+        {
+            nameWindow.SetActive(true);
+
+        }
+        else
+        {
+            nameWindow.SetActive(false);
+
+        }
         Debug.Log("Successful login!");
         GetCharacters(); // Example call to fetch character data after login
     }
@@ -77,6 +100,21 @@ public class PlayfabManager : MonoBehaviour
 
         PlayFabClientAPI.SendAccountRecoveryEmail(request, OnPasswordReset, OnError);
     }
+    public void submintnameButton()
+{
+    var request = new UpdateUserTitleDisplayNameRequest
+    {
+        DisplayName = nameInputText.text,
+    };
+    // chat gpt: Fixed incorrect OnDisplaynameUpdate parameter
+    PlayFabClientAPI.UpdateUserTitleDisplayName(request, OnDisplaynameUpdate, OnError);
+}
+
+void OnDisplaynameUpdate(UpdateUserTitleDisplayNameResult result) // chat gpt: Fixed parameter type
+{
+    Debug.Log("Updated display name!");
+    playername.text = result.DisplayName; // chat gpt: Changed item to result
+}
 
     void OnPasswordReset(SendAccountRecoveryEmailResult result)
     {
