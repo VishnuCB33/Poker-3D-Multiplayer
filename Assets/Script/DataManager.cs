@@ -8,18 +8,20 @@ using UnityEngine.SceneManagement;
 
 public class PlayfabManager : MonoBehaviour
 {
+    public static PlayfabManager instance;
     [Header("UI")]
     public TMP_Text messageText;
-    public TMP_Text playername;
+    public string playername;
     public TMP_InputField emailInput;
     public TMP_InputField passwordInput;
-    public GameObject nameWindow;
-    public TMP_InputField nameInputText;
+    public bool nameWindow;
+    public TextMeshProUGUI nameInputText;
 
     public static string PlayerDisplayName; // chat gpt: Added static variable to store Display Name globally
 
     void Start()
     {
+        instance = this;
         // Initialize or load any required components
         DontDestroyOnLoad(gameObject); // chat gpt: Ensures this object persists across scenes
     }
@@ -51,7 +53,7 @@ public class PlayfabManager : MonoBehaviour
     {
         messageText.text = "Registered and logged in!";
         Debug.Log("Registration successful!");
-
+        SceneManager.LoadScene(1);
         // chat gpt: Retrieve Display Name after registration
         var request = new GetAccountInfoRequest();
         PlayFabClientAPI.GetAccountInfo(request, OnAccountInfoReceived, OnError);
@@ -63,13 +65,13 @@ public class PlayfabManager : MonoBehaviour
 
         if (string.IsNullOrEmpty(name))
         {
-            nameWindow.SetActive(true); // chat gpt: Prompt user to enter Display Name
+            nameWindow = true; // chat gpt: Prompt user to enter Display Name
         }
         else
         {
             PlayerDisplayName = name; // chat gpt: Store Display Name globally
-            playername.text = PlayerDisplayName; // chat gpt: Update UI
-            nameWindow.SetActive(false);
+            playername = PlayerDisplayName.ToString(); // chat gpt: Update UI
+            nameWindow=false;
         }
 
         Debug.Log("Account information retrieved successfully.");
@@ -99,7 +101,7 @@ public class PlayfabManager : MonoBehaviour
     void OnLoginSuccess(LoginResult result)
     {
         messageText.text = "Logged in!";
-        // SceneManager.LoadScene(1); // Optional: Add scene change logic here
+        SceneManager.LoadScene(1); // Optional: Add scene change logic here
 
         string name = null;
         if (result.InfoResultPayload.PlayerProfile != null)
@@ -107,13 +109,13 @@ public class PlayfabManager : MonoBehaviour
 
         if (name == null)
         {
-            nameWindow.SetActive(true);
+            nameWindow=true;
         }
         else
         {
             PlayerDisplayName = name; // chat gpt: Store Display Name globally
-            playername.text = PlayerDisplayName; // chat gpt: Update UI
-            nameWindow.SetActive(false);
+            playername = PlayerDisplayName; // chat gpt: Update UI
+            nameWindow=false;
         }
 
         Debug.Log("Successful login!");
@@ -137,6 +139,7 @@ public class PlayfabManager : MonoBehaviour
         {
             DisplayName = nameInputText.text,
         };
+        nameWindow = false;
 
         PlayFabClientAPI.UpdateUserTitleDisplayName(request, OnDisplaynameUpdate, OnError);
     }
@@ -145,7 +148,7 @@ public class PlayfabManager : MonoBehaviour
     {
         Debug.Log("Updated display name!");
         PlayerDisplayName = result.DisplayName; // chat gpt: Store Display Name globally
-        playername.text = PlayerDisplayName; // chat gpt: Update UI
+        playername= PlayerDisplayName; // chat gpt: Update UI
     }
 
     void OnPasswordReset(SendAccountRecoveryEmailResult result)
