@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5561,6 +5561,9 @@ MonoBehaviour:
   prof11: {fileID: 200933075}
   prof12: {fileID: 1440439383}
   profprefab: {fileID: 551951773}
+  settingslobby: {fileID: 0}
+  settingsback: {fileID: 0}
+  settingspage: {fileID: 0}
   profilepage: {fileID: 122072482}
   profilepanel: {fileID: 1352472803}
   amountpanel: {fileID: 481668647}
@@ -12929,7 +12932,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerName: {fileID: 2603653242965255112}
   PlayerName_input: {fileID: 323726488063470047}
-  PlayerName_input_data: 
   PlayerName_input_panel: {fileID: 323726488063470046}
 --- !u!4 &1510424282
 Transform:

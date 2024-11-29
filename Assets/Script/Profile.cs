@@ -22,6 +22,9 @@ public class Profile : MonoBehaviour
     public Button prof11;
     public Button prof12;
     public Button profprefab;
+    public Button settingslobby;
+    public Button settingsback;
+    public GameObject settingspage;
     public GameObject profilepage;
     public GameObject profilepanel;
     public GameObject amountpanel;
@@ -38,6 +41,8 @@ public class Profile : MonoBehaviour
         profile.onClick.AddListener(OpenProfilePanel);
         amount.onClick.AddListener(OpenAmountPanel);
         backfromprofile.onClick.AddListener(Back);
+        settingslobby.onClick.AddListener(OpenSettingsPage);
+        settingsback.onClick.AddListener(SettingsBack);
         prof1.onClick.AddListener(Prof1);
         prof2.onClick.AddListener(Prof2);
         prof3.onClick.AddListener(Prof3);
@@ -50,6 +55,16 @@ public class Profile : MonoBehaviour
         prof10.onClick.AddListener(Prof10);
         prof11.onClick.AddListener(Prof11);
         prof12.onClick.AddListener(Prof12);
+    }
+    public void OpenSettingsPage()
+    {
+        settingspage.SetActive(true);
+
+
+    }
+    public void SettingsBack()
+    {
+        settingspage.SetActive(false);
     }
     public void OpenProfilePage()
     {
