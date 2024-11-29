@@ -5555,6 +5555,9 @@ MonoBehaviour:
   prof11: {fileID: 200933075}
   prof12: {fileID: 1440439383}
   profprefab: {fileID: 551951773}
+  settingslobby: {fileID: 0}
+  settingsback: {fileID: 0}
+  settingspage: {fileID: 0}
   profilepage: {fileID: 122072482}
   profilepanel: {fileID: 1352472803}
   amountpanel: {fileID: 481668647}
@@ -13247,8 +13250,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerName: {fileID: 2603653242965255112}
-  PlayerName_input: {fileID: 3050114168749839854}
-  PlayerName_input_panel: {fileID: 8010896514322031932}
+  PlayerName_input: {fileID: 323726488063470047}
+  PlayerName_input_panel: {fileID: 323726488063470046}
 --- !u!4 &1510424282
 Transform:
   m_ObjectHideFlags: 0
