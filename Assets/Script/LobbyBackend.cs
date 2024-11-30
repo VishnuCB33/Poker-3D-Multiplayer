@@ -15,7 +15,7 @@ public class LobbyBackend : MonoBehaviour
     public int previous_player_amount ;
     private void Start()
     {
-        Instance = this;
+        player_amount = 100;
             PlayfabManager.instance.GetPlayerData();
 
     }
@@ -31,7 +31,7 @@ public class LobbyBackend : MonoBehaviour
 
          
         }
-
+        PlayerName.text = PlayfabManager.instance.playername.ToString();
         if(Input.GetKeyDown(KeyCode.A))
         {
             PlayfabManager.instance.GetPlayerData();
