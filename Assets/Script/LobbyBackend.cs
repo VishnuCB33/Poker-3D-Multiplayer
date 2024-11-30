@@ -5,6 +5,7 @@ using TMPro;
 
 public class LobbyBackend : MonoBehaviour
 {
+    public static LobbyBackend Instance;
     public TextMeshProUGUI PlayerName;
     public TextMeshProUGUI PlayerAmount;
     public TMP_InputField PlayerName_input;
@@ -14,13 +15,13 @@ public class LobbyBackend : MonoBehaviour
     public int previous_player_amount ;
     private void Start()
     {
+        Instance = this;
             PlayfabManager.instance.GetPlayerData();
 
     }
     void Update()
     {
-        
-       
+      
         if (player_amount != previous_player_amount)
         {
            
