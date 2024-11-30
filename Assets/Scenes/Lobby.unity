@@ -4022,6 +4022,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 406999123}
   m_CullTransparentMesh: 1
+--- !u!114 &413164681 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 471397902633645581, guid: da87c386dbbb7e34ca4507c7f41dfaec, type: 3}
+  m_PrefabInstance: {fileID: 2603653242965255110}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &420645033
 GameObject:
   m_ObjectHideFlags: 0
@@ -12660,9 +12671,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerName: {fileID: 2603653242965255112}
+  PlayerAmount: {fileID: 413164681}
   PlayerName_input: {fileID: 323726488063470047}
-  PlayerName_input_data: 
   PlayerName_input_panel: {fileID: 323726488063470046}
+  player_amount: 0
 --- !u!4 &1510424282
 Transform:
   m_ObjectHideFlags: 0
@@ -19167,6 +19179,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2076843113}
     m_Modifications:
+    - target: {fileID: 471397902633645581, guid: da87c386dbbb7e34ca4507c7f41dfaec, type: 3}
+      propertyPath: m_fontSize
+      value: 102.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 471397902633645581, guid: da87c386dbbb7e34ca4507c7f41dfaec, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 102.22
+      objectReference: {fileID: 0}
     - target: {fileID: 1723043902351746258, guid: da87c386dbbb7e34ca4507c7f41dfaec, type: 3}
       propertyPath: m_Name
       value: profile

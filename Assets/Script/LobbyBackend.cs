@@ -5,43 +5,58 @@ using TMPro;
 
 public class LobbyBackend : MonoBehaviour
 {
-    public TextMeshProUGUI PlayerName; // Text to display player's name
-    public TMP_InputField PlayerName_input; // Input field for player's name
-    public GameObject PlayerName_input_panel; // Panel to input player's name
+    public TextMeshProUGUI PlayerName;
+    public TextMeshProUGUI PlayerAmount;
+    public TMP_InputField PlayerName_input;
+    public GameObject PlayerName_input_panel;
+    
+    public int player_amount ;
+    public int previous_player_amount ;
+    private void Start()
+    {
+            PlayfabManager.instance.GetPlayerData();
 
+    }
     void Update()
     {
-        // Update the UI display of the player's name if PlayfabManager exists
-        if (PlayfabManager.instance != null)
+        
+       
+        if (player_amount != previous_player_amount)
         {
-            PlayerName.text = PlayfabManager.instance.playername; // Display the player's name
+           
+            PlayfabManager.instance.StorePlayerAvatarAndAmount(player_amount);
+            
+            previous_player_amount = player_amount;
 
-            // Show or hide the input panel based on whether the player's name is set
-            if (string.IsNullOrEmpty(PlayfabManager.instance.playername))
-            {
-                PlayerName_input_panel.SetActive(true); // Show input panel
-            }
-            else
-            {
-                PlayerName_input_panel.SetActive(false); // Hide input panel if name is set
-            }
+         
         }
+
+        if(Input.GetKeyDown(KeyCode.A))
+        {
+            PlayfabManager.instance.GetPlayerData();
+        }
+        PlayerAmount.text = PlayfabManager.instance.player_amount_backend.ToString();
+
+        
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            player_amount += 100;
+
+        };
     }
 
-    // Called when the submit button is clicked
     public void SubmitButton()
     {
-        // Ensure PlayfabManager instance exists
         if (PlayfabManager.instance != null)
         {
-            string enteredName = PlayerName_input.text; // Get the entered name
+            string enteredName = PlayerName_input.text;
 
-            // Ensure the entered name is not empty
             if (!string.IsNullOrEmpty(enteredName))
             {
-                PlayfabManager.instance.playername = enteredName; // Update playername in PlayfabManager
-                PlayfabManager.instance.submintnameButton(); // Save the name to PlayFab
-                PlayerName_input_panel.SetActive(false); // Optionally hide input panel
+                PlayfabManager.instance.playername = enteredName;
+                PlayfabManager.instance.submintnameButton();
+                PlayerName_input_panel.SetActive(false);
             }
             else
             {
