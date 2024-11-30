@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1288,7 +1288,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &62597435
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7166,9 +7166,9 @@ RectTransform:
   - {fileID: 1133543601}
   - {fileID: 256461311}
   - {fileID: 122072483}
-  - {fileID: 5284017540605035863}
   - {fileID: 62597435}
   - {fileID: 1948123076}
+  - {fileID: 5284017540605035863}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -15568,8 +15568,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerName: {fileID: 2603653242965255112}
-  PlayerName_input: {fileID: 0}
-  PlayerName_input_panel: {fileID: 0}
+  PlayerAmount: {fileID: 413164681}
+  PlayerName_input: {fileID: 3050114168749839854}
+  PlayerName_input_panel: {fileID: 8010896514322031932}
+  player_amount: 0
+  previous_player_amount: 0
 --- !u!4 &1510424282
 Transform:
   m_ObjectHideFlags: 0
@@ -18381,7 +18384,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.050165016}
+  m_AnchoredPosition: {x: 0, y: 0.00007976504}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1799595730
@@ -19183,7 +19186,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1227008129}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.97624654
+  m_Size: 0.9999969
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -19471,7 +19474,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1905602713
 RectTransform:
   m_ObjectHideFlags: 0
