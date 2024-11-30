@@ -17,7 +17,8 @@ public class LobbyManager : MonoBehaviour
     // [SerializeField] private Button getLobbiesListButton;
     [SerializeField] private GameObject lobbyInfoPrefab;
     [SerializeField] private GameObject lobbiesInfoContent;
-    [SerializeField] private TextMeshProUGUI roomNameText;
+    //  [SerializeField] private TextMeshProUGUI roomNameText;
+    [SerializeField] private TextMeshProUGUI playerNames;
     [Space(10)]
     [Header("Create Room panel")]
     [SerializeField] private GameObject createRoomPanel;
@@ -30,6 +31,8 @@ public class LobbyManager : MonoBehaviour
     [SerializeField] private GameObject roomPanel;
     [SerializeField] private TextMeshProUGUI roomName;
     [SerializeField] private TextMeshProUGUI roomCode;
+    [SerializeField] private GameObject playerInfoContent;
+    [SerializeField] private GameObject playerInfoPrefab;
 
      private Lobby currentLobby;
 
@@ -37,13 +40,14 @@ public class LobbyManager : MonoBehaviour
        {
          //Initialize unity services,and add await keyword for wait for the initialize done,async automatically add
           await  UnityServices.InitializeAsync();
-
+        
         //print player ID
         AuthenticationService.Instance.SignedIn += () =>
         {
             //after signed in we get playerID
             playerId = AuthenticationService.Instance.PlayerId;
             Debug.Log("You SuccessFully Signed in: " + playerId);
+           
 
         };
 
@@ -68,8 +72,13 @@ public class LobbyManager : MonoBehaviour
             string lobbbyName = roomNameIF.text;
             //maxplayer inputfield Output to integer
             int.TryParse(maxPlayerIF.text, out int maxPlayers);
+
+            CreateLobbyOptions options = new CreateLobbyOptions
+            {
+                Player = GetPlayer()
+            };
             //Parameter= Lobby name and max players
-             currentLobby = await LobbyService.Instance.CreateLobbyAsync(lobbbyName, maxPlayers);
+             currentLobby = await LobbyService.Instance.CreateLobbyAsync(lobbbyName, maxPlayers,options);
             //Lobby Id
             Debug.Log("Room Created :" + currentLobby.Id);
             EnterRoom();
@@ -88,6 +97,10 @@ public class LobbyManager : MonoBehaviour
         //Now RoomCode and roomName to roomPanel
         roomName.text=currentLobby.Name;
         roomCode.text = currentLobby.LobbyCode;
+        foreach(Player player  in currentLobby.Players)
+        {
+            Debug.Log("Player Name : " + player.Data["PlayerName"].Value);
+        }
 
     }
   public void RoomBackButt()
@@ -182,16 +195,37 @@ public class LobbyManager : MonoBehaviour
     }
     public async void JoinLobby(string _lobbyId)
     {
+      
         //Player join the lobby by using LobbyId
         try
         {
-           currentLobby= await LobbyService.Instance.JoinLobbyByIdAsync(_lobbyId);
+            JoinLobbyByIdOptions options = new JoinLobbyByIdOptions()
+            {
+                Player = GetPlayer()
+            };
+           currentLobby= await LobbyService.Instance.JoinLobbyByIdAsync(_lobbyId,options);
             EnterRoom();
             Debug.Log("Players In Room : "+currentLobby.Players.Count);
         }catch(LobbyServiceException e)
         {
             Debug.Log(e);
         }
+    }
+    //Others Visibility
+    private Player GetPlayer()
+    {
+        string playerName=LobbyBackend.Instance.PlayerName.ToString();
+        if (playerName == null || playerName == " ")
+            playerName = playerId;
+        Player player = new Player
+        {
+            Data = new Dictionary<string, PlayerDataObject>
+            {
+                //playerDataObject has to parameter one visibility and value of player name
+                {"PlayerName",new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member,playerName) }
+            }
+        };
+        return player;
     }
 
 }
