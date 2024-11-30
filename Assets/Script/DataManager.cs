@@ -3,10 +3,11 @@ using PlayFab.ClientModels;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.Collections.Generic;
 
 public class PlayfabManager : MonoBehaviour
 {
-    public static PlayfabManager instance;
+    public static PlayfabManager instance; // for use the data in all script
 
     [Header("UI")]
     public TMP_Text messageText; // Message for user feedback
@@ -16,6 +17,7 @@ public class PlayfabManager : MonoBehaviour
     public TMP_InputField nameInputText; // Input field for display name
 
     public static string PlayerDisplayName; // Global variable for display name
+    public int player_amount_backend; // Amount to be stored and retrieved from PlayFab
 
     void Start()
     {
@@ -26,7 +28,7 @@ public class PlayfabManager : MonoBehaviour
     #region Register/Login/Reset Password
     public void RegisterButton()
     {
-        if (passwordInput.text.Length < 6)
+        if (passwordInput.text.Length < 6) //Checks if the password is long enough (at least 6 characters). If not, shows a message.
         {
             messageText.text = "Password too short!";
             return;
@@ -34,12 +36,12 @@ public class PlayfabManager : MonoBehaviour
 
         var request = new RegisterPlayFabUserRequest
         {
-            Email = emailInput.text,
-            Password = passwordInput.text,
-            RequireBothUsernameAndEmail = false
+            Email = emailInput.text, // for Get email entered by the player.
+            Password = passwordInput.text, //get password by the player
+            RequireBothUsernameAndEmail = false // We don't want to require username, just the display name.
         };
 
-        PlayFabClientAPI.RegisterPlayFabUser(request, OnRegisterSuccess, OnError);
+        PlayFabClientAPI.RegisterPlayFabUser(request, OnRegisterSuccess, OnError); // Sends the request to PlayFab server.
     }
 
     void OnRegisterSuccess(RegisterPlayFabUserResult result)
@@ -48,8 +50,7 @@ public class PlayfabManager : MonoBehaviour
         Debug.Log("Registration successful!");
         SceneManager.LoadScene(1); // Load next scene
 
-        // Retrieve Display Name after registration
-        var request = new GetAccountInfoRequest();
+        var request = new GetAccountInfoRequest(); // Request to get account information.
         PlayFabClientAPI.GetAccountInfo(request, OnAccountInfoReceived, OnError);
     }
 
@@ -57,7 +58,7 @@ public class PlayfabManager : MonoBehaviour
     {
         string name = result.AccountInfo.TitleInfo.DisplayName;
 
-        if (string.IsNullOrEmpty(name))
+        if (string.IsNullOrEmpty(name)) // Check if display name is empty.
         {
             messageText.text = "Set a display name.";
         }
@@ -98,7 +99,7 @@ public class PlayfabManager : MonoBehaviour
 
         string name = result.InfoResultPayload.PlayerProfile?.DisplayName;
 
-        if (string.IsNullOrEmpty(name))
+        if (string.IsNullOrEmpty(name)) // Check if display name exists.
         {
             messageText.text = "Set a display name.";
         }
@@ -116,7 +117,7 @@ public class PlayfabManager : MonoBehaviour
         var request = new SendAccountRecoveryEmailRequest
         {
             Email = emailInput.text,
-            TitleId = PlayFabSettings.TitleId
+            TitleId = "4F828" // Use your game title ID here
         };
 
         PlayFabClientAPI.SendAccountRecoveryEmail(request, OnPasswordReset, OnError);
@@ -154,6 +155,62 @@ public class PlayfabManager : MonoBehaviour
         messageText.text = "Display name updated successfully!";
     }
     #endregion
+
+    // Store player amount in PlayFab
+    public void StorePlayerAvatarAndAmount(int playerAmount)
+    {
+        var request = new UpdateUserDataRequest
+        {
+            Data = new Dictionary<string, string>
+            {
+                { "PlayerAmount", playerAmount.ToString() }  // Convert player amount to string
+            }
+        };
+
+        PlayFabClientAPI.UpdateUserData(request, OnDataStored, OnError);
+    }
+
+    private void OnDataStored(UpdateUserDataResult result)
+    {
+        messageText.text = "Player data updated!";
+        Debug.Log("Player amount stored successfully.");
+    }
+
+    // Retrieve player data
+    public void GetPlayerData()
+    {
+        var request = new GetUserDataRequest
+        {
+            PlayFabId = PlayFabSettings.staticPlayer.PlayFabId
+        };
+
+        PlayFabClientAPI.GetUserData(request, OnDataReceived, OnError);
+    }
+
+    private void OnDataReceived(GetUserDataResult result)
+    {
+        if (result.Data == null || result.Data.Count == 0)
+        {
+            Debug.LogError("No user data found.");
+            return;
+        }
+
+        if (result.Data.ContainsKey("PlayerAmount"))
+        {
+            if (int.TryParse(result.Data["PlayerAmount"].Value, out int playerAmount))
+            {
+                player_amount_backend = playerAmount;  
+            }
+            else
+            {
+                Debug.LogError("'PlayerAmount' value is not a valid integer.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("'PlayerAmount' key not found.");
+        }
+    }
 
     #region Error Handling
     void OnError(PlayFabError error)
