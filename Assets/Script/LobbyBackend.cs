@@ -15,6 +15,7 @@ public class LobbyBackend : MonoBehaviour
     public int previous_player_amount ;
     private void Start()
     {
+        Instance = this;
         player_amount = 100;
             PlayfabManager.instance.GetPlayerData();
 
@@ -68,5 +69,9 @@ public class LobbyBackend : MonoBehaviour
         {
             Debug.LogError("PlayfabManager.instance is null. Ensure PlayfabManager is initialized.");
         }
+    }
+    public string GetPlayerName()
+    {
+        return PlayerName.text;
     }
 }

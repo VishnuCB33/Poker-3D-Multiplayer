@@ -9,6 +9,8 @@ using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using UnityEngine.UIElements;
 using Button = UnityEngine.UI.Button;
+using UnityEditor.UI;
+//using static UnityEditor.Experimental.GraphView.GraphView;
 public class LobbyManager : MonoBehaviour
 {
     private string playerId;
@@ -18,7 +20,7 @@ public class LobbyManager : MonoBehaviour
     [SerializeField] private GameObject lobbyInfoPrefab;
     [SerializeField] private GameObject lobbiesInfoContent;
     //  [SerializeField] private TextMeshProUGUI roomNameText;
-    [SerializeField] private TextMeshProUGUI playerNames;
+   // [SerializeField] private TextMeshProUGUI playerNames;
     [Space(10)]
     [Header("Create Room panel")]
     [SerializeField] private GameObject createRoomPanel;
@@ -26,6 +28,7 @@ public class LobbyManager : MonoBehaviour
     [SerializeField] private TMP_InputField maxPlayerIF;
     //[SerializeField] private Button createRoomButt;
     [SerializeField] private GameObject listOfLobbyPanel;
+    [SerializeField] private UnityEngine.UI.Toggle isPrivateToggle;
 
     [Header("Inside Room ")]
     [SerializeField] private GameObject roomPanel;
@@ -33,8 +36,13 @@ public class LobbyManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI roomCode;
     [SerializeField] private GameObject playerInfoContent;
     [SerializeField] private GameObject playerInfoPrefab;
-
+    [SerializeField] private Button leaveRoomButton;
      private Lobby currentLobby;
+    [Header("JOinCodeLobby")]
+    [SerializeField] private TMP_InputField roomCodeIF;
+    [SerializeField] private Button joinRoomButton;
+    [SerializeField] private GameObject JoinRoomPanel;
+
 
        async void Start()
        {
@@ -55,7 +63,8 @@ public class LobbyManager : MonoBehaviour
          await  AuthenticationService.Instance.SignInAnonymouslyAsync();
         //CreateLobby Function active when click on Create Room Button
         //createRoomButt.onClick.AddListener(CreateLobby);
-
+        leaveRoomButton.onClick.AddListener(LeaveRoom);
+        joinRoomButton.onClick.AddListener(JoinLobbyWithCode);
         }
 
     // Update is called once per frame
@@ -63,8 +72,9 @@ public class LobbyManager : MonoBehaviour
     {
         //TimerHeartBeat
         HandleLobbyHeartBeat();
+        HandleRoomUpdate();
     }
-    //Lobby Creation
+    //Lobby Creation(It is helpful to seee player names details through the parameter
     public  async void CreateLobby()
     {
         try
@@ -75,6 +85,9 @@ public class LobbyManager : MonoBehaviour
 
             CreateLobbyOptions options = new CreateLobbyOptions
             {
+                //Private public(toggle) , we create private public in these 1 line
+                IsPrivate = isPrivateToggle.isOn,
+                //in GetPlayer contain the information of current player
                 Player = GetPlayer()
             };
             //Parameter= Lobby name and max players
@@ -97,15 +110,72 @@ public class LobbyManager : MonoBehaviour
         //Now RoomCode and roomName to roomPanel
         roomName.text=currentLobby.Name;
         roomCode.text = currentLobby.LobbyCode;
+        //Wwe are taking each player from current Player.player and printing name
         foreach(Player player  in currentLobby.Players)
         {
             Debug.Log("Player Name : " + player.Data["PlayerName"].Value);
+          //  playerNames.text = player.Data["PlayerName"].Value;
         }
-
+        VisualizeRoomDetails();
+    }
+    //this function is display the early joining(room Update timer)
+    private float roomUpdateTimer = 2f;
+    private async void HandleRoomUpdate()
+    {
+        roomUpdateTimer-=Time.deltaTime;
+        if (currentLobby != null)
+        {
+            if (roomUpdateTimer <= 0)
+            {
+                roomUpdateTimer = 2f;
+                try
+                {
+                    if (IsinLobby())
+                    {
+                        //We need to send Id of Lobby for Which lobby we want to get inside GEtLobbyAsync function
+                        currentLobby = await LobbyService.Instance.GetLobbyAsync(currentLobby.Id);
+                        VisualizeRoomDetails();
+                    }
+                   
+                }
+                catch (LobbyServiceException e)
+                {
+                    Debug.Log(e);
+                }
+            }
+        }
+        
+       
+    }
+    //Check this function to player is in the lobby or not
+    private bool IsinLobby()
+    {
+       //Now check id the player ID matches the any player ID in Lobby
+       foreach(Player _player in currentLobby.Players)
+        {
+            if (_player.Id == playerId)
+            {
+                return true;
+            }
+            
+        }
+        currentLobby = null;
+        return false;
+        //Now we shall call this function before calling getLobbyAsync
     }
   public void RoomBackButt()
     {
         roomPanel.SetActive(false);
+        createRoomPanel.SetActive(true);
+    }
+    public void JoinRoomCodePanel()
+    {
+        JoinRoomPanel.SetActive(true);
+        createRoomPanel.SetActive(false);
+    }
+    public void BackJoinRoomCodePanel()
+    {
+        JoinRoomPanel.SetActive(false);
         createRoomPanel.SetActive(true);
     }
    public void ListLobbiesBack()
@@ -211,14 +281,38 @@ public class LobbyManager : MonoBehaviour
             Debug.Log(e);
         }
     }
-    //Others Visibility
+    //JoinLobby With code
+    public async void JoinLobbyWithCode()
+    {
+
+        //player code inputField
+        string lobbyCode = roomCodeIF.text;
+        try
+        {
+            //joinLobbyById change to joinLobbyByCode
+            JoinLobbyByCodeOptions options = new JoinLobbyByCodeOptions()
+            {
+                Player = GetPlayer()
+            };
+            //in public lobby player enterd by id and join code player enter with code
+            currentLobby = await LobbyService.Instance.JoinLobbyByCodeAsync(lobbyCode, options);
+            EnterRoom();
+            Debug.Log("Players In Room : " + currentLobby.Players.Count);
+        }
+        catch (LobbyServiceException e)
+        {
+            Debug.Log(e);
+        }
+    }
+    //Others Visibility  Remain
     private Player GetPlayer()
     {
-        string playerName=LobbyBackend.Instance.PlayerName.ToString();
+        string playerName=LobbyBackend.Instance.GetPlayerName();
         if (playerName == null || playerName == " ")
             playerName = playerId;
         Player player = new Player
         {
+
             Data = new Dictionary<string, PlayerDataObject>
             {
                 //playerDataObject has to parameter one visibility and value of player name
@@ -227,5 +321,73 @@ public class LobbyManager : MonoBehaviour
         };
         return player;
     }
+    //this function helps to instantiate the player name text butt of the prefab
+    private void VisualizeRoomDetails()
+    {
 
+        //Previous player info delete
+        for(int i=0;i<playerInfoContent.transform.childCount;i++)
+        {
+            Destroy(playerInfoContent.transform.GetChild(i).gameObject);
+        }
+        //Check player is in room before accessing the current lobby
+        if (IsinLobby())
+        {
+            //EnterRoom function loop,this is the loop for who is entering the room 
+            foreach (Player player in currentLobby.Players)
+            {
+                GameObject newPlayerInfo = Instantiate(playerInfoPrefab, playerInfoContent.transform);
+                newPlayerInfo.GetComponentInChildren<TextMeshProUGUI>().text = player.Data["PlayerName"].Value;
+                if (isHost()&& player.Id != playerId)
+                {
+                    //if is Host only kick the player(the refernce taken by the playerinfo children),in this player.id!=playerId is helps to not seen the kick button in host player(own himself)
+                    Button kickBtn=newPlayerInfo.GetComponentInChildren<Button>(true);
+
+                 kickBtn.onClick.AddListener(() => KickPlayer(playerId));
+                    kickBtn.gameObject.SetActive(true);
+                }
+               
+            }
+
+        }
+        else
+        {
+            ExitRoomButt();
+        }
+
+
+    }
+    //Leave Room Function
+    private async void LeaveRoom()
+    {
+        try
+        {
+            //We need to call remove player async method for removing player from the lobby so we need to pass Lobby ID and player ID as Input to remove lobby
+            await LobbyService.Instance.RemovePlayerAsync(currentLobby.Id,playerId);
+            ExitRoomButt();
+
+        }
+        catch(LobbyServiceException e)
+        {
+            Debug.Log(e);
+        }
+    }
+    //Kick Button
+    private async void KickPlayer(string _playerId)
+    {
+        try
+        {
+            await LobbyService.Instance.RemovePlayerAsync(currentLobby.Id, playerId);
+        }
+        catch (LobbyServiceException e)
+        {
+            Debug.Log(e);
+        }
+
+    }
+    public void ExitRoomButt()
+    {
+        createRoomPanel.SetActive(true);
+        roomPanel.SetActive(false);
+    }
 }
