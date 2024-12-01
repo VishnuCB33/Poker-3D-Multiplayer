@@ -9,7 +9,7 @@ using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using UnityEngine.UIElements;
 using Button = UnityEngine.UI.Button;
-using UnityEditor.UI;
+//using UnityEditor.UI;
 //using static UnityEditor.Experimental.GraphView.GraphView;
 public class LobbyManager : MonoBehaviour
 {
@@ -42,7 +42,8 @@ public class LobbyManager : MonoBehaviour
     [SerializeField] private TMP_InputField roomCodeIF;
     [SerializeField] private Button joinRoomButton;
     [SerializeField] private GameObject JoinRoomPanel;
-
+    [Header("PlayersINdex")]
+    public int playerIndex;
 
        async void Start()
        {
@@ -324,39 +325,42 @@ public class LobbyManager : MonoBehaviour
     //this function helps to instantiate the player name text butt of the prefab
     private void VisualizeRoomDetails()
     {
-
-        //Previous player info delete
-        for(int i=0;i<playerInfoContent.transform.childCount;i++)
+        // Clear previous player info
+        for (int i = 0; i < playerInfoContent.transform.childCount; i++)
         {
             Destroy(playerInfoContent.transform.GetChild(i).gameObject);
         }
-        //Check player is in room before accessing the current lobby
+
+        // Check if player is still in the lobby
         if (IsinLobby())
         {
-            //EnterRoom function loop,this is the loop for who is entering the room 
-            foreach (Player player in currentLobby.Players)
+            // Loop through players and visualize their details
+            for (playerIndex = 0; playerIndex < currentLobby.Players.Count; playerIndex++)
             {
+                Player player = currentLobby.Players[playerIndex];
                 GameObject newPlayerInfo = Instantiate(playerInfoPrefab, playerInfoContent.transform);
-                newPlayerInfo.GetComponentInChildren<TextMeshProUGUI>().text = player.Data["PlayerName"].Value;
-                if (isHost()&& player.Id != playerId)
-                {
-                    //if is Host only kick the player(the refernce taken by the playerinfo children),in this player.id!=playerId is helps to not seen the kick button in host player(own himself)
-                    Button kickBtn=newPlayerInfo.GetComponentInChildren<Button>(true);
 
-                 kickBtn.onClick.AddListener(() => KickPlayer(playerId));
+                // Set the player name and display their index
+                string playerName = player.Data["PlayerName"].Value;
+                newPlayerInfo.GetComponentInChildren<TextMeshProUGUI>().text = $"{playerIndex + 1}. {playerName}";
+
+                Debug.Log($"Player Index: {playerIndex}, Player Name: {playerName}");
+
+                // Show kick button for host (except for themselves)
+                if (isHost() && player.Id != playerId)
+                {
+                    Button kickBtn = newPlayerInfo.GetComponentInChildren<Button>(true);
+                    kickBtn.onClick.AddListener(() => KickPlayer(player.Id));
                     kickBtn.gameObject.SetActive(true);
                 }
-               
             }
-
         }
         else
         {
             ExitRoomButt();
         }
-
-
     }
+
     //Leave Room Function
     private async void LeaveRoom()
     {
