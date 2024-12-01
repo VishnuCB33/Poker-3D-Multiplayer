@@ -18,6 +18,7 @@ public class LobbyBackend : MonoBehaviour
         Instance = this;
         player_amount = 100;
             PlayfabManager.instance.GetPlayerData();
+        PlayfabManager.instance.StorePlayerAvatarAndAmount(player_amount);
 
     }
     void Update()
