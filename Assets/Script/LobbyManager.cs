@@ -376,7 +376,8 @@ public class LobbyManager : MonoBehaviour
                 newPlayerInfo.GetComponentInChildren<TextMeshProUGUI>().text = $"{playerIndex + 1}. {playerName}";
 
                 Debug.Log($"Player Index: {playerIndex}, Player Name: {playerName}");
-
+           
+                LobbyBackend.Instance.DataSet();
                 // Show kick button for host (except for themselves)
                 if (isHost() && player.Id != playerId)
                 {

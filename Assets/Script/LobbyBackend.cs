@@ -10,37 +10,41 @@ public class LobbyBackend : MonoBehaviour
     public TextMeshProUGUI PlayerAmount;
     public TMP_InputField PlayerName_input;
     public GameObject PlayerName_input_panel;
-    
+    public int temoraryID;
     public int player_amount ;
     public int previous_player_amount ;
     private void Start()
     {
         Instance = this;
-        player_amount = 100;
-            PlayfabManager.instance.GetPlayerData();
-        PlayfabManager.instance.StorePlayerAvatarAndAmount(player_amount);
+       /* player_amount = 0;
+        temoraryID = 0;*/
+        PlayfabManager.instance.GetPlayerData();
+        //PlayfabManager.instance.StorePlayerAvatarAndAmount(player_amount, temoraryID);
 
     }
     void Update()
     {
+     
       
         if (player_amount != previous_player_amount)
         {
-           
-            PlayfabManager.instance.StorePlayerAvatarAndAmount(player_amount);
-            
+
+            DataSet();
             previous_player_amount = player_amount;
 
          
         }
         PlayerName.text = PlayfabManager.instance.playername.ToString();
+
         if(Input.GetKeyDown(KeyCode.A))
         {
             PlayfabManager.instance.GetPlayerData();
         }
-        PlayerAmount.text = PlayfabManager.instance.player_amount_backend.ToString();
 
-        
+        PlayerAmount.text = PlayfabManager.instance.player_amount_backend.ToString();
+        temoraryID = PlayfabManager.instance.player_PlayertempId_backend;
+
+
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -48,7 +52,11 @@ public class LobbyBackend : MonoBehaviour
 
         };
     }
+    public void DataSet()
+    {
+        PlayfabManager.instance.StorePlayerAvatarAndAmount(player_amount, LobbyManager.Instance.playerIndex);
 
+    }
     public void SubmitButton()
     {
         if (PlayfabManager.instance != null)

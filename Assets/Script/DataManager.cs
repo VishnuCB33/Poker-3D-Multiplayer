@@ -18,7 +18,7 @@ public class PlayfabManager : MonoBehaviour
 
     public static string PlayerDisplayName; // Global variable for display name
     public int player_amount_backend; // Amount to be stored and retrieved from PlayFab
-
+    public int player_PlayertempId_backend;
     void Start()
     {
         instance = this;
@@ -156,14 +156,15 @@ public class PlayfabManager : MonoBehaviour
     }
     #endregion
 
-    // Store player amount in PlayFab
-    public void StorePlayerAvatarAndAmount(int playerAmount)
+    // Store player amount, index  in PlayFab
+    public void StorePlayerAvatarAndAmount(int playerAmount, int PlayertempId)
     {
         var request = new UpdateUserDataRequest
         {
             Data = new Dictionary<string, string>
             {
-                { "PlayerAmount", playerAmount.ToString() }  // Convert player amount to string
+                { "PlayerAmount", playerAmount.ToString() },  // Convert player amount to string
+                { "PlayertempId", PlayertempId.ToString() }  // Convert player index to string
             }
         };
 
@@ -205,10 +206,22 @@ public class PlayfabManager : MonoBehaviour
             {
                 Debug.LogError("'PlayerAmount' value is not a valid integer.");
             }
+        } 
+        
+        if (result.Data.ContainsKey("PlayertempId"))
+        {
+            if (int.TryParse(result.Data["PlayertempId"].Value, out int PlayertempId))
+            {
+                player_PlayertempId_backend = PlayertempId;  
+            }
+            else
+            {
+                Debug.LogError("PlayertempId' value is not a valid integer.");
+            }
         }
         else
         {
-            Debug.LogWarning("'PlayerAmount' key not found.");
+            Debug.LogWarning("'PlayertempId' key not found.");
         }
     }
 
