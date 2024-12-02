@@ -9,6 +9,7 @@ using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using UnityEngine.UIElements;
 using Button = UnityEngine.UI.Button;
+using UnityEngine.SceneManagement;
 //using UnityEditor.UI;
 //using static UnityEditor.Experimental.GraphView.GraphView;
 public class LobbyManager : MonoBehaviour
@@ -37,6 +38,7 @@ public class LobbyManager : MonoBehaviour
     [SerializeField] private GameObject playerInfoContent;
     [SerializeField] private GameObject playerInfoPrefab;
     [SerializeField] private Button leaveRoomButton;
+    [SerializeField] private Button startGameButton;
      private Lobby currentLobby;
     [Header("JOinCodeLobby")]
     [SerializeField] private TMP_InputField roomCodeIF;
@@ -74,6 +76,7 @@ public class LobbyManager : MonoBehaviour
         //TimerHeartBeat
         HandleLobbyHeartBeat();
         HandleRoomUpdate();
+        //HandleLobbiesListUpdate();
     }
     //Lobby Creation(It is helpful to seee player names details through the parameter
     public  async void CreateLobby()
@@ -81,7 +84,7 @@ public class LobbyManager : MonoBehaviour
         try
         {
             string lobbbyName = roomNameIF.text;
-            //maxplayer inputfield Output to integer
+            //maxPlayer inputfield Output to integer
             int.TryParse(maxPlayerIF.text, out int maxPlayers);
 
             CreateLobbyOptions options = new CreateLobbyOptions
@@ -90,6 +93,12 @@ public class LobbyManager : MonoBehaviour
                 IsPrivate = isPrivateToggle.isOn,
                 //in GetPlayer contain the information of current player
                 Player = GetPlayer()
+                //Start Button (To check game start or not)
+                ,Data=new Dictionary<string, DataObject>
+                {
+                    {"IsGameStarted",new DataObject(DataObject.VisibilityOptions.Member,"false") }
+                }
+
             };
             //Parameter= Lobby name and max players
              currentLobby = await LobbyService.Instance.CreateLobbyAsync(lobbbyName, maxPlayers,options);
@@ -142,6 +151,11 @@ public class LobbyManager : MonoBehaviour
                 catch (LobbyServiceException e)
                 {
                     Debug.Log(e);
+                    if ((e.Reason == LobbyExceptionReason.Forbidden || e.Reason == LobbyExceptionReason.LobbyNotFound))
+                    {
+                        currentLobby= null;
+                        ExitRoomButt();
+                    }
                 }
             }
         }
@@ -207,6 +221,20 @@ public class LobbyManager : MonoBehaviour
             Debug.Log(e);
         }
     }
+    //Update the lobbies refresh timer
+    private float updateLobbiesListTimer = 2f;
+
+    private void HandleLobbiesListUpdate()
+    {
+        updateLobbiesListTimer-=Time.deltaTime;
+        if (updateLobbiesListTimer <= 0)
+        {
+            ListPublicLobbies();
+            updateLobbiesListTimer = 2f;
+        }
+    }
+
+
     //This function is helps to alive the lobby otherwise the lobby  will inactive after 30 second
     private float heartBeatTimer = 15f;
     private async void HandleLobbyHeartBeat()
@@ -354,6 +382,29 @@ public class LobbyManager : MonoBehaviour
                     kickBtn.gameObject.SetActive(true);
                 }
             }
+            if (isHost())
+            {
+                startGameButton.onClick.AddListener(StartGame);
+                //only hist can seen
+                startGameButton.gameObject.SetActive(true);
+            }
+            else
+            {
+                if (IsGameStart())
+                {
+                    startGameButton.onClick.AddListener(EnterGame);
+                    startGameButton.gameObject.SetActive(false);
+                    startGameButton.GetComponentInChildren<TextMeshProUGUI>().text = "Enter Game";
+
+
+                }
+                else
+                {
+                    //Not started game
+                    startGameButton.onClick.RemoveAllListeners();
+                    startGameButton.gameObject.SetActive(false);
+                }
+            }
         }
         else
         {
@@ -393,5 +444,51 @@ public class LobbyManager : MonoBehaviour
     {
         createRoomPanel.SetActive(true);
         roomPanel.SetActive(false);
+    }
+    //when host will click start game the value will updated
+    private async void StartGame()
+    {
+        //We shall check current lobby not null and ONly host can start game
+
+        if(currentLobby != null&&isHost())
+        {
+            try
+            {
+                //now we will make the game started keys value as true 
+                UpdateLobbyOptions updateOption = new UpdateLobbyOptions
+                {
+                    Data = new Dictionary<string, DataObject>
+                    {
+                       {"IsGameStarted",new DataObject(DataObject.VisibilityOptions.Member,"false" )}
+                    }
+                };
+                currentLobby = await LobbyService.Instance.UpdateLobbyAsync(currentLobby.Id, updateOption);
+                //Game Scene Load
+                EnterGame();
+            }
+            catch (LobbyServiceException e)
+            {
+                Debug.Log(e);
+            }
+         
+        }
+       
+    }
+    //Check the host was started the game or not
+
+    private bool IsGameStart()
+    {
+        if (currentLobby != null)
+        {
+            if (currentLobby.Data["IsGameStarted"].Value == "true")
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    private void EnterGame()
+    {
+        SceneManager.LoadScene(2);
     }
 }
