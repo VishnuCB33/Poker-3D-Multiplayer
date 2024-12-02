@@ -14,6 +14,7 @@ using UnityEngine.SceneManagement;
 //using static UnityEditor.Experimental.GraphView.GraphView;
 public class LobbyManager : MonoBehaviour
 {
+    public static LobbyManager Instance;
     private string playerId;
     [Header("Main Menu")]
     [SerializeField] private GameObject mainMenuPanel;
@@ -49,6 +50,7 @@ public class LobbyManager : MonoBehaviour
 
        async void Start()
        {
+        Instance = this;
          //Initialize unity services,and add await keyword for wait for the initialize done,async automatically add
           await  UnityServices.InitializeAsync();
         
@@ -105,6 +107,7 @@ public class LobbyManager : MonoBehaviour
             //Lobby Id
             Debug.Log("Room Created :" + currentLobby.Id);
             EnterRoom();
+
         }
         catch (LobbyServiceException e)
         {
