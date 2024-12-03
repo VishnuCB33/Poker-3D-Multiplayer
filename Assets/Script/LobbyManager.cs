@@ -396,7 +396,7 @@ public class LobbyManager : MonoBehaviour
                 if (IsGameStart())
                 {
                     startGameButton.onClick.AddListener(EnterGame);
-                    startGameButton.gameObject.SetActive(false);
+                    startGameButton.gameObject.SetActive(true);
                     startGameButton.GetComponentInChildren<TextMeshProUGUI>().text = "Enter Game";
 
 
@@ -462,7 +462,7 @@ public class LobbyManager : MonoBehaviour
                 {
                     Data = new Dictionary<string, DataObject>
                     {
-                       {"IsGameStarted",new DataObject(DataObject.VisibilityOptions.Member,"false" )}
+                       {"IsGameStarted",new DataObject(DataObject.VisibilityOptions.Member," " )}
                     }
                 };
                 currentLobby = await LobbyService.Instance.UpdateLobbyAsync(currentLobby.Id, updateOption);
