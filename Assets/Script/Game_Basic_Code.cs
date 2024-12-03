@@ -7,6 +7,7 @@ using static player_details;
 
 public class Game_Basic_Code : MonoBehaviour
 {
+    public static Game_Basic_Code instance;
     [Header("player one")]
     public int player_num_backend_1;
     public string player_name_backend_1;
@@ -120,6 +121,7 @@ public class Game_Basic_Code : MonoBehaviour
         round_refarance = 0;
         DealerSelect();
         AllCardsAllocationFirst();
+        instance = this;
 
     }
     public void Update()
@@ -222,11 +224,11 @@ public class Game_Basic_Code : MonoBehaviour
         randomCardsGameObject[11].transform.localScale = new Vector3(2, 2, 2);
         randomCardsGameObject[12].transform.localScale = new Vector3(2, 2, 2);
         Instantiate(randomCardsGameObject[8], referance[0].transform.position, referance[0].transform.rotation);
-
+        CheckButton.Instance.finalCheckFiveCard[0]=randomCardsGameObject[8];
         Instantiate(randomCardsGameObject[9], referance[1].transform.position, referance[1].transform.rotation);
-
+        CheckButton.Instance.finalCheckFiveCard[1] = randomCardsGameObject[9];
         Instantiate(randomCardsGameObject[10], referance[2].transform.position, referance[2].transform.rotation);
-
+        CheckButton.Instance.finalCheckFiveCard[2] = randomCardsGameObject[10];
         round_refarance = 2;
 
         Debug.Log("R1");
@@ -240,7 +242,7 @@ public class Game_Basic_Code : MonoBehaviour
         if (P4__setected != P4_setected.Fold) { P4__setected = P4_setected.none; }
         round_refarance = 3;
         Instantiate(randomCardsGameObject[11], referance[3].transform.position, referance[3].transform.rotation);
-
+        CheckButton.Instance.finalCheckFiveCard[3] = randomCardsGameObject[11];
 
     }
     public void round_3_funtion()
@@ -253,8 +255,12 @@ public class Game_Basic_Code : MonoBehaviour
         round_refarance = 4;
 
         Instantiate(randomCardsGameObject[12], referance[4].transform.position, referance[4].transform.rotation);
-
+        CheckButton.Instance.finalCheckFiveCard[4] = randomCardsGameObject[12];
     }
+    public List<int>winnerSelectP1=new List<int>();
+    public List<int> winnerSelectP2 = new List<int>();
+    public List<int> winnerSelectP3 = new List<int>();
+    public List<int> winnerSelectP4 = new List<int>();
     public void round_4_funtion()
     {
         Debug.Log("R4");
@@ -264,8 +270,51 @@ public class Game_Basic_Code : MonoBehaviour
         if (P4__setected != P4_setected.Fold) { P4__setected = P4_setected.none; }
         round_refarance = 5;
 
+        if (P1__setected != P1_setected.Fold)
+        {
+            CheckButton.Instance.finalCheckFiveCard[5] = playerOneCards[0];
+            CheckButton.Instance.finalCheckFiveCard[6] = playerOneCards[1];
 
+            CheckButton.Instance.RoyalFlush();
+            winnerSelectP1.Add(2);
+
+            CheckButton.Instance.StraightFlush();
+            winnerSelectP1.Add(6);
+            CheckButton.Instance.Four_of_a_kind();
+            winnerSelectP1.Add(1);
+            CheckButton.Instance.flush();
+            winnerSelectP1.Add(CheckButton.Instance.s);
+            CheckButton.Instance.Straight();
+            winnerSelectP1.Add(CheckButton.Instance.s);
+            CheckButton.Instance.Three_of_a_kind();
+            winnerSelectP1.Add(CheckButton.Instance.s);
+            CheckButton.Instance.TwoPair();
+            winnerSelectP1.Add(CheckButton.Instance.s);
+            CheckButton.Instance.Pair();
+            winnerSelectP1.Add(CheckButton.Instance.s);
+            Debug.Log("wtf");     
+
+            winnerSelectP1.Sort();
+        }
+        /*if (P2__setected != P2_setected.Fold)
+        {
+            CheckButton.Instance.finalCheckFiveCard[5] = playerTwoCards[0];
+            CheckButton.Instance.finalCheckFiveCard[6] = playerTwoCards[1];
+        }
+        if (P3__setected != P3_setected.Fold)
+        {
+            CheckButton.Instance.finalCheckFiveCard[5] = playerThreeCards[0];
+            CheckButton.Instance.finalCheckFiveCard[6] = playerThreeCards[1];
+        }
+        if (P4__setected != P4_setected.Fold)
+        {
+            CheckButton.Instance.finalCheckFiveCard[5] = playerFourCards[0];
+            CheckButton.Instance.finalCheckFiveCard[6] = playerFourCards[1];
+        }
+*/
     }
+   
+
     public void EqualingEnum_funtion()
     {
         if (Player_turn == 1)
