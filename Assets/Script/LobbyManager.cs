@@ -135,36 +135,37 @@ public class LobbyManager : MonoBehaviour
     private float roomUpdateTimer = 2f;
     private async void HandleRoomUpdate()
     {
-        roomUpdateTimer-=Time.deltaTime;
-        if (currentLobby != null)
+        roomUpdateTimer -= Time.deltaTime;
+
+        if (currentLobby != null && roomUpdateTimer <= 0)
         {
-            if (roomUpdateTimer <= 0)
+            roomUpdateTimer = 2f;
+            try
             {
-                roomUpdateTimer = 2f;
-                try
+                currentLobby = await LobbyService.Instance.GetLobbyAsync(currentLobby.Id);
+
+                // Check if the game has started
+                if (IsGameStart())
                 {
-                    if (IsinLobby())
-                    {
-                        //We need to send Id of Lobby for Which lobby we want to get inside GEtLobbyAsync function
-                        currentLobby = await LobbyService.Instance.GetLobbyAsync(currentLobby.Id);
-                        VisualizeRoomDetails();
-                    }
-                   
+                    EnterGame();
                 }
-                catch (LobbyServiceException e)
+                else
                 {
-                    Debug.Log(e);
-                    if ((e.Reason == LobbyExceptionReason.Forbidden || e.Reason == LobbyExceptionReason.LobbyNotFound))
-                    {
-                        currentLobby= null;
-                        ExitRoomButt();
-                    }
+                    VisualizeRoomDetails();
+                }
+            }
+            catch (LobbyServiceException e)
+            {
+                Debug.Log(e);
+                if (e.Reason == LobbyExceptionReason.Forbidden || e.Reason == LobbyExceptionReason.LobbyNotFound)
+                {
+                    currentLobby = null;
+                    ExitRoomButt();
                 }
             }
         }
-        
-       
     }
+
     //Check this function to player is in the lobby or not
     private bool IsinLobby()
     {
@@ -395,18 +396,21 @@ public class LobbyManager : MonoBehaviour
             {
                 if (IsGameStart())
                 {
-                    EnterGame();
+                   
                     startGameButton.onClick.AddListener(EnterGame);
                     startGameButton.gameObject.SetActive(true);
-                    //startGameButton.GetComponentInChildren<TextMeshProUGUI>().text = "Enter Game";
+                    startGameButton.GetComponentInChildren<TextMeshProUGUI>().text = "Enter Game";
+                   
 
 
                 }
                 else
                 {
+                   
                     //Not started game
                     startGameButton.onClick.RemoveAllListeners();
                     startGameButton.gameObject.SetActive(false);
+                    
                 }
             }
         }
@@ -463,7 +467,7 @@ public class LobbyManager : MonoBehaviour
                 {
                     Data = new Dictionary<string, DataObject>
                     {
-                       {"IsGameStarted",new DataObject(DataObject.VisibilityOptions.Member," " )}
+                       {"IsGameStarted",new DataObject(DataObject.VisibilityOptions.Public, "true" )}
                     }
                 };
                 currentLobby = await LobbyService.Instance.UpdateLobbyAsync(currentLobby.Id, updateOption);
@@ -482,17 +486,14 @@ public class LobbyManager : MonoBehaviour
 
     private bool IsGameStart()
     {
-        if (currentLobby != null)
-        {
-            if (currentLobby.Data["IsGameStarted"].Value == "true")
-            {
-                return true;
-            }
-        }
-        return false;
+        return currentLobby != null && currentLobby.Data.ContainsKey("IsGameStarted") &&
+               currentLobby.Data["IsGameStarted"].Value == "true";
     }
+
     private void EnterGame()
     {
-        SceneManager.LoadScene(2);
+        Debug.Log("Game is starting...");
+        SceneManager.LoadScene(2); // Replace "2" with the actual build index of your game scene.
     }
+
 }
