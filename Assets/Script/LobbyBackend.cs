@@ -16,9 +16,9 @@ public class LobbyBackend : MonoBehaviour
     private void Start()
     {
         Instance = this;
-        player_amount = 100;
-            PlayfabManager.instance.GetPlayerData();
-        PlayfabManager.instance.StorePlayerAvatarAndAmount(player_amount);
+       // player_amount = 100;
+        PlayfabManager.instance.GetPlayerData();
+       // PlayfabManager.instance.StorePlayerAvatarAndAmount(player_amount);
 
     }
     void Update()
@@ -47,6 +47,10 @@ public class LobbyBackend : MonoBehaviour
             player_amount += 100;
 
         };
+    }
+    public void nemeopenpanel()
+    {
+        PlayerName_input_panel.SetActive(true);
     }
 
     public void SubmitButton()
