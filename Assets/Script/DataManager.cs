@@ -61,6 +61,7 @@ public class PlayfabManager : MonoBehaviour
         if (string.IsNullOrEmpty(name)) // Check if display name is empty.
         {
             messageText.text = "Set a display name.";
+            LobbyBackend.Instance.nemeopenpanel();
         }
         else
         {
@@ -102,6 +103,7 @@ public class PlayfabManager : MonoBehaviour
         if (string.IsNullOrEmpty(name)) // Check if display name exists.
         {
             messageText.text = "Set a display name.";
+
         }
         else
         {
