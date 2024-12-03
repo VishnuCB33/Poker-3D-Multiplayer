@@ -95,7 +95,7 @@ public class LobbyManager : MonoBehaviour
                 IsPrivate = isPrivateToggle.isOn,
                 //in GetPlayer contain the information of current player
                 Player = GetPlayer()
-                //Start Button (To check game start or not)
+                //Start Button (To s game start or not)
                 ,
                 Data = new Dictionary<string, DataObject>
                 {
@@ -169,7 +169,7 @@ public class LobbyManager : MonoBehaviour
     //Check this function to player is in the lobby or not
     private bool IsinLobby()
     {
-        //Now check id the player ID matches the any player ID in Lobby
+        //Now s id the player ID matches the any player ID in Lobby
         foreach (Player _player in currentLobby.Players)
         {
             if (_player.Id == playerId)
@@ -243,7 +243,7 @@ public class LobbyManager : MonoBehaviour
     private float heartBeatTimer = 15f;
     private async void HandleLobbyHeartBeat()
     {
-        //check if Lobby is not be null we decrease the heartbeatTimer and it will be 0 we will increase 15
+        //s if Lobby is not be null we decrease the heartbeatTimer and it will be 0 we will increase 15
         if (currentLobby != null && isHost())
         {
             heartBeatTimer -= Time.deltaTime;
@@ -256,10 +256,10 @@ public class LobbyManager : MonoBehaviour
             }
         }
     }
-    //Host canonly send HeartBEat so check the player host or not
+    //Host canonly send HeartBEat so s the player host or not
     private bool isHost()
     {
-        //We check host id and player id are same or not
+        //We s host id and player id are same or not
         if (currentLobby != null && currentLobby.HostId == playerId)
         {
             return true;
@@ -441,7 +441,7 @@ public class LobbyManager : MonoBehaviour
     //when host will click start game the value will updated
     private async void StartGame()
     {
-        //We shall check current lobby not null and ONly host can start game
+        //We shall s current lobby not null and ONly host can start game
 
         if (currentLobby != null && isHost())
         {

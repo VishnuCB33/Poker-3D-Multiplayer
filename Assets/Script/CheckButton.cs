@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class CheckButton : MonoBehaviour
 {
+    public static CheckButton Instance;
     [Header("Win")]
     public bool[] winnerlist;
 
@@ -28,7 +29,7 @@ public class CheckButton : MonoBehaviour
     [SerializeField] private int changeCards;
     [SerializeField] private int count;
     [SerializeField] private List<GameObject> duplicateCheck;
-    [Header("check Variables")]
+    [Header("s Variables")]
     int checkClubs = 0;
     [SerializeField] private List<GameObject> royalFlushMerge;
     int royalFleshClubCount;
@@ -45,9 +46,12 @@ public class CheckButton : MonoBehaviour
     [SerializeField] List<int> values;
     private int flushChecker = 0;
     private int twoPairChecker = 0;
+    [Header("Checking Final")]
+    public int s = 0;
+
     private void Start()
     {
-       
+       Instance = this;
     }
     private void Update()
     {
@@ -172,6 +176,9 @@ public class CheckButton : MonoBehaviour
                if(royalFleshSpadesCount >= 5 || royalFleshHeartCount >= 5 || royalFleshDiamondCount >= 5 || royalFleshClubCount >= 5)
                 {
                     Debug.Log("RoyalFlush");
+                    s = 1;
+
+
                 }
                 
             }
@@ -211,6 +218,7 @@ public class CheckButton : MonoBehaviour
         if(flush_Club_count >= 5|| flush_Diamonds_count >= 5|| flush_Heart_count >= 5|| flush_Spades_count >= 5)
         {
             Debug.Log("player_one_have_flush");
+            s = 5;
             winnerlist[4] = true;
             flushChecker = 1;
             x = 0;
@@ -247,6 +255,7 @@ public class CheckButton : MonoBehaviour
         else if(count_four_of_a_kind >= 4)
         {
             Debug.Log("player one have Four_of_a_kind");
+            s = 3;
             winnerlist[2] = true;
         }
         else 
@@ -281,6 +290,7 @@ public class CheckButton : MonoBehaviour
         {
             Debug.Log("player one have three_of_a_kind");
             winnerlist[6] = true;
+            s = 7;
 
         }
         else 
@@ -306,6 +316,7 @@ public class CheckButton : MonoBehaviour
                     {
                         Debug.Log(pairCounts);
                         Debug.Log("PAIR.....");
+                        s = 9;
                     }
                 }
               
@@ -313,7 +324,7 @@ public class CheckButton : MonoBehaviour
         }
       
     }
-    void TwoPair()
+    public void TwoPair()
     {
         for (int i = 0; i < finalCheckFiveCard.Count; i++)
         {
@@ -334,9 +345,10 @@ public class CheckButton : MonoBehaviour
         if (pairCounts == 8)
         {
             Debug.Log("TwoPair.....");
+            s = 8;
         }
     }
-    void Straight()
+   public void Straight()
     {
 
        
@@ -366,23 +378,25 @@ public class CheckButton : MonoBehaviour
                     if (check4 == -1)
                     {
                         Debug.Log("Straight.....");
+                        s = 6;
                     }
                 }
             }
         }
     }
-    void StraightFlush()
+    public void StraightFlush()
     {
         if (flushChecker == 1)
         {
             Straight();
+            s = 2;
             Debug.Log("StraightFlush...");
             winnerlist[1] = true;
         }
     }
     void FullHouse()
     {
-
+       
     }
 }
  
