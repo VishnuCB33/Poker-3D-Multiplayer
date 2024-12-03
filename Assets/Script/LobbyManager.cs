@@ -505,7 +505,7 @@ public class LobbyManager : MonoBehaviour
             if (updatedLobby.Data.TryGetValue("GameStarted", out var gameStartedFlag) && gameStartedFlag.Value == "true")
             {
                 Debug.Log("Game has started! Loading Scene2...");
-                UnityEngine.SceneManagement.SceneManager.LoadScene("Scene2");
+                EnterGame();
             }
         }
         catch (LobbyServiceException e)
