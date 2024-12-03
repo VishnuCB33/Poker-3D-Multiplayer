@@ -22,7 +22,7 @@ public class LobbyManager : MonoBehaviour
     [SerializeField] private GameObject lobbyInfoPrefab;
     [SerializeField] private GameObject lobbiesInfoContent;
     //  [SerializeField] private TextMeshProUGUI roomNameText;
-   // [SerializeField] private TextMeshProUGUI playerNames;
+    // [SerializeField] private TextMeshProUGUI playerNames;
     [Space(10)]
     [Header("Create Room panel")]
     [SerializeField] private GameObject createRoomPanel;
@@ -40,7 +40,7 @@ public class LobbyManager : MonoBehaviour
     [SerializeField] private GameObject playerInfoPrefab;
     [SerializeField] private Button leaveRoomButton;
     [SerializeField] private Button startGameButton;
-     private Lobby currentLobby;
+    private Lobby currentLobby;
     [Header("JOinCodeLobby")]
     [SerializeField] private TMP_InputField roomCodeIF;
     [SerializeField] private Button joinRoomButton;
@@ -48,29 +48,29 @@ public class LobbyManager : MonoBehaviour
     [Header("PlayersINdex")]
     public int playerIndex;
 
-       async void Start()
-       {
+    async void Start()
+    {
         Instance = this;
-         //Initialize unity services,and add await keyword for wait for the initialize done,async automatically add
-          await  UnityServices.InitializeAsync();
-        
+        //Initialize unity services,and add await keyword for wait for the initialize done,async automatically add
+        await UnityServices.InitializeAsync();
+        InvokeRepeating(nameof(PollLobbyForUpdates), 1f, 3f);
         //print player ID
         AuthenticationService.Instance.SignedIn += () =>
         {
             //after signed in we get playerID
             playerId = AuthenticationService.Instance.PlayerId;
             Debug.Log("You SuccessFully Signed in: " + playerId);
-           
+
 
         };
 
         //next step unity authentication,(many type of authentications are there google,fb,we use anonymous authentication means automatically sign
-         await  AuthenticationService.Instance.SignInAnonymouslyAsync();
+        await AuthenticationService.Instance.SignInAnonymouslyAsync();
         //CreateLobby Function active when click on Create Room Button
         //createRoomButt.onClick.AddListener(CreateLobby);
         leaveRoomButton.onClick.AddListener(LeaveRoom);
         joinRoomButton.onClick.AddListener(JoinLobbyWithCode);
-        }
+    }
 
     // Update is called once per frame
     void Update()
@@ -81,7 +81,7 @@ public class LobbyManager : MonoBehaviour
         //HandleLobbiesListUpdate();
     }
     //Lobby Creation(It is helpful to seee player names details through the parameter
-    public  async void CreateLobby()
+    public async void CreateLobby()
     {
         try
         {
@@ -96,14 +96,15 @@ public class LobbyManager : MonoBehaviour
                 //in GetPlayer contain the information of current player
                 Player = GetPlayer()
                 //Start Button (To check game start or not)
-                ,Data=new Dictionary<string, DataObject>
+                ,
+                Data = new Dictionary<string, DataObject>
                 {
                     {"IsGameStarted",new DataObject(DataObject.VisibilityOptions.Member,"false") }
                 }
 
             };
             //Parameter= Lobby name and max players
-             currentLobby = await LobbyService.Instance.CreateLobbyAsync(lobbbyName, maxPlayers,options);
+            currentLobby = await LobbyService.Instance.CreateLobbyAsync(lobbbyName, maxPlayers, options);
             //Lobby Id
             Debug.Log("Room Created :" + currentLobby.Id);
             EnterRoom();
@@ -113,7 +114,7 @@ public class LobbyManager : MonoBehaviour
         {
             Debug.Log(e);
         }
-       
+
     }
     private void EnterRoom()
     {
@@ -121,13 +122,13 @@ public class LobbyManager : MonoBehaviour
         createRoomPanel.SetActive(false);
         roomPanel.SetActive(true);
         //Now RoomCode and roomName to roomPanel
-        roomName.text=currentLobby.Name;
+        roomName.text = currentLobby.Name;
         roomCode.text = currentLobby.LobbyCode;
         //Wwe are taking each player from current Player.player and printing name
-        foreach(Player player  in currentLobby.Players)
+        foreach (Player player in currentLobby.Players)
         {
             Debug.Log("Player Name : " + player.Data["PlayerName"].Value);
-          //  playerNames.text = player.Data["PlayerName"].Value;
+            //  playerNames.text = player.Data["PlayerName"].Value;
         }
         VisualizeRoomDetails();
     }
@@ -136,53 +137,52 @@ public class LobbyManager : MonoBehaviour
     private async void HandleRoomUpdate()
     {
         roomUpdateTimer -= Time.deltaTime;
-
-        if (currentLobby != null && roomUpdateTimer <= 0)
+        if (currentLobby != null)
         {
-            roomUpdateTimer = 2f;
-            try
+            if (roomUpdateTimer <= 0)
             {
-                currentLobby = await LobbyService.Instance.GetLobbyAsync(currentLobby.Id);
+                roomUpdateTimer = 2f;
+                try
+                {
+                    if (IsinLobby())
+                    {
+                        //We need to send Id of Lobby for Which lobby we want to get inside GEtLobbyAsync function
+                        currentLobby = await LobbyService.Instance.GetLobbyAsync(currentLobby.Id);
+                        VisualizeRoomDetails();
+                    }
 
-                // Check if the game has started
-                if (IsGameStart())
-                {
-                    EnterGame();
                 }
-                else
+                catch (LobbyServiceException e)
                 {
-                    VisualizeRoomDetails();
-                }
-            }
-            catch (LobbyServiceException e)
-            {
-                Debug.Log(e);
-                if (e.Reason == LobbyExceptionReason.Forbidden || e.Reason == LobbyExceptionReason.LobbyNotFound)
-                {
-                    currentLobby = null;
-                    ExitRoomButt();
+                    Debug.Log(e);
+                    if ((e.Reason == LobbyExceptionReason.Forbidden || e.Reason == LobbyExceptionReason.LobbyNotFound))
+                    {
+                        currentLobby = null;
+                        ExitRoomButt();
+                    }
                 }
             }
         }
-    }
 
+
+    }
     //Check this function to player is in the lobby or not
     private bool IsinLobby()
     {
-       //Now check id the player ID matches the any player ID in Lobby
-       foreach(Player _player in currentLobby.Players)
+        //Now check id the player ID matches the any player ID in Lobby
+        foreach (Player _player in currentLobby.Players)
         {
             if (_player.Id == playerId)
             {
                 return true;
             }
-            
+
         }
         currentLobby = null;
         return false;
         //Now we shall call this function before calling getLobbyAsync
     }
-  public void RoomBackButt()
+    public void RoomBackButt()
     {
         roomPanel.SetActive(false);
         createRoomPanel.SetActive(true);
@@ -197,7 +197,7 @@ public class LobbyManager : MonoBehaviour
         JoinRoomPanel.SetActive(false);
         createRoomPanel.SetActive(true);
     }
-   public void ListLobbiesBack()
+    public void ListLobbiesBack()
     {
         listOfLobbyPanel.SetActive(false);
         createRoomPanel.SetActive(true);
@@ -212,15 +212,15 @@ public class LobbyManager : MonoBehaviour
             //Search---QueryLobbiesAsync Method will return QueryResponse type variable
             QueryResponse response = await LobbyService.Instance.QueryLobbiesAsync();
             //We can get List of lobbies from this response variable dot result ---This debug will shows the number of lobbies available 
-            Debug.Log("Available Public Lobbies :"+response.Results.Count);
-            foreach(Lobby _lobby in response.Results)
+            Debug.Log("Available Public Lobbies :" + response.Results.Count);
+            foreach (Lobby _lobby in response.Results)
             {
                 //Only members can see Lobby code so _lobby.Id 
                 Debug.Log("Lobby Name  :" + _lobby.Name + "Lobby ID :" + _lobby.Id);
             }
             VisualizeLobbyList(response.Results);
         }
-        catch(LobbyServiceException e)
+        catch (LobbyServiceException e)
         {
             Debug.Log(e);
         }
@@ -230,7 +230,7 @@ public class LobbyManager : MonoBehaviour
 
     private void HandleLobbiesListUpdate()
     {
-        updateLobbiesListTimer-=Time.deltaTime;
+        updateLobbiesListTimer -= Time.deltaTime;
         if (updateLobbiesListTimer <= 0)
         {
             ListPublicLobbies();
@@ -244,15 +244,15 @@ public class LobbyManager : MonoBehaviour
     private async void HandleLobbyHeartBeat()
     {
         //check if Lobby is not be null we decrease the heartbeatTimer and it will be 0 we will increase 15
-        if (currentLobby != null&& isHost())
+        if (currentLobby != null && isHost())
         {
             heartBeatTimer -= Time.deltaTime;
-            if( heartBeatTimer < 0)
+            if (heartBeatTimer < 0)
             {
                 heartBeatTimer = 15f;
                 //Host will call send  heartBeat ping async function and pass current lobby id to it 
-               
-               await LobbyService.Instance.SendHeartbeatPingAsync(currentLobby.Id);
+
+                await LobbyService.Instance.SendHeartbeatPingAsync(currentLobby.Id);
             }
         }
     }
@@ -260,7 +260,7 @@ public class LobbyManager : MonoBehaviour
     private bool isHost()
     {
         //We check host id and player id are same or not
-        if(currentLobby != null && currentLobby.HostId == playerId)
+        if (currentLobby != null && currentLobby.HostId == playerId)
         {
             return true;
         }
@@ -271,9 +271,9 @@ public class LobbyManager : MonoBehaviour
     {
 
         // We need to clear previous lobbiesInfo
-        for(int i = 0; i < lobbiesInfoContent.transform.childCount; i++)
+        for (int i = 0; i < lobbiesInfoContent.transform.childCount; i++)
         {
-            Destroy(lobbiesInfoContent.transform.GetChild(i).gameObject);   
+            Destroy(lobbiesInfoContent.transform.GetChild(i).gameObject);
         }
         foreach (Lobby _lobby in _publicLobbies)
         {
@@ -288,17 +288,17 @@ public class LobbyManager : MonoBehaviour
             {
                 lobbyDetailsTexts[0].text = _lobby.Name; // Set lobby name
                 lobbyDetailsTexts[1].text = (_lobby.MaxPlayers - _lobby.AvailableSlots).ToString() + "/" + _lobby.MaxPlayers.ToString(); // Set player count
-             
-           
 
-                
+
+
+
             }
-          newLobbyInfo.GetComponentInChildren<Button>().onClick.AddListener(()=>JoinLobby(_lobby.Id));
+            newLobbyInfo.GetComponentInChildren<Button>().onClick.AddListener(() => JoinLobby(_lobby.Id));
         }
     }
     public async void JoinLobby(string _lobbyId)
     {
-      
+
         //Player join the lobby by using LobbyId
         try
         {
@@ -306,10 +306,11 @@ public class LobbyManager : MonoBehaviour
             {
                 Player = GetPlayer()
             };
-           currentLobby= await LobbyService.Instance.JoinLobbyByIdAsync(_lobbyId,options);
+            currentLobby = await LobbyService.Instance.JoinLobbyByIdAsync(_lobbyId, options);
             EnterRoom();
-            Debug.Log("Players In Room : "+currentLobby.Players.Count);
-        }catch(LobbyServiceException e)
+            Debug.Log("Players In Room : " + currentLobby.Players.Count);
+        }
+        catch (LobbyServiceException e)
         {
             Debug.Log(e);
         }
@@ -340,7 +341,7 @@ public class LobbyManager : MonoBehaviour
     //Others Visibility  Remain
     private Player GetPlayer()
     {
-        string playerName=LobbyBackend.Instance.GetPlayerName();
+        string playerName = LobbyBackend.Instance.GetPlayerName();
         if (playerName == null || playerName == " ")
             playerName = playerId;
         Player player = new Player
@@ -388,30 +389,14 @@ public class LobbyManager : MonoBehaviour
             }
             if (isHost())
             {
+                startGameButton.onClick.RemoveAllListeners();
                 startGameButton.onClick.AddListener(StartGame);
-                //only hist can seen
                 startGameButton.gameObject.SetActive(true);
             }
             else
             {
-                if (IsGameStart())
-                {
-                   
-                    startGameButton.onClick.AddListener(EnterGame);
-                    startGameButton.gameObject.SetActive(true);
-                    startGameButton.GetComponentInChildren<TextMeshProUGUI>().text = "Enter Game";
-                   
-
-
-                }
-                else
-                {
-                   
-                    //Not started game
-                    startGameButton.onClick.RemoveAllListeners();
-                    startGameButton.gameObject.SetActive(false);
-                    
-                }
+                // Non-host players just wait for the host to start the game
+                startGameButton.gameObject.SetActive(false);
             }
         }
         else
@@ -426,11 +411,11 @@ public class LobbyManager : MonoBehaviour
         try
         {
             //We need to call remove player async method for removing player from the lobby so we need to pass Lobby ID and player ID as Input to remove lobby
-            await LobbyService.Instance.RemovePlayerAsync(currentLobby.Id,playerId);
+            await LobbyService.Instance.RemovePlayerAsync(currentLobby.Id, playerId);
             ExitRoomButt();
 
         }
-        catch(LobbyServiceException e)
+        catch (LobbyServiceException e)
         {
             Debug.Log(e);
         }
@@ -458,42 +443,74 @@ public class LobbyManager : MonoBehaviour
     {
         //We shall check current lobby not null and ONly host can start game
 
-        if(currentLobby != null&&isHost())
+        if (currentLobby != null && isHost())
         {
             try
             {
                 //now we will make the game started keys value as true 
-                UpdateLobbyOptions updateOption = new UpdateLobbyOptions
-                {
-                    Data = new Dictionary<string, DataObject>
+                // Update the lobby's data with a "GameStarted" flag
+                var updatedLobby = await LobbyService.Instance.UpdateLobbyAsync(
+                    currentLobby.Id,
+                    new UpdateLobbyOptions
                     {
-                       {"IsGameStarted",new DataObject(DataObject.VisibilityOptions.Public, "true" )}
+                        Data = new Dictionary<string, DataObject>
+                        {
+                    {
+                        "GameStarted", new DataObject(
+                            visibility: DataObject.VisibilityOptions.Public,
+                            value: "true"
+                        )
                     }
-                };
-                currentLobby = await LobbyService.Instance.UpdateLobbyAsync(currentLobby.Id, updateOption);
-                //Game Scene Load
+                        }
+                    }
+                );
+
+                Debug.Log("Game started! Lobby data updated.");
+
                 EnterGame();
             }
             catch (LobbyServiceException e)
             {
                 Debug.Log(e);
             }
-         
+
         }
-       
+
     }
     //Check the host was started the game or not
 
     private bool IsGameStart()
     {
-        return currentLobby != null && currentLobby.Data.ContainsKey("IsGameStarted") &&
-               currentLobby.Data["IsGameStarted"].Value == "true";
+        if (currentLobby != null)
+        {
+            if (currentLobby.Data["IsGameStarted"].Value == "true")
+            {
+                return true;
+            }
+        }
+        return false;
     }
-
     private void EnterGame()
     {
-        Debug.Log("Game is starting...");
-        SceneManager.LoadScene(2); // Replace "2" with the actual build index of your game scene.
+        SceneManager.LoadScene(2);
     }
+    private async void PollLobbyForUpdates()
+    {
+        try
+        {
+            // Fetch the latest lobby data
+            var updatedLobby = await LobbyService.Instance.GetLobbyAsync(currentLobby.Id);
 
+            // Check if the "GameStarted" flag is set
+            if (updatedLobby.Data.TryGetValue("GameStarted", out var gameStartedFlag) && gameStartedFlag.Value == "true")
+            {
+                Debug.Log("Game has started! Loading Scene2...");
+                UnityEngine.SceneManagement.SceneManager.LoadScene("Scene2");
+            }
+        }
+        catch (LobbyServiceException e)
+        {
+            Debug.LogError($"Failed to fetch lobby updates: {e}");
+        }
+    }
 }
