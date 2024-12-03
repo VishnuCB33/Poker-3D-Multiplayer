@@ -395,9 +395,10 @@ public class LobbyManager : MonoBehaviour
             {
                 if (IsGameStart())
                 {
+                    EnterGame();
                     startGameButton.onClick.AddListener(EnterGame);
                     startGameButton.gameObject.SetActive(true);
-                    startGameButton.GetComponentInChildren<TextMeshProUGUI>().text = "Enter Game";
+                    //startGameButton.GetComponentInChildren<TextMeshProUGUI>().text = "Enter Game";
 
 
                 }
