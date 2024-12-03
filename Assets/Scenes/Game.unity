@@ -7493,6 +7493,10 @@ MonoBehaviour:
   - {fileID: 1329307295}
   - {fileID: 221418697}
   - {fileID: 403658873}
+  winnerSelectP1: 
+  winnerSelectP2: 
+  winnerSelectP3: 
+  winnerSelectP4: 
 --- !u!4 &675259963
 Transform:
   m_ObjectHideFlags: 0
@@ -19607,13 +19611,13 @@ MonoBehaviour:
   - {fileID: 6290163690470343772, guid: 276a581c69768684e8a0fef01f93077a, type: 3}
   - {fileID: 4699265818613305834, guid: 9b1450ad91edbd64199dee0d33d9c9a2, type: 3}
   finalCheckFiveCard:
-  - {fileID: 971127196252652502, guid: 63669c00bbca2814e8007bf9d8f71627, type: 3}
-  - {fileID: 3630086298591436864, guid: 39fd4ab2b24ed18458e81b47268eb34b, type: 3}
-  - {fileID: 2138710574712454216, guid: 9033c6f482787f747b2851058e53fc63, type: 3}
-  - {fileID: 2837282519608362209, guid: da3691f3b1c2063418e130793cabc85a, type: 3}
-  - {fileID: 4253198141244412870, guid: 3039d3a2f47efb34a8b74f45a5b77818, type: 3}
-  - {fileID: 8947273938133433633, guid: c90ee74bb6bf4b340b806b10fde80ac0, type: 3}
-  - {fileID: 7026005134679962567, guid: 2f7e7a4a0ed587e43951edb91fc28ded, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   clubsRoyalFlush: []
   changeCards: 0
   count: 0
@@ -19623,6 +19627,7 @@ MonoBehaviour:
   straightCheck: []
   temp: 0
   values: 00000000000000000000000000000000000000000000000000000000
+  s: 0
   count_four_of_a_kind: 0
   count_three_of_a_kind: 0
 --- !u!4 &2112251263

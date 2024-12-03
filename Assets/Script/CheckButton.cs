@@ -63,18 +63,18 @@ public class CheckButton : MonoBehaviour
         }*/
 
 
-        if (Input.GetKeyDown(KeyCode.Space))//A
+      /*  if (Input.GetKeyDown(KeyCode.Space))//A
         {
             flush();
             Four_of_a_kind();
-            Three_of_a_kind();
+            Three_of_a_kind(); 
         }
 
         if (Input.GetKeyDown(KeyCode.S))
         {
             Pair();
             TwoPair();  
-        }
+        }*/
 
 
         if (Input.GetKeyDown(KeyCode.A))//A
@@ -89,14 +89,14 @@ public class CheckButton : MonoBehaviour
             count_three_of_a_kind = 0;
         }
 
-        if (Input.GetKeyDown(KeyCode.D))
+       /* if (Input.GetKeyDown(KeyCode.D))
         {
             Straight();
         }
         if (Input.GetKeyDown(KeyCode.F))
         {
             StraightFlush();
-        }
+        }*/
 
     }
     public bool RoyalFlush()
@@ -176,7 +176,8 @@ public class CheckButton : MonoBehaviour
                if(royalFleshSpadesCount >= 5 || royalFleshHeartCount >= 5 || royalFleshDiamondCount >= 5 || royalFleshClubCount >= 5)
                 {
                     Debug.Log("RoyalFlush");
-                    s = 1;
+                    s = 10;
+                    winnerlist[0] = true;
 
 
                 }
@@ -218,8 +219,9 @@ public class CheckButton : MonoBehaviour
         if(flush_Club_count >= 5|| flush_Diamonds_count >= 5|| flush_Heart_count >= 5|| flush_Spades_count >= 5)
         {
             Debug.Log("player_one_have_flush");
-            s = 5;
+           
             winnerlist[4] = true;
+            s = 6;
             flushChecker = 1;
             x = 0;
         }
@@ -255,7 +257,7 @@ public class CheckButton : MonoBehaviour
         else if(count_four_of_a_kind >= 4)
         {
             Debug.Log("player one have Four_of_a_kind");
-            s = 3;
+            s = 8;
             winnerlist[2] = true;
         }
         else 
@@ -316,7 +318,8 @@ public class CheckButton : MonoBehaviour
                     {
                         Debug.Log(pairCounts);
                         Debug.Log("PAIR.....");
-                        s = 9;
+                        s = 2;
+                        winnerlist[8] = true;
                     }
                 }
               
@@ -345,7 +348,8 @@ public class CheckButton : MonoBehaviour
         if (pairCounts == 8)
         {
             Debug.Log("TwoPair.....");
-            s = 8;
+            winnerlist[7] = true;
+            s = 3;
         }
     }
    public void Straight()
@@ -378,7 +382,8 @@ public class CheckButton : MonoBehaviour
                     if (check4 == -1)
                     {
                         Debug.Log("Straight.....");
-                        s = 6;
+                        winnerlist[5] = true;
+                        s = 5;
                     }
                 }
             }
@@ -389,7 +394,7 @@ public class CheckButton : MonoBehaviour
         if (flushChecker == 1)
         {
             Straight();
-            s = 2;
+            s = 9;
             Debug.Log("StraightFlush...");
             winnerlist[1] = true;
         }
