@@ -303,56 +303,110 @@ public class CheckButton : MonoBehaviour
     }
     public void Pair()
     {
-        for(int i=0;i< finalCheckFiveCard.Count;i++)
-        {
-           for(int j = i+1; j < finalCheckFiveCard.Count; j++)
-            {
-               
+        // A dictionary to track card ranks and their counts
+        Dictionary<string, int> cardRankCounts = new Dictionary<string, int>();
+        pairCounts = 0; // Reset pair count
+        duplicatePair.Clear(); // Clear the previous pairs
 
-                if (finalCheckFiveCard[i].tag == finalCheckFiveCard[j].tag)
+        // Count the occurrences of each card rank
+        foreach (var card in finalCheckFiveCard)
+        {
+            string rank = card.tag; // Assuming 'tag' represents the card rank (e.g., "2", "3", "A")
+            if (cardRankCounts.ContainsKey(rank))
+            {
+                cardRankCounts[rank]++;
+            }
+            else
+            {
+                cardRankCounts[rank] = 1;
+            }
+        }
+
+        // Check for pairs
+        foreach (var entry in cardRankCounts)
+        {
+            if (entry.Value == 2) // A pair is exactly two cards of the same rank
+            {
+                pairCounts++;
+
+                // Add the duplicate cards to the duplicatePair list
+                foreach (var card in finalCheckFiveCard)
                 {
-                    pairCounts++;
-                    duplicatePair.Add(finalCheckFiveCard[i]);
-                   
-                    if (pairCounts == 4)
+                    if (card.tag == entry.Key)
                     {
-                        Debug.Log(pairCounts);
-                        Debug.Log("PAIR.....");
-                        s = 2;
-                        winnerlist[8] = true;
+                        duplicatePair.Add(card);
                     }
                 }
-              
             }
         }
-      
+
+        // Check if there is at least one pair
+        if (pairCounts > 0)
+        {
+            Debug.Log($"Found {pairCounts} pair(s)!");
+            Debug.Log("PAIR.....");
+            s = 9; // Indicate pair logic or scoring
+            winnerlist[8] = true;
+        }
+        else
+        {
+            Debug.Log("No pairs found.");
+        }
     }
+
     public void TwoPair()
     {
-        for (int i = 0; i < finalCheckFiveCard.Count; i++)
+        // Dictionary to count occurrences of each card rank
+        Dictionary<string, int> cardRankCounts = new Dictionary<string, int>();
+        pairCounts = 0; // Reset pair count
+        duplicatePair.Clear(); // Clear the previous pairs
+
+        // Count occurrences of each card rank
+        foreach (var card in finalCheckFiveCard)
         {
-            for (int j = i + 1; j < finalCheckFiveCard.Count; j++)
+            string rank = card.tag; // Assuming 'tag' represents the card rank
+            if (cardRankCounts.ContainsKey(rank))
             {
-
-
-                if (finalCheckFiveCard[i].tag == finalCheckFiveCard[j].tag)
-                {
-                    pairCounts++;
-                    duplicatePair.Add(finalCheckFiveCard[i]);
-                    Debug.Log(pairCounts);
-                   
-                }
-
+                cardRankCounts[rank]++;
+            }
+            else
+            {
+                cardRankCounts[rank] = 1;
             }
         }
-        if (pairCounts == 8)
+
+        // Identify pairs
+        foreach (var entry in cardRankCounts)
         {
-            Debug.Log("TwoPair.....");
-            winnerlist[7] = true;
-            s = 3;
+            if (entry.Value == 2) // If exactly two cards of the same rank exist
+            {
+                pairCounts++;
+
+                // Add cards of this rank to duplicatePair
+                foreach (var card in finalCheckFiveCard)
+                {
+                    if (card.tag == entry.Key)
+                    {
+                        duplicatePair.Add(card);
+                    }
+                }
+            }
+        }
+
+        // Check if there are exactly two pairs
+        if (pairCounts == 2)
+        {
+            Debug.Log("Two Pair.....");
+            winnerlist[7] = true; // Example: Mark the winner or state
+            s = 3; // Indicate logic or scoring for Two Pair
+        }
+        else
+        {
+            Debug.Log("Not Two Pair.");
         }
     }
-   public void Straight()
+
+    public void Straight()
     {
 
        
@@ -399,9 +453,68 @@ public class CheckButton : MonoBehaviour
             winnerlist[1] = true;
         }
     }
-    void FullHouse()
+    public void FullHouse()
     {
-       
+        // Dictionary to count occurrences of each card rank
+        Dictionary<string, int> cardRankCounts = new Dictionary<string, int>();
+        int threeOfAKindCount = 0; // Counter for Three of a Kind
+        int pairCount = 0; // Counter for Pairs
+        duplicatePair.Clear(); // Clear previous duplicates
+
+        // Count occurrences of each card rank
+        foreach (var card in finalCheckFiveCard)
+        {
+            string rank = card.tag; // Assuming 'tag' represents the card rank
+            if (cardRankCounts.ContainsKey(rank))
+            {
+                cardRankCounts[rank]++;
+            }
+            else
+            {
+                cardRankCounts[rank] = 1;
+            }
+        }
+
+        // Determine if there is a Three of a Kind and a Pair
+        foreach (var entry in cardRankCounts)
+        {
+            if (entry.Value == 3) // Check for Three of a Kind
+            {
+                threeOfAKindCount++;
+                // Add cards of this rank to duplicatePair
+                foreach (var card in finalCheckFiveCard)
+                {
+                    if (card.tag == entry.Key)
+                    {
+                        duplicatePair.Add(card);
+                    }
+                }
+            }
+            else if (entry.Value == 2) // Check for Pair
+            {
+                pairCount++;
+                // Add cards of this rank to duplicatePair
+                foreach (var card in finalCheckFiveCard)
+                {
+                    if (card.tag == entry.Key)
+                    {
+                        duplicatePair.Add(card);
+                    }
+                }
+            }
+        }
+
+        // Check if there is one Three of a Kind and one Pair
+        if (threeOfAKindCount == 1 && pairCount == 1)
+        {
+            Debug.Log("Full House!");
+            winnerlist[3] = true; // Example: Mark the winner or state
+            s = 6; // Indicate logic or scoring for Full House
+        }
+        else
+        {
+            Debug.Log("Not a Full House.");
+        }
     }
+
 }
- 
