@@ -110,6 +110,17 @@ public class Game_Basic_Code : MonoBehaviour
     public List<int> randomCards = new List<int>(8);
     public List<GameObject> randomCardsGameObject = new List<GameObject>();
     public List<Transform> cardPos;
+    [Header("WinnerSelection")]
+    int yes = 0;
+    public List<int>winnerCount = new List<int>();
+    public List<int> winnerSelectP1 = new List<int>();
+    public List<int> winnerSelectP2 = new List<int>();
+    public List<int> winnerSelectP3 = new List<int>();
+    public List<int> winnerSelectP4 = new List<int>();
+    int one = 0;
+    int two = 0;
+    int three = 0;
+    int checkComplete = 0;
     private void Awake()
     {
         dealer = Random.Range(1, 5);
@@ -269,10 +280,8 @@ public class Game_Basic_Code : MonoBehaviour
         Instantiate(randomCardsGameObject[12], referance[4].transform.position, referance[4].transform.rotation);
         CheckButton.Instance.finalCheckFiveCard[4] = randomCardsGameObject[12];
     }
-    public List<int>winnerSelectP1=new List<int>();
-    public List<int> winnerSelectP2 = new List<int>();
-    public List<int> winnerSelectP3 = new List<int>();
-    public List<int> winnerSelectP4 = new List<int>();
+   
+    
     public void round_4_funtion()
     {
         Debug.Log("R4");
@@ -284,122 +293,324 @@ public class Game_Basic_Code : MonoBehaviour
 
         if (P1__setected != P1_setected.Fold)
         {
+          
+           // CheckButton.Instance.ResetFlush();
             CheckButton.Instance.finalCheckFiveCard[5] = playerOneCards[0];
             CheckButton.Instance.finalCheckFiveCard[6] = playerOneCards[1];
 
             CheckButton.Instance.RoyalFlush();
-            winnerSelectP1.Add(CheckButton.Instance.s);
+            winnerSelectP1.Add(CheckButton.Instance.royalFlushVar);
 
             CheckButton.Instance.StraightFlush();
-            winnerSelectP1.Add(CheckButton.Instance.s);
+            winnerSelectP1.Add(CheckButton.Instance.straightFlushVar);
             CheckButton.Instance.Four_of_a_kind();
-            winnerSelectP1.Add(CheckButton.Instance.s);
+            winnerSelectP1.Add(CheckButton.Instance.fourOFaKindVar);
             CheckButton.Instance.flush();
-            winnerSelectP1.Add(CheckButton.Instance.s);
+            winnerSelectP1.Add(CheckButton.Instance.flushVar);
             CheckButton.Instance.Straight();
-            winnerSelectP1.Add(CheckButton.Instance.s);
+            winnerSelectP1.Add(CheckButton.Instance.straightVar);
             CheckButton.Instance.Three_of_a_kind();
-            winnerSelectP1.Add(CheckButton.Instance.s);
+            winnerSelectP1.Add(CheckButton.Instance.threeOfaKindVar);
             CheckButton.Instance.TwoPair();
-            winnerSelectP1.Add(CheckButton.Instance.s);
+            winnerSelectP1.Add(CheckButton.Instance.twoPairVar);
             CheckButton.Instance.Pair();
-            winnerSelectP1.Add(CheckButton.Instance.s);
-            Debug.Log("wtf");     
-
+            winnerSelectP1.Add(CheckButton.Instance.pairVar);
+            CheckButton.Instance.FullHouse();
+            winnerSelectP1.Add(CheckButton.Instance.fullHouseVar);
+            Debug.Log("wtf");
+         //checking final
+            playerOneCards[2] = CheckButton.Instance.finalCheckFiveCard[0];
+            playerOneCards[3] = CheckButton.Instance.finalCheckFiveCard[1];
+            playerOneCards[4] = CheckButton.Instance.finalCheckFiveCard[2];
+            playerOneCards[5] = CheckButton.Instance.finalCheckFiveCard[3];
+            playerOneCards[6] = CheckButton.Instance.finalCheckFiveCard[4];
             winnerSelectP1.Sort();
+            checkComplete = 1;
         }
-      /*  if (P2__setected != P2_setected.Fold)
+        if (checkComplete == 1)
         {
-            CheckButton.Instance.finalCheckFiveCard[5] = playerTwoCards[0];
-            CheckButton.Instance.finalCheckFiveCard[6] = playerTwoCards[1];
-            CheckButton.Instance.RoyalFlush();
-            winnerSelectP2.Add(CheckButton.Instance.s);
+            if (one == 0)
+            {
+                winnerSelectP1[0] = CheckButton.Instance.royalFlushVar;
+                winnerSelectP1[1] = CheckButton.Instance.straightFlushVar;
+                winnerSelectP1[2] = CheckButton.Instance.fourOFaKindVar;
+                winnerSelectP1[3] = CheckButton.Instance.flushVar;
+                winnerSelectP1[4] = CheckButton.Instance.straightVar;
+                winnerSelectP1[5] = CheckButton.Instance.threeOfaKindVar;
+                winnerSelectP1[6] = CheckButton.Instance.twoPairVar;
+                winnerSelectP1[7] = CheckButton.Instance.pairVar;
+                winnerSelectP1[8] = CheckButton.Instance.fullHouseVar;
+                one = 1;
+            }
+             
+               
 
-            CheckButton.Instance.StraightFlush();
-            winnerSelectP2.Add(CheckButton.Instance.s);
-            CheckButton.Instance.Four_of_a_kind();
-            winnerSelectP2.Add(CheckButton.Instance.s);
-            CheckButton.Instance.flush();
-            winnerSelectP2.Add(CheckButton.Instance.s);
-            CheckButton.Instance.Straight();
-            winnerSelectP2.Add(CheckButton.Instance.s);
-            CheckButton.Instance.Three_of_a_kind();
-            winnerSelectP2.Add(CheckButton.Instance.s);
-            CheckButton.Instance.TwoPair();
-            winnerSelectP2.Add(CheckButton.Instance.s);
-            CheckButton.Instance.Pair();
-            winnerSelectP2.Add(CheckButton.Instance.s);
-            winnerSelectP1.Sort();
-
-        }
-        if (P3__setected != P3_setected.Fold)
-        {
-            CheckButton.Instance.finalCheckFiveCard[5] = playerThreeCards[0];
-            CheckButton.Instance.finalCheckFiveCard[6] = playerThreeCards[1];
-            CheckButton.Instance.RoyalFlush();
-            winnerSelectP2.Add(CheckButton.Instance.s);
-
-            CheckButton.Instance.StraightFlush();
-            winnerSelectP3.Add(CheckButton.Instance.s);
-            CheckButton.Instance.Four_of_a_kind();
-            winnerSelectP3.Add(CheckButton.Instance.s);
-            CheckButton.Instance.flush();
-            winnerSelectP3.Add(CheckButton.Instance.s);
-            CheckButton.Instance.Straight();
-            winnerSelectP3.Add(CheckButton.Instance.s);
-            CheckButton.Instance.Three_of_a_kind();
-            winnerSelectP3.Add(CheckButton.Instance.s);
-            CheckButton.Instance.TwoPair();
-            winnerSelectP3.Add(CheckButton.Instance.s);
-            CheckButton.Instance.Pair();
-            winnerSelectP3.Add(CheckButton.Instance.s);
-            winnerSelectP3.Sort();
+            CheckButton.Instance.royalFlushVar=0;
+           CheckButton.Instance.straightFlushVar = 0;
+            CheckButton.Instance.fourOFaKindVar = 0;
+          CheckButton.Instance.flushVar = 0;
+           CheckButton.Instance.straightVar=0;
+             CheckButton.Instance.threeOfaKindVar = 0;
+           CheckButton.Instance.twoPairVar = 0;
+         CheckButton.Instance.pairVar = 0;
+            CheckButton.Instance.fullHouseVar = 0;  
+            checkComplete = 2;
 
         }
-        if (P4__setected != P4_setected.Fold)
+        if(checkComplete == 2)
         {
-            CheckButton.Instance.finalCheckFiveCard[5] = playerFourCards[0];
-            CheckButton.Instance.finalCheckFiveCard[6] = playerFourCards[1];
-            CheckButton.Instance.RoyalFlush();
-            winnerSelectP4.Add(CheckButton.Instance.s);
+            if (P2__setected != P2_setected.Fold)
+            {
 
-            CheckButton.Instance.StraightFlush();
-            winnerSelectP4.Add(CheckButton.Instance.s);
-            CheckButton.Instance.Four_of_a_kind();
-            winnerSelectP4.Add(CheckButton.Instance.s);
-            CheckButton.Instance.flush();
-            winnerSelectP4.Add(CheckButton.Instance.s);
-            CheckButton.Instance.Straight();
-            winnerSelectP4.Add(CheckButton.Instance.s);
-            CheckButton.Instance.Three_of_a_kind();
-            winnerSelectP4.Add(CheckButton.Instance.s);
-            CheckButton.Instance.TwoPair();
-            winnerSelectP4.Add(CheckButton.Instance.s);
-            CheckButton.Instance.Pair();
-            winnerSelectP4.Add(CheckButton.Instance.s);
-            winnerSelectP4.Sort();
+                CheckButton.Instance.ResetFlush();
+                CheckButton.Instance.finalCheckFiveCard[5] = playerOneCards[0];
+                CheckButton.Instance.finalCheckFiveCard[6] = playerOneCards[1];
 
-        }*/
-        if (winnerSelectP1[7]> winnerSelectP2[7]&& winnerSelectP1[7] > winnerSelectP3[7]&& winnerSelectP1[7] > winnerSelectP4[7])
-        {
-            Debug.Log("winner 1");
-        }
-        if(winnerSelectP2[7] > winnerSelectP1[7] && winnerSelectP2[7] > winnerSelectP3[7] && winnerSelectP2[7] > winnerSelectP4[7])
-        {
-            Debug.Log("winner 1");
-        }
-        if (winnerSelectP3[7] > winnerSelectP1[7] && winnerSelectP3[7] > winnerSelectP2[7] && winnerSelectP3[7] > winnerSelectP4[7])
-        {
-            Debug.Log("winner 1");
-        }
-        if(winnerSelectP4[7] > winnerSelectP1[7] && winnerSelectP4[7] > winnerSelectP2[7] && winnerSelectP4[7] > winnerSelectP3[7])
-        {
-            Debug.Log("winner 1");
-        }
+                CheckButton.Instance.RoyalFlush();
+                winnerSelectP2.Add(CheckButton.Instance.player2Win[0]);
+                // CheckButton.Instance.player2Win[0] = 10;
 
+                CheckButton.Instance.StraightFlush();
+                winnerSelectP2.Add(CheckButton.Instance.player2Win[1]);
+                // CheckButton.Instance.player2Win[1] = 9;
+                CheckButton.Instance.Four_of_a_kind();
+                winnerSelectP2.Add(CheckButton.Instance.player2Win[2]);
+                //CheckButton.Instance.player2Win[2] = 8;
+                CheckButton.Instance.flush();
+                winnerSelectP2.Add(CheckButton.Instance.player2Win[4]);
+                //CheckButton.Instance.player2Win[4] = 6;
+                CheckButton.Instance.Straight();
+                winnerSelectP2.Add(CheckButton.Instance.player2Win[5]);
+                //CheckButton.Instance.player2Win[5] = 5;
+                CheckButton.Instance.Three_of_a_kind();
+                winnerSelectP2.Add(CheckButton.Instance.player2Win[6]);
+                //  CheckButton.Instance.player2Win[6] = 4;
+
+                CheckButton.Instance.TwoPair();
+                winnerSelectP2.Add(CheckButton.Instance.player2Win[7]);
+                //  CheckButton.Instance.player2Win[7] = 3;
+                CheckButton.Instance.Pair();
+                winnerSelectP2.Add(CheckButton.Instance.player2Win[8]);
+                //   CheckButton.Instance.player2Win[8] = 2;
+                CheckButton.Instance.FullHouse();
+                winnerSelectP2.Add(CheckButton.Instance.player2Win[3]);
+                //  CheckButton.Instance.player2Win[3] = 7;
+
+                playerTwoCards[2] = CheckButton.Instance.finalCheckFiveCard[0];
+                playerTwoCards[3] = CheckButton.Instance.finalCheckFiveCard[1];
+                playerTwoCards[4] = CheckButton.Instance.finalCheckFiveCard[2];
+                playerTwoCards[5] = CheckButton.Instance.finalCheckFiveCard[3];
+                playerTwoCards[6] = CheckButton.Instance.finalCheckFiveCard[4];
+                checkComplete = 3;
+                Debug.Log("wtf");
+
+            }
+        }
+        if (checkComplete == 3)
+        {
+            if (two == 0)
+            {
+                winnerSelectP2[0] = CheckButton.Instance.royalFlushVar;
+                winnerSelectP2[1] = CheckButton.Instance.straightFlushVar;
+                winnerSelectP2[2] = CheckButton.Instance.fourOFaKindVar;
+                winnerSelectP2[3] = CheckButton.Instance.flushVar;
+                winnerSelectP2[4] = CheckButton.Instance.straightVar;
+                winnerSelectP2[5] = CheckButton.Instance.threeOfaKindVar;
+                winnerSelectP2[6] = CheckButton.Instance.twoPairVar;
+                winnerSelectP2[7] = CheckButton.Instance.pairVar;
+                winnerSelectP2[8] = CheckButton.Instance.fullHouseVar;
+                two = 1;
+            }
+
+
+
+
+
+            CheckButton.Instance.royalFlushVar = 0;
+            CheckButton.Instance.straightFlushVar = 0;
+            CheckButton.Instance.fourOFaKindVar = 0;
+            CheckButton.Instance.flushVar = 0;
+            CheckButton.Instance.straightVar = 0;
+            CheckButton.Instance.threeOfaKindVar = 0;
+            CheckButton.Instance.twoPairVar = 0;
+            CheckButton.Instance.pairVar = 0;
+            CheckButton.Instance.fullHouseVar = 0;
+            checkComplete = 4;
+        }
+        if (checkComplete == 4)
+        {
+            if (P3__setected != P3_setected.Fold)
+            {
+
+
+                CheckButton.Instance.ResetFlush();
+                CheckButton.Instance.finalCheckFiveCard[5] = playerOneCards[0];
+                CheckButton.Instance.finalCheckFiveCard[6] = playerOneCards[1];
+
+                CheckButton.Instance.RoyalFlush();
+                winnerSelectP3.Add(CheckButton.Instance.player3Win[0]);
+                //CheckButton.Instance.player3Win[0] = 10;
+                CheckButton.Instance.StraightFlush();
+                winnerSelectP3.Add(CheckButton.Instance.player3Win[1]);
+                // CheckButton.Instance.player2Win[1] = 9;
+                CheckButton.Instance.Four_of_a_kind();
+                winnerSelectP3.Add(CheckButton.Instance.player3Win[2]);
+                // CheckButton.Instance.player2Win[2] = 8;
+                CheckButton.Instance.flush();
+                winnerSelectP3.Add(CheckButton.Instance.player3Win[4]);
+                //   CheckButton.Instance.player2Win[4] = 6;
+                CheckButton.Instance.Straight();
+                winnerSelectP3.Add(CheckButton.Instance.player3Win[5]);
+                // CheckButton.Instance.player2Win[5] = 5;
+                CheckButton.Instance.Three_of_a_kind();
+                winnerSelectP3.Add(CheckButton.Instance.player3Win[6]);
+                //CheckButton.Instance.player2Win[6] = 4;
+
+                CheckButton.Instance.TwoPair();
+                winnerSelectP3.Add(CheckButton.Instance.player3Win[7]);
+                // CheckButton.Instance.player2Win[7] = 3;
+                CheckButton.Instance.Pair();
+                winnerSelectP3.Add(CheckButton.Instance.player3Win[8]);
+                //CheckButton.Instance.player2Win[8] = 2;
+                CheckButton.Instance.FullHouse();
+                winnerSelectP3.Add(CheckButton.Instance.player3Win[3]);
+                //CheckButton.Instance.player2Win[3] = 7;
+
+
+                playerThreeCards[2] = CheckButton.Instance.finalCheckFiveCard[0];
+                playerThreeCards[3] = CheckButton.Instance.finalCheckFiveCard[1];
+                playerThreeCards[4] = CheckButton.Instance.finalCheckFiveCard[2];
+                playerThreeCards[5] = CheckButton.Instance.finalCheckFiveCard[3];
+                playerThreeCards[6] = CheckButton.Instance.finalCheckFiveCard[4];
+                checkComplete = 5;
+                Debug.Log("wtf");
+            }
+        }
+        if (checkComplete == 5)
+        {
+            if (three == 0)
+            {
+                winnerSelectP3[0] = CheckButton.Instance.royalFlushVar;
+                winnerSelectP3[1] = CheckButton.Instance.straightFlushVar;
+                winnerSelectP3[2] = CheckButton.Instance.fourOFaKindVar;
+                winnerSelectP3[3] = CheckButton.Instance.flushVar;
+                winnerSelectP3[4] = CheckButton.Instance.straightVar;
+                winnerSelectP3[5] = CheckButton.Instance.threeOfaKindVar;
+                winnerSelectP3[6] = CheckButton.Instance.twoPairVar;
+                winnerSelectP3[7] = CheckButton.Instance.pairVar;
+                winnerSelectP3[8] = CheckButton.Instance.fullHouseVar;
+                three = 1;
+
+            }
+
+
+
+
+
+            CheckButton.Instance.royalFlushVar = 0;
+            CheckButton.Instance.straightFlushVar = 0;
+            CheckButton.Instance.fourOFaKindVar = 0;
+            CheckButton.Instance.flushVar = 0;
+            CheckButton.Instance.straightVar = 0;
+            CheckButton.Instance.threeOfaKindVar = 0;
+            CheckButton.Instance.twoPairVar = 0;
+            CheckButton.Instance.pairVar = 0;
+            CheckButton.Instance.fullHouseVar = 0;
+            checkComplete = 6;
+        }
+        if (checkComplete == 6)
+        {
+            if (P4__setected != P4_setected.Fold)
+            {
+
+                CheckButton.Instance.ResetFlush();
+                CheckButton.Instance.finalCheckFiveCard[5] = playerOneCards[0];
+                CheckButton.Instance.finalCheckFiveCard[6] = playerOneCards[1];
+
+                CheckButton.Instance.RoyalFlush();
+                winnerSelectP4.Add(CheckButton.Instance.player4Win[0]);
+                //CheckButton.Instance.player3Win[0] = 10;
+                CheckButton.Instance.StraightFlush();
+                winnerSelectP4.Add(CheckButton.Instance.player4Win[1]);
+                //CheckButton.Instance.player2Win[1] = 9;
+                CheckButton.Instance.Four_of_a_kind();
+                winnerSelectP4.Add(CheckButton.Instance.player4Win[2]);
+                // CheckButton.Instance.player2Win[2] = 8;
+                CheckButton.Instance.flush();
+                winnerSelectP4.Add(CheckButton.Instance.player4Win[4]);
+                //CheckButton.Instance.player2Win[4] = 6;
+                CheckButton.Instance.Straight();
+                winnerSelectP4.Add(CheckButton.Instance.player4Win[5]);
+                //CheckButton.Instance.player2Win[5] = 5;
+                CheckButton.Instance.Three_of_a_kind();
+                winnerSelectP4.Add(CheckButton.Instance.player4Win[6]);
+                //CheckButton.Instance.player2Win[6] = 4;
+                CheckButton.Instance.TwoPair();
+                winnerSelectP4.Add(CheckButton.Instance.player4Win[7]);
+                //CheckButton.Instance.player2Win[7] = 3;
+                CheckButton.Instance.Pair();
+                winnerSelectP4.Add(CheckButton.Instance.player4Win[8]);
+                //CheckButton.Instance.player2Win[8] = 2;
+                CheckButton.Instance.FullHouse();
+                winnerSelectP4.Add(CheckButton.Instance.player4Win[3]);
+                //CheckButton.Instance.player2Win[3] = 7;
+
+                playerFourCards[2] = CheckButton.Instance.finalCheckFiveCard[0];
+                playerFourCards[3] = CheckButton.Instance.finalCheckFiveCard[1];
+                playerFourCards[4] = CheckButton.Instance.finalCheckFiveCard[2];
+                playerFourCards[5] = CheckButton.Instance.finalCheckFiveCard[3];
+                playerFourCards[6] = CheckButton.Instance.finalCheckFiveCard[4];
+
+
+                Debug.Log("wtf");
+            }
+            yes = 1;
+            WinnerSelection();
+        }
     }
+        
    
+    public void WinnerSelection()
+    {
+        /* if (yes == 1)
+         {
+             for(int i = 0; i < winnerSelectP1.Count; i++)
+             {
+                 if (winnerSelectP1[i] != 0)
+                 {
+                     winnerCount.Add(winnerSelectP1[i]);
+                 }
+             }
+             for (int i = 0; i < winnerSelectP2.Count; i++)
+             {
+                 if (winnerSelectP2[i] != 0)
+                 {
+                     winnerCount.Add(winnerSelectP2[i]);
+                 }
+             }
+             for (int i = 0; i < winnerSelectP3.Count; i++)
+             {
+                 if (winnerSelectP3[i] != 0)
+                 {
+                     winnerCount.Add(winnerSelectP3[i]);
+                 }
+             }
+             for (int i = 0; i < winnerSelectP4.Count; i++)
+             {
+                 if (winnerSelectP4[i] != 0)
+                 {
+                     winnerCount.Add(winnerSelectP4[i]);
+                 }
+             }
+         }*/
+        /*if (yes == 1)
+        {
+            for(int i = 0; i < playerOneCards.Count; i++)
+            {
 
+            }
+        }*/
+    }
     public void EqualingEnum_funtion()
     {
         if (Player_turn == 1)

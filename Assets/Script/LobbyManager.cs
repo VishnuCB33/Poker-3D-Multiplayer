@@ -95,7 +95,7 @@ public class LobbyManager : MonoBehaviour
                 IsPrivate = isPrivateToggle.isOn,
                 //in GetPlayer contain the information of current player
                 Player = GetPlayer()
-                //Start Button (To s game start or not)
+                //Start Button (To royalFlushVar game start or not)
                 ,
                 Data = new Dictionary<string, DataObject>
                 {
@@ -169,7 +169,7 @@ public class LobbyManager : MonoBehaviour
     //Check this function to player is in the lobby or not
     private bool IsinLobby()
     {
-        //Now s id the player ID matches the any player ID in Lobby
+        //Now royalFlushVar id the player ID matches the any player ID in Lobby
         foreach (Player _player in currentLobby.Players)
         {
             if (_player.Id == playerId)
@@ -243,7 +243,7 @@ public class LobbyManager : MonoBehaviour
     private float heartBeatTimer = 15f;
     private async void HandleLobbyHeartBeat()
     {
-        //s if Lobby is not be null we decrease the heartbeatTimer and it will be 0 we will increase 15
+        //royalFlushVar if Lobby is not be null we decrease the heartbeatTimer and it will be 0 we will increase 15
         if (currentLobby != null && isHost())
         {
             heartBeatTimer -= Time.deltaTime;
@@ -256,10 +256,10 @@ public class LobbyManager : MonoBehaviour
             }
         }
     }
-    //Host canonly send HeartBEat so s the player host or not
+    //Host canonly send HeartBEat so royalFlushVar the player host or not
     private bool isHost()
     {
-        //We s host id and player id are same or not
+        //We royalFlushVar host id and player id are same or not
         if (currentLobby != null && currentLobby.HostId == playerId)
         {
             return true;
@@ -441,14 +441,14 @@ public class LobbyManager : MonoBehaviour
     //when host will click start game the value will updated
     private async void StartGame()
     {
-        //We shall s current lobby not null and ONly host can start game
+        //We shall royalFlushVar current lobby not null and ONly host can start game
 
         if (currentLobby != null && isHost())
         {
             try
             {
                 //now we will make the game started keys value as true 
-                // Update the lobby's data with a "GameStarted" flag
+                // Update the lobby'royalFlushVar data with a "GameStarted" flag
                 var updatedLobby = await LobbyService.Instance.UpdateLobbyAsync(
                     currentLobby.Id,
                     new UpdateLobbyOptions

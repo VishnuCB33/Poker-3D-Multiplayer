@@ -29,7 +29,7 @@ public class CheckButton : MonoBehaviour
     [SerializeField] private int changeCards;
     [SerializeField] private int count;
     [SerializeField] private List<GameObject> duplicateCheck;
-    [Header("s Variables")]
+    [Header("royalFlushVar Variables")]
     int checkClubs = 0;
     [SerializeField] private List<GameObject> royalFlushMerge;
     int royalFleshClubCount;
@@ -47,8 +47,23 @@ public class CheckButton : MonoBehaviour
     private int flushChecker = 0;
     private int twoPairChecker = 0;
     [Header("Checking Final")]
-    public int s = 0;
+    public int royalFlushVar = 0;
+    public int straightFlushVar = 0;
+    public int fourOFaKindVar = 0;
+    public int fullHouseVar = 0;
+    public int flushVar = 0;
+    public int straightVar = 0;
+    public int threeOfaKindVar = 0;
+    public int twoPairVar = 0;
+    public int pairVar = 0;
+    public int highCardVar = 0;
+    public List<int>player2Win=new List<int>(10);
+    public List<int> player3Win = new List<int>(10);
+    public List<int> player4Win = new List<int>(10);
 
+    /*  [Header("IdentifyWinsCount")]
+      public List<int>winnerCount = new List<int>();
+      int countWinner = 0;*/
     private void Start()
     {
        Instance = this;
@@ -98,6 +113,17 @@ public class CheckButton : MonoBehaviour
             StraightFlush();
         }*/
 
+    }
+    public void ResetFlush()
+    {
+        flush_Diamonds_count = 0;
+        flush_Club_count = 0;
+        flush_Heart_count = 0;
+        flush_Spades_count = 0;
+        x = 0;
+        y = 0;
+        count_four_of_a_kind = 0;
+        count_three_of_a_kind = 0;
     }
     public bool RoyalFlush()
     {
@@ -176,8 +202,12 @@ public class CheckButton : MonoBehaviour
                if(royalFleshSpadesCount >= 5 || royalFleshHeartCount >= 5 || royalFleshDiamondCount >= 5 || royalFleshClubCount >= 5)
                 {
                     Debug.Log("RoyalFlush");
-                    s = 10;
+                    //player1
+                    royalFlushVar = 10;
+                    player2Win[0] = 10;
                     winnerlist[0] = true;
+                 player3Win[0] = 10;
+                    player4Win[0] = 10;
 
 
                 }
@@ -221,9 +251,13 @@ public class CheckButton : MonoBehaviour
             Debug.Log("player_one_have_flush");
            
             winnerlist[4] = true;
-            s = 6;
+            flushVar = 6;
             flushChecker = 1;
             x = 0;
+          
+            player3Win[4] = 6;
+            player4Win[4] = 6;
+
         }
         else
         {
@@ -257,8 +291,11 @@ public class CheckButton : MonoBehaviour
         else if(count_four_of_a_kind >= 4)
         {
             Debug.Log("player one have Four_of_a_kind");
-            s = 8;
+            fourOFaKindVar = 8;
             winnerlist[2] = true;
+           
+            player3Win[2] = 8;
+            player4Win[2] = 8;
         }
         else 
         {
@@ -292,7 +329,10 @@ public class CheckButton : MonoBehaviour
         {
             Debug.Log("player one have three_of_a_kind");
             winnerlist[6] = true;
-            s = 7;
+            threeOfaKindVar = 4;
+            player2Win[6] = 4;
+            player3Win[6] = 4;
+            player4Win[6] = 4;
 
         }
         else 
@@ -343,10 +383,14 @@ public class CheckButton : MonoBehaviour
         // Check if there is at least one pair
         if (pairCounts > 0)
         {
-            Debug.Log($"Found {pairCounts} pair(s)!");
+            //Debug.Log($"Found {pairCounts} pair(royalFlushVar)!");
             Debug.Log("PAIR.....");
-            s = 9; // Indicate pair logic or scoring
+            pairVar = 2; // Indicate pair logic or scoring
             winnerlist[8] = true;
+          
+            player2Win[8] = 2;
+            player3Win[8] = 2;
+            player4Win[8] = 2;
         }
         else
         {
@@ -398,7 +442,10 @@ public class CheckButton : MonoBehaviour
         {
             Debug.Log("Two Pair.....");
             winnerlist[7] = true; // Example: Mark the winner or state
-            s = 3; // Indicate logic or scoring for Two Pair
+            twoPairVar = 3; // Indicate logic or scoring for Two Pair
+            player2Win[7] = 3;
+            player3Win[7] = 3;
+            player4Win[7] = 3;
         }
         else
         {
@@ -437,7 +484,9 @@ public class CheckButton : MonoBehaviour
                     {
                         Debug.Log("Straight.....");
                         winnerlist[5] = true;
-                        s = 5;
+                        straightVar = 5;
+                      
+                       
                     }
                 }
             }
@@ -448,9 +497,10 @@ public class CheckButton : MonoBehaviour
         if (flushChecker == 1)
         {
             Straight();
-            s = 9;
+            straightFlushVar = 9;
             Debug.Log("StraightFlush...");
             winnerlist[1] = true;
+            
         }
     }
     public void FullHouse()
@@ -509,7 +559,9 @@ public class CheckButton : MonoBehaviour
         {
             Debug.Log("Full House!");
             winnerlist[3] = true; // Example: Mark the winner or state
-            s = 6; // Indicate logic or scoring for Full House
+            fullHouseVar = 7; // Indicate logic or scoring for Full House
+           
+           
         }
         else
         {

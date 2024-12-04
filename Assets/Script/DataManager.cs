@@ -11,7 +11,7 @@ public class PlayfabManager : MonoBehaviour
 
     [Header("UI")]
     public TMP_Text messageText; // Message for user feedback
-    public string playername; // Current player's name
+    public string playername; // Current player'royalFlushVar name
     public TMP_InputField emailInput; // Input field for email
     public TMP_InputField passwordInput; // Input field for password
     public TMP_InputField nameInputText; // Input field for display name
