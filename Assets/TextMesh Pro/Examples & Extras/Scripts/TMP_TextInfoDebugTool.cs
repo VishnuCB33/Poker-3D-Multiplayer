@@ -44,7 +44,7 @@ namespace TMPro.Examples
 
             m_Transform = m_TextComponent.transform;
 
-            // Get a reference to the text object's textInfo
+            // Get a reference to the text object'royalFlushVar textInfo
             m_TextInfo = m_TextComponent.textInfo;
 
             // Update Text Statistics
