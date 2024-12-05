@@ -317,6 +317,15 @@ public class Game_Basic_Code : MonoBehaviour
             winnerSelectP1.Add(CheckButton.Instance.pairVar);
             CheckButton.Instance.FullHouse();
             winnerSelectP1.Add(CheckButton.Instance.fullHouseVar);
+            CheckButton.Instance.royalFlushVar = 0;
+            CheckButton.Instance.straightFlushVar = 0;
+            CheckButton.Instance.fourOFaKindVar = 0;
+            CheckButton.Instance.flushVar = 0;
+            CheckButton.Instance.straightVar = 0;
+            CheckButton.Instance.threeOfaKindVar = 0;
+            CheckButton.Instance.twoPairVar = 0;
+            CheckButton.Instance.pairVar = 0;
+            CheckButton.Instance.fullHouseVar = 0;
             Debug.Log("wtf");
          //checking final
             playerOneCards[2] = CheckButton.Instance.finalCheckFiveCard[0];
@@ -327,7 +336,7 @@ public class Game_Basic_Code : MonoBehaviour
             winnerSelectP1.Sort();
             checkComplete = 1;
         }
-        if (checkComplete == 1)
+        /*if (checkComplete == 1)
         {
             if (one == 0)
             {
@@ -356,7 +365,7 @@ public class Game_Basic_Code : MonoBehaviour
             CheckButton.Instance.fullHouseVar = 0;  
             checkComplete = 2;
 
-        }
+        }*/
         if(checkComplete == 2)
         {
             if (P2__setected != P2_setected.Fold)
@@ -395,7 +404,15 @@ public class Game_Basic_Code : MonoBehaviour
                 CheckButton.Instance.FullHouse();
                 winnerSelectP2.Add(CheckButton.Instance.player2Win[3]);
                 //  CheckButton.Instance.player2Win[3] = 7;
-
+                CheckButton.Instance.royalFlushVar = 0;
+                CheckButton.Instance.straightFlushVar = 0;
+                CheckButton.Instance.fourOFaKindVar = 0;
+                CheckButton.Instance.flushVar = 0;
+                CheckButton.Instance.straightVar = 0;
+                CheckButton.Instance.threeOfaKindVar = 0;
+                CheckButton.Instance.twoPairVar = 0;
+                CheckButton.Instance.pairVar = 0;
+                CheckButton.Instance.fullHouseVar = 0;
                 playerTwoCards[2] = CheckButton.Instance.finalCheckFiveCard[0];
                 playerTwoCards[3] = CheckButton.Instance.finalCheckFiveCard[1];
                 playerTwoCards[4] = CheckButton.Instance.finalCheckFiveCard[2];
@@ -406,7 +423,7 @@ public class Game_Basic_Code : MonoBehaviour
 
             }
         }
-        if (checkComplete == 3)
+       /* if (checkComplete == 3)
         {
             if (two == 0)
             {
@@ -436,7 +453,7 @@ public class Game_Basic_Code : MonoBehaviour
             CheckButton.Instance.pairVar = 0;
             CheckButton.Instance.fullHouseVar = 0;
             checkComplete = 4;
-        }
+        }*/
         if (checkComplete == 4)
         {
             if (P3__setected != P3_setected.Fold)
@@ -474,8 +491,15 @@ public class Game_Basic_Code : MonoBehaviour
                 //CheckButton.Instance.player2Win[8] = 2;
                 CheckButton.Instance.FullHouse();
                 winnerSelectP3.Add(CheckButton.Instance.player3Win[3]);
-                //CheckButton.Instance.player2Win[3] = 7;
-
+                //CheckButton.Instance.player2Win[3] = 7; CheckButton.Instance.royalFlushVar = 0;
+                CheckButton.Instance.straightFlushVar = 0;
+                CheckButton.Instance.fourOFaKindVar = 0;
+                CheckButton.Instance.flushVar = 0;
+                CheckButton.Instance.straightVar = 0;
+                CheckButton.Instance.threeOfaKindVar = 0;
+                CheckButton.Instance.twoPairVar = 0;
+                CheckButton.Instance.pairVar = 0;
+                CheckButton.Instance.fullHouseVar = 0;
 
                 playerThreeCards[2] = CheckButton.Instance.finalCheckFiveCard[0];
                 playerThreeCards[3] = CheckButton.Instance.finalCheckFiveCard[1];
@@ -486,7 +510,7 @@ public class Game_Basic_Code : MonoBehaviour
                 Debug.Log("wtf");
             }
         }
-        if (checkComplete == 5)
+       /* if (checkComplete == 5)
         {
             if (three == 0)
             {
@@ -517,7 +541,7 @@ public class Game_Basic_Code : MonoBehaviour
             CheckButton.Instance.pairVar = 0;
             CheckButton.Instance.fullHouseVar = 0;
             checkComplete = 6;
-        }
+        }*/
         if (checkComplete == 6)
         {
             if (P4__setected != P4_setected.Fold)
@@ -554,7 +578,15 @@ public class Game_Basic_Code : MonoBehaviour
                 CheckButton.Instance.FullHouse();
                 winnerSelectP4.Add(CheckButton.Instance.player4Win[3]);
                 //CheckButton.Instance.player2Win[3] = 7;
-
+                CheckButton.Instance.royalFlushVar = 0;
+                CheckButton.Instance.straightFlushVar = 0;
+                CheckButton.Instance.fourOFaKindVar = 0;
+                CheckButton.Instance.flushVar = 0;
+                CheckButton.Instance.straightVar = 0;
+                CheckButton.Instance.threeOfaKindVar = 0;
+                CheckButton.Instance.twoPairVar = 0;
+                CheckButton.Instance.pairVar = 0;
+                CheckButton.Instance.fullHouseVar = 0;
                 playerFourCards[2] = CheckButton.Instance.finalCheckFiveCard[0];
                 playerFourCards[3] = CheckButton.Instance.finalCheckFiveCard[1];
                 playerFourCards[4] = CheckButton.Instance.finalCheckFiveCard[2];
