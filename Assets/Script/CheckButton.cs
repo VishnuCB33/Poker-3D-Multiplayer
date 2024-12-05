@@ -559,9 +559,14 @@ public class CheckButton : MonoBehaviour
         {
             Debug.Log("Full House!");
             winnerlist[3] = true; // Example: Mark the winner or state
-            fullHouseVar = 7; // Indicate logic or scoring for Full House
-           
-           
+
+           // Indicate logic or scoring for Full House
+            if (Game_Basic_Code.instance.Player_turn == 1)
+            {
+                fullHouseVar = 7;
+
+            }
+
         }
         else
         {
