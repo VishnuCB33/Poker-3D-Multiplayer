@@ -21,13 +21,13 @@ public class Animation_script : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        card1.SetActive(true);
-        card2.SetActive(true);
-        card3.SetActive(true);
-        card4.SetActive(true);
-        card5.SetActive(true);
-        card6.SetActive(true);
-        card7.SetActive(true);
-        card8.SetActive(true);
+        card1.SetActive(false);
+        card2.SetActive(false);
+        card3.SetActive(false);
+        card4.SetActive(false);
+        card5.SetActive(false);
+        card6.SetActive(false);
+        card7.SetActive(false);
+        card8.SetActive(false);
     }
 }
