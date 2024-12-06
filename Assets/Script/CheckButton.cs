@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class CheckButton : MonoBehaviour
 {
+    public static CheckButton Instance;
     [Header("Win")]
     public bool[] winnerlist;
 
@@ -28,7 +29,7 @@ public class CheckButton : MonoBehaviour
     [SerializeField] private int changeCards;
     [SerializeField] private int count;
     [SerializeField] private List<GameObject> duplicateCheck;
-    [Header("check Variables")]
+    [Header("royalFlushVar Variables")]
     int checkClubs = 0;
     [SerializeField] private List<GameObject> royalFlushMerge;
     int royalFleshClubCount;
@@ -45,9 +46,27 @@ public class CheckButton : MonoBehaviour
     [SerializeField] List<int> values;
     private int flushChecker = 0;
     private int twoPairChecker = 0;
+    [Header("Checking Final")]
+    public int royalFlushVar = 0;
+    public int straightFlushVar = 0;
+    public int fourOFaKindVar = 0;
+    public int fullHouseVar = 0;
+    public int flushVar = 0;
+    public int straightVar = 0;
+    public int threeOfaKindVar = 0;
+    public int twoPairVar = 0;
+    public int pairVar = 0;
+    public int highCardVar = 0;
+    public List<int>player2Win=new List<int>(10);
+    public List<int> player3Win = new List<int>(10);
+    public List<int> player4Win = new List<int>(10);
+
+    /*  [Header("IdentifyWinsCount")]
+      public List<int>winnerCount = new List<int>();
+      int countWinner = 0;*/
     private void Start()
     {
-       
+       Instance = this;
     }
     private void Update()
     {
@@ -59,18 +78,18 @@ public class CheckButton : MonoBehaviour
         }*/
 
 
-        if (Input.GetKeyDown(KeyCode.Space))//A
+      /*  if (Input.GetKeyDown(KeyCode.Space))//A
         {
             flush();
             Four_of_a_kind();
-            Three_of_a_kind();
+            Three_of_a_kind(); 
         }
 
         if (Input.GetKeyDown(KeyCode.S))
         {
             Pair();
             TwoPair();  
-        }
+        }*/
 
 
         if (Input.GetKeyDown(KeyCode.A))//A
@@ -85,15 +104,26 @@ public class CheckButton : MonoBehaviour
             count_three_of_a_kind = 0;
         }
 
-        if (Input.GetKeyDown(KeyCode.D))
+       /* if (Input.GetKeyDown(KeyCode.D))
         {
             Straight();
         }
         if (Input.GetKeyDown(KeyCode.F))
         {
             StraightFlush();
-        }
+        }*/
 
+    }
+    public void ResetFlush()
+    {
+        flush_Diamonds_count = 0;
+        flush_Club_count = 0;
+        flush_Heart_count = 0;
+        flush_Spades_count = 0;
+        x = 0;
+        y = 0;
+        count_four_of_a_kind = 0;
+        count_three_of_a_kind = 0;
     }
     public bool RoyalFlush()
     {
@@ -172,6 +202,14 @@ public class CheckButton : MonoBehaviour
                if(royalFleshSpadesCount >= 5 || royalFleshHeartCount >= 5 || royalFleshDiamondCount >= 5 || royalFleshClubCount >= 5)
                 {
                     Debug.Log("RoyalFlush");
+                    //player1
+                    royalFlushVar = 10;
+                    player2Win[0] = 10;
+                    winnerlist[0] = true;
+                 player3Win[0] = 10;
+                    player4Win[0] = 10;
+
+
                 }
                 
             }
@@ -211,9 +249,15 @@ public class CheckButton : MonoBehaviour
         if(flush_Club_count >= 5|| flush_Diamonds_count >= 5|| flush_Heart_count >= 5|| flush_Spades_count >= 5)
         {
             Debug.Log("player_one_have_flush");
+           
             winnerlist[4] = true;
+            flushVar = 6;
             flushChecker = 1;
             x = 0;
+          
+            player3Win[4] = 6;
+            player4Win[4] = 6;
+
         }
         else
         {
@@ -247,7 +291,11 @@ public class CheckButton : MonoBehaviour
         else if(count_four_of_a_kind >= 4)
         {
             Debug.Log("player one have Four_of_a_kind");
+            fourOFaKindVar = 8;
             winnerlist[2] = true;
+           
+            player3Win[2] = 8;
+            player4Win[2] = 8;
         }
         else 
         {
@@ -281,6 +329,10 @@ public class CheckButton : MonoBehaviour
         {
             Debug.Log("player one have three_of_a_kind");
             winnerlist[6] = true;
+            threeOfaKindVar = 4;
+            player2Win[6] = 4;
+            player3Win[6] = 4;
+            player4Win[6] = 4;
 
         }
         else 
@@ -291,52 +343,117 @@ public class CheckButton : MonoBehaviour
     }
     public void Pair()
     {
-        for(int i=0;i< finalCheckFiveCard.Count;i++)
-        {
-           for(int j = i+1; j < finalCheckFiveCard.Count; j++)
-            {
-               
+        // A dictionary to track card ranks and their counts
+        Dictionary<string, int> cardRankCounts = new Dictionary<string, int>();
+        pairCounts = 0; // Reset pair count
+        duplicatePair.Clear(); // Clear the previous pairs
 
-                if (finalCheckFiveCard[i].tag == finalCheckFiveCard[j].tag)
+        // Count the occurrences of each card rank
+        foreach (var card in finalCheckFiveCard)
+        {
+            string rank = card.tag; // Assuming 'tag' represents the card rank (e.g., "2", "3", "A")
+            if (cardRankCounts.ContainsKey(rank))
+            {
+                cardRankCounts[rank]++;
+            }
+            else
+            {
+                cardRankCounts[rank] = 1;
+            }
+        }
+
+        // Check for pairs
+        foreach (var entry in cardRankCounts)
+        {
+            if (entry.Value == 2) // A pair is exactly two cards of the same rank
+            {
+                pairCounts++;
+
+                // Add the duplicate cards to the duplicatePair list
+                foreach (var card in finalCheckFiveCard)
                 {
-                    pairCounts++;
-                    duplicatePair.Add(finalCheckFiveCard[i]);
-                   
-                    if (pairCounts == 4)
+                    if (card.tag == entry.Key)
                     {
-                        Debug.Log(pairCounts);
-                        Debug.Log("PAIR.....");
+                        duplicatePair.Add(card);
                     }
                 }
-              
             }
         }
-      
+
+        // Check if there is at least one pair
+        if (pairCounts > 0)
+        {
+            //Debug.Log($"Found {pairCounts} pair(royalFlushVar)!");
+            Debug.Log("PAIR.....");
+            pairVar = 2; // Indicate pair logic or scoring
+            winnerlist[8] = true;
+          
+            player2Win[8] = 2;
+            player3Win[8] = 2;
+            player4Win[8] = 2;
+        }
+        else
+        {
+            Debug.Log("No pairs found.");
+        }
     }
-    void TwoPair()
+
+    public void TwoPair()
     {
-        for (int i = 0; i < finalCheckFiveCard.Count; i++)
+        // Dictionary to count occurrences of each card rank
+        Dictionary<string, int> cardRankCounts = new Dictionary<string, int>();
+        pairCounts = 0; // Reset pair count
+        duplicatePair.Clear(); // Clear the previous pairs
+
+        // Count occurrences of each card rank
+        foreach (var card in finalCheckFiveCard)
         {
-            for (int j = i + 1; j < finalCheckFiveCard.Count; j++)
+            string rank = card.tag; // Assuming 'tag' represents the card rank
+            if (cardRankCounts.ContainsKey(rank))
             {
-
-
-                if (finalCheckFiveCard[i].tag == finalCheckFiveCard[j].tag)
-                {
-                    pairCounts++;
-                    duplicatePair.Add(finalCheckFiveCard[i]);
-                    Debug.Log(pairCounts);
-                   
-                }
-
+                cardRankCounts[rank]++;
+            }
+            else
+            {
+                cardRankCounts[rank] = 1;
             }
         }
-        if (pairCounts == 8)
+
+        // Identify pairs
+        foreach (var entry in cardRankCounts)
         {
-            Debug.Log("TwoPair.....");
+            if (entry.Value == 2) // If exactly two cards of the same rank exist
+            {
+                pairCounts++;
+
+                // Add cards of this rank to duplicatePair
+                foreach (var card in finalCheckFiveCard)
+                {
+                    if (card.tag == entry.Key)
+                    {
+                        duplicatePair.Add(card);
+                    }
+                }
+            }
+        }
+
+        // Check if there are exactly two pairs
+        if (pairCounts == 2)
+        {
+            Debug.Log("Two Pair.....");
+            winnerlist[7] = true; // Example: Mark the winner or state
+            twoPairVar = 3; // Indicate logic or scoring for Two Pair
+            player2Win[7] = 3;
+            player3Win[7] = 3;
+            player4Win[7] = 3;
+        }
+        else
+        {
+            Debug.Log("Not Two Pair.");
         }
     }
-    void Straight()
+
+    public void Straight()
     {
 
        
@@ -366,23 +483,95 @@ public class CheckButton : MonoBehaviour
                     if (check4 == -1)
                     {
                         Debug.Log("Straight.....");
+                        winnerlist[5] = true;
+                        straightVar = 5;
+                      
+                       
                     }
                 }
             }
         }
     }
-    void StraightFlush()
+    public void StraightFlush()
     {
         if (flushChecker == 1)
         {
             Straight();
+            straightFlushVar = 9;
             Debug.Log("StraightFlush...");
             winnerlist[1] = true;
+            
         }
     }
-    void FullHouse()
+    public void FullHouse()
     {
+        // Dictionary to count occurrences of each card rank
+        Dictionary<string, int> cardRankCounts = new Dictionary<string, int>();
+        int threeOfAKindCount = 0; // Counter for Three of a Kind
+        int pairCount = 0; // Counter for Pairs
+        duplicatePair.Clear(); // Clear previous duplicates
 
+        // Count occurrences of each card rank
+        foreach (var card in finalCheckFiveCard)
+        {
+            string rank = card.tag; // Assuming 'tag' represents the card rank
+            if (cardRankCounts.ContainsKey(rank))
+            {
+                cardRankCounts[rank]++;
+            }
+            else
+            {
+                cardRankCounts[rank] = 1;
+            }
+        }
+
+        // Determine if there is a Three of a Kind and a Pair
+        foreach (var entry in cardRankCounts)
+        {
+            if (entry.Value == 3) // Check for Three of a Kind
+            {
+                threeOfAKindCount++;
+                // Add cards of this rank to duplicatePair
+                foreach (var card in finalCheckFiveCard)
+                {
+                    if (card.tag == entry.Key)
+                    {
+                        duplicatePair.Add(card);
+                    }
+                }
+            }
+            else if (entry.Value == 2) // Check for Pair
+            {
+                pairCount++;
+                // Add cards of this rank to duplicatePair
+                foreach (var card in finalCheckFiveCard)
+                {
+                    if (card.tag == entry.Key)
+                    {
+                        duplicatePair.Add(card);
+                    }
+                }
+            }
+        }
+
+        // Check if there is one Three of a Kind and one Pair
+        if (threeOfAKindCount == 1 && pairCount == 1)
+        {
+            Debug.Log("Full House!");
+            winnerlist[3] = true; // Example: Mark the winner or state
+
+           // Indicate logic or scoring for Full House
+            if (Game_Basic_Code.instance.Player_turn == 1)
+            {
+                fullHouseVar = 7;
+
+            }
+
+        }
+        else
+        {
+            Debug.Log("Not a Full House.");
+        }
     }
+
 }
- 

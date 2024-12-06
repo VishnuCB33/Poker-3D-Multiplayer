@@ -11,13 +11,17 @@ public class PlayfabManager : MonoBehaviour
 
     [Header("UI")]
     public TMP_Text messageText; // Message for user feedback
-    public string playername; // Current player's name
+    public string playername; // Current player'royalFlushVar name
     public TMP_InputField emailInput; // Input field for email
     public TMP_InputField passwordInput; // Input field for password
     public TMP_InputField nameInputText; // Input field for display name
+    public GameObject login_panel;
+    public GameObject Resent_panel;
 
     public static string PlayerDisplayName; // Global variable for display name
     public int player_amount_backend; // Amount to be stored and retrieved from PlayFab
+    public int player_index_backend; // Amount to be stored and retrieved from PlayFab
+    public int player_language_backend; // Amount to be stored and retrieved from PlayFab
 
     void Start()
     {
@@ -40,6 +44,7 @@ public class PlayfabManager : MonoBehaviour
             Password = passwordInput.text, //get password by the player
             RequireBothUsernameAndEmail = false // We don't want to require username, just the display name.
         };
+        login_panel.SetActive(true);
 
         PlayFabClientAPI.RegisterPlayFabUser(request, OnRegisterSuccess, OnError); // Sends the request to PlayFab server.
     }
@@ -61,6 +66,7 @@ public class PlayfabManager : MonoBehaviour
         if (string.IsNullOrEmpty(name)) // Check if display name is empty.
         {
             messageText.text = "Set a display name.";
+            LobbyBackend.Instance.nemeopenpanel();
         }
         else
         {
@@ -86,30 +92,38 @@ public class PlayfabManager : MonoBehaviour
             InfoRequestParameters = new GetPlayerCombinedInfoRequestParams
             {
                 GetPlayerProfile = true
+
             }
         };
-
-        PlayFabClientAPI.LoginWithEmailAddress(request, OnLoginSuccess, OnError);
+        login_panel.SetActive(true);
+       
+        
+            PlayFabClientAPI.LoginWithEmailAddress(request, OnLoginSuccess, OnError);
+        
     }
 
     void OnLoginSuccess(LoginResult result)
     {
-        messageText.text = "Logged in!";
-        SceneManager.LoadScene(1); // Load next scene
+       
+            messageText.text = "Logged in!";
+            SceneManager.LoadScene(1); // Load next scene
 
-        string name = result.InfoResultPayload.PlayerProfile?.DisplayName;
+            string name = result.InfoResultPayload.PlayerProfile?.DisplayName;
 
-        if (string.IsNullOrEmpty(name)) // Check if display name exists.
-        {
-            messageText.text = "Set a display name.";
-        }
-        else
-        {
-            PlayerDisplayName = name;
-            playername = PlayerDisplayName;
-        }
+            if (string.IsNullOrEmpty(name)) // Check if display name exists.
+            {
+                messageText.text = "Set a display name.";
 
-        Debug.Log("Successful login!");
+            }
+            else
+            {
+                PlayerDisplayName = name;
+                playername = PlayerDisplayName;
+            }
+
+            Debug.Log("Successful login!");
+        
+       
     }
 
     public void ResetPasswordButton()
@@ -125,6 +139,7 @@ public class PlayfabManager : MonoBehaviour
 
     void OnPasswordReset(SendAccountRecoveryEmailResult result)
     {
+        Resent_panel.SetActive(true);
         messageText.text = "Password reset email sent!";
         Debug.Log("Password reset email sent.");
     }
@@ -157,13 +172,15 @@ public class PlayfabManager : MonoBehaviour
     #endregion
 
     // Store player amount in PlayFab
-    public void StorePlayerAvatarAndAmount(int playerAmount)
+    public void StorePlayerAvatarAndAmount(int playerAmount ,int Playerindex, int playerlanguage)
     {
         var request = new UpdateUserDataRequest
         {
             Data = new Dictionary<string, string>
             {
-                { "PlayerAmount", playerAmount.ToString() }  // Convert player amount to string
+                { "PlayerAmount", playerAmount.ToString() } , // Convert player amount to string
+                { "Playerindex", Playerindex.ToString() }, // Convert player amount to string
+                { "playerlanguage", playerlanguage.ToString() }  // Convert player amount to string
             }
         };
 
@@ -203,7 +220,28 @@ public class PlayfabManager : MonoBehaviour
             }
             else
             {
+                player_amount_backend = 0;
                 Debug.LogError("'PlayerAmount' value is not a valid integer.");
+            }
+
+            if (int.TryParse(result.Data["Playerindex"].Value, out int Playerindex))
+            {
+                player_index_backend = Playerindex;  
+            }
+            else
+            {
+                player_index_backend = 0;
+               
+            } 
+
+            if (int.TryParse(result.Data["playerlanguage"].Value, out int playerlanguage))
+            {
+                player_language_backend = playerlanguage;  
+            }
+            else
+            {
+                player_language_backend = 0;
+               
             }
         }
         else
@@ -215,8 +253,15 @@ public class PlayfabManager : MonoBehaviour
     #region Error Handling
     void OnError(PlayFabError error)
     {
+        login_panel.SetActive(false);
+
         messageText.text = error.ErrorMessage;
         Debug.LogError(error.GenerateErrorReport());
+    }
+    //ui
+    public void closeResentPanel()
+    {
+        Resent_panel.SetActive(false);
     }
     #endregion
 }
