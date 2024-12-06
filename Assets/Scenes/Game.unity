@@ -7512,12 +7512,19 @@ MonoBehaviour:
   winnerSelectP2: 
   winnerSelectP3: 
   winnerSelectP4: 
+  lastStore: 00000000000000000000000000000000
+  lastStoretext: 
+  largestDuplicates: 
+  highCardPlay: 0000000000000000000000000000000000000000000000000000000000000000
+  indexNum: 
+  finalIndex: 00000000000000000000000000000000
   referance:
   - {fileID: 1950188504}
   - {fileID: 370396659}
   - {fileID: 1329307295}
   - {fileID: 221418697}
   - {fileID: 403658873}
+  winner: 0
 --- !u!4 &675259963
 Transform:
   m_ObjectHideFlags: 0
@@ -18854,7 +18861,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1933931820
 MonoBehaviour:
   m_ObjectHideFlags: 0
