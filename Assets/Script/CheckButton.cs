@@ -203,8 +203,8 @@ public class CheckButton : MonoBehaviour
                 {
                     Debug.Log("RoyalFlush");
                     //player1
-                    royalFlushVar = 10;
-                    player2Win[0] = 10;
+                   royalFlushVar = 10;
+                   player2Win[0] = 10;
                     winnerlist[0] = true;
                  player3Win[0] = 10;
                     player4Win[0] = 10;
@@ -252,9 +252,9 @@ public class CheckButton : MonoBehaviour
            
             winnerlist[4] = true;
             flushVar = 6;
-            flushChecker = 1;
+           flushChecker = 1;
             x = 0;
-          
+           player3Win[4] = 6;
             player3Win[4] = 6;
             player4Win[4] = 6;
 
@@ -293,7 +293,7 @@ public class CheckButton : MonoBehaviour
             Debug.Log("player one have Four_of_a_kind");
             fourOFaKindVar = 8;
             winnerlist[2] = true;
-           
+           player2Win[2] = 8;
             player3Win[2] = 8;
             player4Win[2] = 8;
         }
@@ -329,7 +329,7 @@ public class CheckButton : MonoBehaviour
         {
             Debug.Log("player one have three_of_a_kind");
             winnerlist[6] = true;
-            threeOfaKindVar = 4;
+           threeOfaKindVar = 4;
             player2Win[6] = 4;
             player3Win[6] = 4;
             player4Win[6] = 4;
@@ -442,7 +442,7 @@ public class CheckButton : MonoBehaviour
         {
             Debug.Log("Two Pair.....");
             winnerlist[7] = true; // Example: Mark the winner or state
-            twoPairVar = 3; // Indicate logic or scoring for Two Pair
+           twoPairVar = 3; // Indicate logic or scoring for Two Pair
             player2Win[7] = 3;
             player3Win[7] = 3;
             player4Win[7] = 3;
@@ -485,8 +485,11 @@ public class CheckButton : MonoBehaviour
                         Debug.Log("Straight.....");
                         winnerlist[5] = true;
                         straightVar = 5;
-                      
-                       
+                        player2Win[5] = 5;
+                        player3Win[5] = 5;
+                        player4Win[5] = 5;
+
+
                     }
                 }
             }
@@ -500,7 +503,10 @@ public class CheckButton : MonoBehaviour
             straightFlushVar = 9;
             Debug.Log("StraightFlush...");
             winnerlist[1] = true;
-            
+         player2Win[1] = 9;
+            player3Win[1] = 9;
+            player4Win[1] = 9;
+
         }
     }
     public void FullHouse()
@@ -559,14 +565,10 @@ public class CheckButton : MonoBehaviour
         {
             Debug.Log("Full House!");
             winnerlist[3] = true; // Example: Mark the winner or state
-
-           // Indicate logic or scoring for Full House
-            if (Game_Basic_Code.instance.Player_turn == 1)
-            {
-                fullHouseVar = 7;
-
-            }
-
+            fullHouseVar = 7; // Indicate logic or scoring for Full House
+            player2Win[3] = 7;
+            player3Win[3] = 7;
+            player4Win[3] = 7; 
         }
         else
         {
