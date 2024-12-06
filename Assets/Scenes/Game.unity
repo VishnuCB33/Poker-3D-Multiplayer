@@ -7508,16 +7508,23 @@ MonoBehaviour:
   - {fileID: 3912574340181194221}
   - {fileID: 7131409580838358204}
   winnerCount: 
+  winnerSelectP1: 
+  winnerSelectP2: 
+  winnerSelectP3: 
+  winnerSelectP4: 
+  lastStore: 00000000000000000000000000000000
+  lastStoretext: 00000000000000000000000000000000
+  largestDuplicates: 
+  highCardPlay: 0000000000000000000000000000000000000000000000000000000000000000
+  indexNum: 
+  finalIndex: 00000000000000000000000000000000
   referance:
   - {fileID: 1950188504}
   - {fileID: 370396659}
   - {fileID: 1329307295}
   - {fileID: 221418697}
   - {fileID: 403658873}
-  winnerSelectP1: 
-  winnerSelectP2: 
-  winnerSelectP3: 
-  winnerSelectP4: 
+  winner: 0
 --- !u!4 &675259963
 Transform:
   m_ObjectHideFlags: 0
@@ -19619,18 +19626,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   winnerlist: 00000000000000000000
-  playerOneCard:
-  - {fileID: 385550109368088674, guid: e24405f1246673b4ab926b57fcb208ed, type: 3}
-  - {fileID: 1990851046391045254, guid: 6f213911946f2184baaadbf3e00eeca3, type: 3}
-  playerTwoCard:
-  - {fileID: 1055205628213336658, guid: b2092b6f8a97f5b4999b5db5971ca85d, type: 3}
-  - {fileID: 8816023348059597911, guid: 4c8aafa92e8173947b4ee2add433d99b, type: 3}
-  playerThreeCard:
-  - {fileID: 9155915166557002907, guid: 60425771b5b8d0c4aae2396f0e61e474, type: 3}
-  - {fileID: 6879098107901988219, guid: d2ab62c8542be1d4887f6750a747c673, type: 3}
-  playerFourCard:
-  - {fileID: 6290163690470343772, guid: 276a581c69768684e8a0fef01f93077a, type: 3}
-  - {fileID: 4699265818613305834, guid: 9b1450ad91edbd64199dee0d33d9c9a2, type: 3}
+  playerOneCard: []
+  playerTwoCard: []
+  playerThreeCard: []
+  playerFourCard: []
   finalCheckFiveCard:
   - {fileID: 0}
   - {fileID: 0}

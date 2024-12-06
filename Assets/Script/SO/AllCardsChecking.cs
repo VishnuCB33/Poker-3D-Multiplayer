@@ -22,3 +22,4 @@ public class AllCardsChecking : ScriptableObject
     public int value;
 
 }
+

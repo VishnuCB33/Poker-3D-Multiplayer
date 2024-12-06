@@ -47,6 +47,7 @@ public class LobbyManager : MonoBehaviour
     [SerializeField] private GameObject JoinRoomPanel;
     [Header("PlayersINdex")]
     public int playerIndex;
+    int show = 0;
 
     async void Start()
     {
@@ -376,7 +377,7 @@ public class LobbyManager : MonoBehaviour
                 // Set the player name and display their index
                 string playerName = player.Data["PlayerName"].Value;
                 newPlayerInfo.GetComponentInChildren<TextMeshProUGUI>().text = $"{playerIndex + 1}. {playerName}";
-
+                show = 1;
                 Debug.Log($"Player Index: {playerIndex}, Player Name: {playerName}");
 
                 // Show kick button for host (except for themselves)
@@ -499,14 +500,19 @@ public class LobbyManager : MonoBehaviour
         try
         {
             // Fetch the latest lobby data
-            var updatedLobby = await LobbyService.Instance.GetLobbyAsync(currentLobby.Id);
-
-            // Check if the "GameStarted" flag is set
-            if (updatedLobby.Data.TryGetValue("GameStarted", out var gameStartedFlag) && gameStartedFlag.Value == "true")
+            if (show == 1)
             {
-                Debug.Log("Game has started! Loading Scene2...");
-                EnterGame();
+                var updatedLobby = await LobbyService.Instance.GetLobbyAsync(currentLobby.Id);
+                // Check if the "GameStarted" flag is set
+                if (updatedLobby.Data.TryGetValue("GameStarted", out var gameStartedFlag) && gameStartedFlag.Value == "true")
+                {
+                    Debug.Log("Game has started! Loading Scene2...");
+                    EnterGame();
+                }
             }
+           
+
+           
         }
         catch (LobbyServiceException e)
         {

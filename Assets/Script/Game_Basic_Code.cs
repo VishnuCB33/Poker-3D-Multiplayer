@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using static player_details;
+using System.Linq;
 
 public class Game_Basic_Code : MonoBehaviour
 {
@@ -121,6 +122,18 @@ public class Game_Basic_Code : MonoBehaviour
     int two = 0;
     int three = 0;
     int checkComplete = 0;
+    [Header("StoreFinalCheck")]
+    int play1;
+    int play2;
+    int play3;
+    int play4;
+    public List<int> lastStore = new List<int>();
+    public List<int> lastStoretext = new List<int>();
+    int wincount;
+    public List<int> largestDuplicates = new List<int>();
+    public List<int> highCardPlay = new List<int>();
+    public List<int> indexNum= new List<int>();      
+    public List<int> finalIndex= new List<int>();
     private void Awake()
     {
         dealer = Random.Range(1, 5);
@@ -324,7 +337,7 @@ public class Game_Basic_Code : MonoBehaviour
             playerOneCards[4] = CheckButton.Instance.finalCheckFiveCard[2];
             playerOneCards[5] = CheckButton.Instance.finalCheckFiveCard[3];
             playerOneCards[6] = CheckButton.Instance.finalCheckFiveCard[4];
-            winnerSelectP1.Sort();
+          
             checkComplete = 1;
         }
         if (checkComplete == 1)
@@ -363,38 +376,38 @@ public class Game_Basic_Code : MonoBehaviour
             {
 
                 CheckButton.Instance.ResetFlush();
-                CheckButton.Instance.finalCheckFiveCard[5] = playerOneCards[0];
-                CheckButton.Instance.finalCheckFiveCard[6] = playerOneCards[1];
+                CheckButton.Instance.finalCheckFiveCard[5] = playerTwoCards[0];
+                CheckButton.Instance.finalCheckFiveCard[6] = playerTwoCards[1];
 
                 CheckButton.Instance.RoyalFlush();
                 winnerSelectP2.Add(CheckButton.Instance.player2Win[0]);
-                // CheckButton.Instance.player2Win[0] = 10;
+                 CheckButton.Instance.player2Win[0] = 10;
 
                 CheckButton.Instance.StraightFlush();
                 winnerSelectP2.Add(CheckButton.Instance.player2Win[1]);
-                // CheckButton.Instance.player2Win[1] = 9;
+                CheckButton.Instance.player2Win[1] = 9;
                 CheckButton.Instance.Four_of_a_kind();
                 winnerSelectP2.Add(CheckButton.Instance.player2Win[2]);
-                //CheckButton.Instance.player2Win[2] = 8;
+                CheckButton.Instance.player2Win[2] = 8;
                 CheckButton.Instance.flush();
                 winnerSelectP2.Add(CheckButton.Instance.player2Win[4]);
-                //CheckButton.Instance.player2Win[4] = 6;
+                CheckButton.Instance.player2Win[4] = 6;
                 CheckButton.Instance.Straight();
                 winnerSelectP2.Add(CheckButton.Instance.player2Win[5]);
-                //CheckButton.Instance.player2Win[5] = 5;
+                CheckButton.Instance.player2Win[5] = 5;
                 CheckButton.Instance.Three_of_a_kind();
                 winnerSelectP2.Add(CheckButton.Instance.player2Win[6]);
-                //  CheckButton.Instance.player2Win[6] = 4;
+                CheckButton.Instance.player2Win[6] = 4;
 
                 CheckButton.Instance.TwoPair();
                 winnerSelectP2.Add(CheckButton.Instance.player2Win[7]);
-                //  CheckButton.Instance.player2Win[7] = 3;
+                 CheckButton.Instance.player2Win[7] = 3;
                 CheckButton.Instance.Pair();
                 winnerSelectP2.Add(CheckButton.Instance.player2Win[8]);
-                //   CheckButton.Instance.player2Win[8] = 2;
+                CheckButton.Instance.player2Win[8] = 2;
                 CheckButton.Instance.FullHouse();
                 winnerSelectP2.Add(CheckButton.Instance.player2Win[3]);
-                //  CheckButton.Instance.player2Win[3] = 7;
+                CheckButton.Instance.player2Win[3] = 7;
 
                 playerTwoCards[2] = CheckButton.Instance.finalCheckFiveCard[0];
                 playerTwoCards[3] = CheckButton.Instance.finalCheckFiveCard[1];
@@ -444,37 +457,37 @@ public class Game_Basic_Code : MonoBehaviour
 
 
                 CheckButton.Instance.ResetFlush();
-                CheckButton.Instance.finalCheckFiveCard[5] = playerOneCards[0];
-                CheckButton.Instance.finalCheckFiveCard[6] = playerOneCards[1];
+                CheckButton.Instance.finalCheckFiveCard[5] = playerThreeCards[0];
+                CheckButton.Instance.finalCheckFiveCard[6] = playerThreeCards[1];
 
                 CheckButton.Instance.RoyalFlush();
                 winnerSelectP3.Add(CheckButton.Instance.player3Win[0]);
-                //CheckButton.Instance.player3Win[0] = 10;
+                CheckButton.Instance.player3Win[0] = 10;
                 CheckButton.Instance.StraightFlush();
                 winnerSelectP3.Add(CheckButton.Instance.player3Win[1]);
-                // CheckButton.Instance.player2Win[1] = 9;
+                CheckButton.Instance.player2Win[1] = 9;
                 CheckButton.Instance.Four_of_a_kind();
                 winnerSelectP3.Add(CheckButton.Instance.player3Win[2]);
-                // CheckButton.Instance.player2Win[2] = 8;
+                CheckButton.Instance.player2Win[2] = 8;
                 CheckButton.Instance.flush();
                 winnerSelectP3.Add(CheckButton.Instance.player3Win[4]);
-                //   CheckButton.Instance.player2Win[4] = 6;
+                 CheckButton.Instance.player2Win[4] = 6;
                 CheckButton.Instance.Straight();
                 winnerSelectP3.Add(CheckButton.Instance.player3Win[5]);
-                // CheckButton.Instance.player2Win[5] = 5;
+                CheckButton.Instance.player2Win[5] = 5;
                 CheckButton.Instance.Three_of_a_kind();
                 winnerSelectP3.Add(CheckButton.Instance.player3Win[6]);
-                //CheckButton.Instance.player2Win[6] = 4;
+                CheckButton.Instance.player2Win[6] = 4;
 
                 CheckButton.Instance.TwoPair();
                 winnerSelectP3.Add(CheckButton.Instance.player3Win[7]);
-                // CheckButton.Instance.player2Win[7] = 3;
+                CheckButton.Instance.player2Win[7] = 3;
                 CheckButton.Instance.Pair();
                 winnerSelectP3.Add(CheckButton.Instance.player3Win[8]);
-                //CheckButton.Instance.player2Win[8] = 2;
+                CheckButton.Instance.player2Win[8] = 2;
                 CheckButton.Instance.FullHouse();
                 winnerSelectP3.Add(CheckButton.Instance.player3Win[3]);
-                //CheckButton.Instance.player2Win[3] = 7;
+                CheckButton.Instance.player2Win[3] = 7;
 
 
                 playerThreeCards[2] = CheckButton.Instance.finalCheckFiveCard[0];
@@ -524,36 +537,36 @@ public class Game_Basic_Code : MonoBehaviour
             {
 
                 CheckButton.Instance.ResetFlush();
-                CheckButton.Instance.finalCheckFiveCard[5] = playerOneCards[0];
-                CheckButton.Instance.finalCheckFiveCard[6] = playerOneCards[1];
+                CheckButton.Instance.finalCheckFiveCard[5] = playerFourCards[0];
+                CheckButton.Instance.finalCheckFiveCard[6] = playerFourCards[1];
 
                 CheckButton.Instance.RoyalFlush();
                 winnerSelectP4.Add(CheckButton.Instance.player4Win[0]);
-                //CheckButton.Instance.player3Win[0] = 10;
+               CheckButton.Instance.player3Win[0] = 10;
                 CheckButton.Instance.StraightFlush();
                 winnerSelectP4.Add(CheckButton.Instance.player4Win[1]);
-                //CheckButton.Instance.player2Win[1] = 9;
+                CheckButton.Instance.player2Win[1] = 9;
                 CheckButton.Instance.Four_of_a_kind();
                 winnerSelectP4.Add(CheckButton.Instance.player4Win[2]);
-                // CheckButton.Instance.player2Win[2] = 8;
+                CheckButton.Instance.player2Win[2] = 8;
                 CheckButton.Instance.flush();
                 winnerSelectP4.Add(CheckButton.Instance.player4Win[4]);
-                //CheckButton.Instance.player2Win[4] = 6;
+                CheckButton.Instance.player2Win[4] = 6;
                 CheckButton.Instance.Straight();
                 winnerSelectP4.Add(CheckButton.Instance.player4Win[5]);
-                //CheckButton.Instance.player2Win[5] = 5;
+               CheckButton.Instance.player2Win[5] = 5;
                 CheckButton.Instance.Three_of_a_kind();
                 winnerSelectP4.Add(CheckButton.Instance.player4Win[6]);
-                //CheckButton.Instance.player2Win[6] = 4;
+                CheckButton.Instance.player2Win[6] = 4;
                 CheckButton.Instance.TwoPair();
                 winnerSelectP4.Add(CheckButton.Instance.player4Win[7]);
-                //CheckButton.Instance.player2Win[7] = 3;
+                CheckButton.Instance.player2Win[7] = 3;
                 CheckButton.Instance.Pair();
                 winnerSelectP4.Add(CheckButton.Instance.player4Win[8]);
-                //CheckButton.Instance.player2Win[8] = 2;
+                CheckButton.Instance.player2Win[8] = 2;
                 CheckButton.Instance.FullHouse();
                 winnerSelectP4.Add(CheckButton.Instance.player4Win[3]);
-                //CheckButton.Instance.player2Win[3] = 7;
+                CheckButton.Instance.player2Win[3] = 7;
 
                 playerFourCards[2] = CheckButton.Instance.finalCheckFiveCard[0];
                 playerFourCards[3] = CheckButton.Instance.finalCheckFiveCard[1];
@@ -561,55 +574,223 @@ public class Game_Basic_Code : MonoBehaviour
                 playerFourCards[5] = CheckButton.Instance.finalCheckFiveCard[3];
                 playerFourCards[6] = CheckButton.Instance.finalCheckFiveCard[4];
 
-
+                yes = 1;
                 Debug.Log("wtf");
             }
-            yes = 1;
-            WinnerSelection();
+           if(yes== 1)
+            {
+                WinnerSelection();
+            }
+          
         }
     }
-        
+    int y = 0;
+    public int winner;
    
-    public void WinnerSelection()
+   public void WinnerSelection()
     {
-        /* if (yes == 1)
-         {
-             for(int i = 0; i < winnerSelectP1.Count; i++)
-             {
-                 if (winnerSelectP1[i] != 0)
-                 {
-                     winnerCount.Add(winnerSelectP1[i]);
-                 }
-             }
-             for (int i = 0; i < winnerSelectP2.Count; i++)
-             {
-                 if (winnerSelectP2[i] != 0)
-                 {
-                     winnerCount.Add(winnerSelectP2[i]);
-                 }
-             }
-             for (int i = 0; i < winnerSelectP3.Count; i++)
-             {
-                 if (winnerSelectP3[i] != 0)
-                 {
-                     winnerCount.Add(winnerSelectP3[i]);
-                 }
-             }
-             for (int i = 0; i < winnerSelectP4.Count; i++)
-             {
-                 if (winnerSelectP4[i] != 0)
-                 {
-                     winnerCount.Add(winnerSelectP4[i]);
-                 }
-             }
-         }*/
-        /*if (yes == 1)
-        {
-            for(int i = 0; i < playerOneCards.Count; i++)
-            {
+       
+            
+                for (int i = 0; i < winnerSelectP1.Count; i++)
+                {
+                    if (winnerSelectP1[i] != 0)
+                    {
+                        play1 = winnerSelectP1[i];
+                        lastStore.Insert(0,play1);
+                        Debug.Log(play1+"player1");
+                       
+                        break;
+                    }
 
+                }
+            
+              for (int i = 0; i < winnerSelectP2.Count; i++)
+                {
+                    if (winnerSelectP2[i] != 0)
+                    {
+                        play2 = winnerSelectP2[i];
+                        lastStore.Insert(1,play2);
+                        Debug.Log(play2 + "player2");
+                        
+                        break;
+                    }
+                }
+            
+            
+                for (int i = 0; i < winnerSelectP3.Count; i++)
+                {
+                    if (winnerSelectP3[i] != 0)
+                    {
+                        play3 = winnerSelectP3[i];
+                        lastStore.Insert(2,play3);
+                        Debug.Log(play3 + "player3");
+                       
+                        break;
+                       
+                    }
+
+                }
+            
+           
+                for (int i = 0; i < winnerSelectP4.Count; i++)
+                {
+                    if (winnerSelectP4[i] != 0)
+                    {
+                        play4 = winnerSelectP4[i];
+                        lastStore.Insert(3,play4);
+                        Debug.Log(play4 + "player4");
+                       
+                        break;
+                    }
+                    
+                }
+        int y = 0;
+        if (y == 0)
+        {
+            if (lastStore.Count > 0)
+            {
+                // New list to store duplicates
+                int largestNumber = lastStore.Max(); // Get the largest number.
+                int largestIndex = lastStore.IndexOf(largestNumber); // Find its index.
+                Debug.Log("Largest number is" + largestNumber + "at index " + largestIndex);
+
+                for (int i = 0; i < lastStore.Count; i++)
+                {
+                    if (largestNumber == lastStore[i])
+                    {
+                        largestDuplicates.Add(lastStore[i]); // Add to new list
+                        Debug.Log("Duplicate found at index " + i + lastStore[i]);
+
+
+                    }
+                }
+
+                Debug.Log("Total duplicates found" + largestDuplicates.Count);
             }
-        }*/
+            y = 1;
+        }
+      
+        AllCardsChecking cards=new AllCardsChecking();
+        //largest Card
+        highCardPlay[0] = playerOneCards[0].GetComponent<CardsAttached>().properties.value;
+        highCardPlay[1] = playerOneCards[1].GetComponent<CardsAttached>().properties.value;
+        highCardPlay[2] = playerTwoCards[0].GetComponent<CardsAttached>().properties.value;
+        highCardPlay[3] = playerTwoCards[1].GetComponent<CardsAttached>().properties.value;
+        highCardPlay[4] = playerThreeCards[0].GetComponent<CardsAttached>().properties.value;
+        highCardPlay[5] = playerThreeCards[1].GetComponent<CardsAttached>().properties.value;
+        highCardPlay[6] = playerFourCards[0].GetComponent<CardsAttached>().properties.value;
+        highCardPlay[7] = playerFourCards[1].GetComponent<CardsAttached>().properties.value;
+
+        if (y == 1)
+        {
+            if (largestDuplicates.Count == 1)
+            {
+                Debug.Log("Winner is :" + largestDuplicates[0]);
+            }
+            else
+            {
+                for(int i = 0; i < lastStore.Count; i++)
+                {
+                    if (largestDuplicates[0] == lastStore[i])
+                    {
+                      Debug.Log( "Index"+ i);
+                        indexNum.Add(i);    
+
+                    }
+                }
+               
+            }
+            y = 2;
+        }
+        if (y == 2)
+        {
+           for(int i=0; i < indexNum.Count; i++)
+            {
+                if (indexNum[i] == 0)
+                {
+                    if (highCardPlay[0] > highCardPlay[1])
+                    {
+                        finalIndex[0] = highCardPlay[0];
+                    }
+                    else
+                    {
+                         finalIndex[0] = highCardPlay[1];
+                    }
+                }
+                if (indexNum[i] == 1)
+                {
+                    if (highCardPlay[2] > highCardPlay[3])
+                    {
+                        finalIndex[1] = highCardPlay[2];
+                    }
+                    else
+                    {
+                        finalIndex[1] = highCardPlay[3];
+                    }
+                }
+                if(indexNum[i] == 2)
+                {
+                    if(highCardPlay[4] > highCardPlay[5])
+                    {
+                        finalIndex[2]=highCardPlay[4];
+                    }
+                    else
+                    {
+                        finalIndex[2] = highCardPlay[5];
+                    }
+                }
+                if (indexNum[i] == 3)
+                {
+                    if (highCardPlay[6] > highCardPlay[7])
+                    {
+                        finalIndex[3]=highCardPlay[6];
+                    }
+                    else
+                    {
+                        finalIndex[3] = highCardPlay[7];
+                    }
+                }
+                y = 3;
+            }
+
+        }
+        if (y == 3)
+        {
+            if (finalIndex[0] > finalIndex[1] && finalIndex[0]> finalIndex[2]&& finalIndex[0] > finalIndex[3])
+            {
+                Debug.Log("player one win");
+            }
+            else if (finalIndex[1] > finalIndex[0] && finalIndex[1] > finalIndex[2] && finalIndex[1] > finalIndex[3])
+            {
+                Debug.Log("player two win");
+            }
+            else if (finalIndex[2] > finalIndex[0] && finalIndex[2] > finalIndex[1] && finalIndex[2] > finalIndex[3])
+            {
+                Debug.Log("player three win");
+            }
+            else if (finalIndex[3] > finalIndex[0] && finalIndex[3] > finalIndex[1] && finalIndex[3] > finalIndex[2])
+            {
+                Debug.Log("player four win");
+            }
+        }
+       /* for (int i = 0; i < largestDuplicates.Count; i++)
+        {
+            if (lastStore[i] == largestDuplicates[i])
+            {
+                Debug.Log("lastStore 1");
+               
+                if (lastStore.IndexOf(lastStore[i]) == 0)
+                {
+                    
+                    Debug.Log("lastStore 2");
+                    
+                    Debug.Log("lastStore 3");
+                }
+            }
+        }
+          */
+      
+      
     }
     public void EqualingEnum_funtion()
     {
