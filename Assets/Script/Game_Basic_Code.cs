@@ -1137,7 +1137,7 @@ public class player_details
         Dealer, Small_Blind, Big_Blind,
 
     }
-
+    
 
 }
 

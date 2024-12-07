@@ -28,6 +28,7 @@ public class Profile : MonoBehaviour
     public GameObject profilepage;
     public GameObject profilepanel;
     public GameObject amountpanel;
+    public GameObject lobbyPanel;
     // Start is called before the first frame update
     void Start()
     {
@@ -148,6 +149,9 @@ public class Profile : MonoBehaviour
         profprefab.GetComponent<Image>().sprite = prof12.GetComponent<Image>().sprite;
         profilelobby.GetComponent<Image>().sprite = prof12.GetComponent<Image>().sprite;
     }
-
+    public void MultiplayerButt()
+    {
+        lobbyPanel.SetActive(true);
+    }
 }
  
