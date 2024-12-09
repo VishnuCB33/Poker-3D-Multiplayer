@@ -134,6 +134,8 @@ public class Game_Basic_Code : MonoBehaviour
     public List<int> highCardPlay = new List<int>();
     public List<int> indexNum= new List<int>();      
     public List<int> finalIndex= new List<int>();
+    public TextMeshProUGUI playerName;
+    public GameObject winnerPanel;
     private void Awake()
     {
         dealer = Random.Range(1, 5);
@@ -600,7 +602,7 @@ public class Game_Basic_Code : MonoBehaviour
     }
     int y = 0;
     public int winner;
-
+    int duplicatesLargest = 0;
     public void WinnerSelection()
     {
 
@@ -700,7 +702,14 @@ public class Game_Basic_Code : MonoBehaviour
         {
             if (largestDuplicates.Count == 1)
             {
-                Debug.Log("Winner is :" + largestDuplicates[0]);
+                for(int i = 0; i < lastStore.Count; i++)
+                {
+                    if(lastStore[i] != 0)
+                    {
+                        Debug.Log("Winner is :" + lastStore[i]);
+                    }
+                }
+               
             }
             else
             {
@@ -771,21 +780,51 @@ public class Game_Basic_Code : MonoBehaviour
         }
         if (y == 3)
         {
+
+            for (int i = 0; i < finalIndex.Count; i++)
+            {
+                int count = 0;
+
+                for (int j = 0; j < finalIndex.Count; j++)
+                {
+                    if (finalIndex.Max() == finalIndex[j])
+                    {
+                        count++;
+                        Debug.Log("Counts  :" + count+"Count High  :" + finalIndex[j]);
+                    }
+                }
+
+                if (count > 1)
+                {
+                    Debug.Log("Value: " + finalIndex[i] + " appears " + count + " times.");
+                    Debug.Log("WInner Count  :" + count);
+                    //Amount Divide Space
+
+                }
+            }
             if (finalIndex[0] > finalIndex[1] && finalIndex[0] > finalIndex[2] && finalIndex[0] > finalIndex[3])
             {
                 Debug.Log("player one win");
+                winnerPanel.SetActive(true);
+                playerName.text = "player one win"+LobbyBackend.Instance.PlayerName;
             }
             else if (finalIndex[1] > finalIndex[0] && finalIndex[1] > finalIndex[2] && finalIndex[1] > finalIndex[3])
             {
                 Debug.Log("player two win");
+                winnerPanel.SetActive(true);
+                playerName.text = "player Two win"+LobbyBackend.Instance.PlayerName;
             }
             else if (finalIndex[2] > finalIndex[0] && finalIndex[2] > finalIndex[1] && finalIndex[2] > finalIndex[3])
             {
                 Debug.Log("player three win");
+                winnerPanel.SetActive(true);
+                playerName.text = "player Three win" + LobbyBackend.Instance.PlayerName;
             }
             else if (finalIndex[3] > finalIndex[0] && finalIndex[3] > finalIndex[1] && finalIndex[3] > finalIndex[2])
             {
                 Debug.Log("player four win");
+                winnerPanel.SetActive(true);
+                playerName.text = "player Four win"+ LobbyBackend.Instance.PlayerName;
             }
         }
 
