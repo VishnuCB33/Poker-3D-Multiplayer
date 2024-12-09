@@ -341,6 +341,10 @@ public class Game_Basic_Code : MonoBehaviour
 
             checkComplete = 1;
         }
+        else
+        {
+            checkComplete = 2;
+        }
         if (checkComplete == 1)
         {
             if (one == 0)
@@ -418,6 +422,10 @@ public class Game_Basic_Code : MonoBehaviour
                 checkComplete = 3;
                 Debug.Log("wtf");
 
+            }
+            else
+            {
+                checkComplete = 4;
             }
         }
         if (checkComplete == 3)
@@ -498,6 +506,10 @@ public class Game_Basic_Code : MonoBehaviour
                 playerThreeCards[6] = CheckButton.Instance.finalCheckFiveCard[4];
                 checkComplete = 5;
                 Debug.Log("wtf");
+            }
+            else
+            {
+                checkComplete = 6;
             }
         }
         if (checkComplete == 5)
