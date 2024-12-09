@@ -587,9 +587,10 @@ public class Game_Basic_Code : MonoBehaviour
                 playerFourCards[5] = CheckButton.Instance.finalCheckFiveCard[3];
                 playerFourCards[6] = CheckButton.Instance.finalCheckFiveCard[4];
 
-                yes = 1;
+                
                 Debug.Log("wtf");
             }
+            yes = 1;
             if (yes == 1)
             {
                 WinnerSelection();
@@ -608,7 +609,8 @@ public class Game_Basic_Code : MonoBehaviour
         {
             if (winnerSelectP1[i] != 0)
             {
-                play1 = winnerSelectP1[i];
+                play1 = winnerSelectP1.Max();
+
                 lastStore.Insert(0, play1);
                 Debug.Log(play1 + "player1");
 
@@ -621,7 +623,7 @@ public class Game_Basic_Code : MonoBehaviour
         {
             if (winnerSelectP2[i] != 0)
             {
-                play2 = winnerSelectP2[i];
+                play2 = winnerSelectP2.Max();
                 lastStore.Insert(1, play2);
                 Debug.Log(play2 + "player2");
 
@@ -634,7 +636,7 @@ public class Game_Basic_Code : MonoBehaviour
         {
             if (winnerSelectP3[i] != 0)
             {
-                play3 = winnerSelectP3[i];
+                play3 = winnerSelectP3.Max();
                 lastStore.Insert(2, play3);
                 Debug.Log(play3 + "player3");
 
@@ -649,7 +651,7 @@ public class Game_Basic_Code : MonoBehaviour
         {
             if (winnerSelectP4[i] != 0)
             {
-                play4 = winnerSelectP4[i];
+                play4 = winnerSelectP4.Max();
                 lastStore.Insert(3, play4);
                 Debug.Log(play4 + "player4");
 
