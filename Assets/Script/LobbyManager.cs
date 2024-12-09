@@ -105,7 +105,7 @@ public class LobbyManager : MonoBehaviour
 
             };
             //Parameter= Lobby name and max players
-            currentLobby = await LobbyService.Instance.CreateLobbyAsync(lobbbyName, maxPlayers, options);
+            currentLobby = await LobbyService.Instance.CreateLobbyAsync(lobbbyName, 4, options);
             //Lobby Id
             Debug.Log("Room Created :" + currentLobby.Id);
             EnterRoom();
@@ -442,42 +442,48 @@ public class LobbyManager : MonoBehaviour
     //when host will click start game the value will updated
     private async void StartGame()
     {
-        //We shall royalFlushVar current lobby not null and ONly host can start game
-
         if (currentLobby != null && isHost())
         {
             try
             {
-                //now we will make the game started keys value as true 
-                // Update the lobby'royalFlushVar data with a "GameStarted" flag
+                // Check if there are exactly 4 players
+                if (currentLobby.Players.Count != 4)
+                {
+                    Debug.LogWarning("Game cannot start. Exactly 4 players are required!");
+                    // Optionally, display a message to the host
+                    // e.g., using a UI text or pop-up notification
+                    return;
+                }
+
+                // Update the lobby data to indicate the game has started
                 var updatedLobby = await LobbyService.Instance.UpdateLobbyAsync(
                     currentLobby.Id,
                     new UpdateLobbyOptions
                     {
                         Data = new Dictionary<string, DataObject>
                         {
-                    {
-                        "GameStarted", new DataObject(
-                            visibility: DataObject.VisibilityOptions.Public,
-                            value: "true"
-                        )
-                    }
+                        {
+                            "GameStarted", new DataObject(
+                                visibility: DataObject.VisibilityOptions.Public,
+                                value: "true"
+                            )
+                        }
                         }
                     }
                 );
 
                 Debug.Log("Game started! Lobby data updated.");
 
+                // Load the game scene
                 EnterGame();
             }
             catch (LobbyServiceException e)
             {
-                Debug.Log(e);
+                Debug.LogError($"Failed to start the game: {e}");
             }
-
         }
-
     }
+
     //Check the host was started the game or not
 
     private bool IsGameStart()
@@ -493,8 +499,16 @@ public class LobbyManager : MonoBehaviour
     }
     private void EnterGame()
     {
-        SceneManager.LoadScene(2);
+        if (currentLobby.Players.Count == 4)
+        {
+            SceneManager.LoadScene(2);
+        }
+        else
+        {
+            Debug.LogWarning("Cannot enter game. Exactly 4 players are required!");
+        }
     }
+
     private async void PollLobbyForUpdates()
     {
         try
