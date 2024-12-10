@@ -71,7 +71,7 @@ public class PlayfabManager : MonoBehaviour
         {
             PlayerDisplayName = name;
             playername = PlayerDisplayName;
-           /* LobbyBackend.Instance.PlayerName_input_panel.SetActive(false);*/
+            /* LobbyBackend.Instance.PlayerName_input_panel.SetActive(false);*/
         }
 
         Debug.Log("Account information retrieved successfully.");
@@ -96,35 +96,35 @@ public class PlayfabManager : MonoBehaviour
             }
         };
         login_panel.SetActive(true);
-       
-        
-            PlayFabClientAPI.LoginWithEmailAddress(request, OnLoginSuccess, OnError);
-        
+
+
+        PlayFabClientAPI.LoginWithEmailAddress(request, OnLoginSuccess, OnError);
+
     }
 
     void OnLoginSuccess(LoginResult result)
     {
-       
-            messageText.text = "Logged in!";
-            SceneManager.LoadScene(1); // Load next scene
 
-            string name = result.InfoResultPayload.PlayerProfile?.DisplayName;
+        messageText.text = "Logged in!";
+        SceneManager.LoadScene(1); // Load next scene
 
-            if (string.IsNullOrEmpty(name)) // Check if display name exists.
-            {
-                messageText.text = "Set a display name.";
+        string name = result.InfoResultPayload.PlayerProfile?.DisplayName;
+
+        if (string.IsNullOrEmpty(name)) // Check if display name exists.
+        {
+            messageText.text = "Set a display name.";
             LobbyBackend.Instance.nemeopenpanel();
 
-            }
+        }
         else
-            {
-                PlayerDisplayName = name;
-                playername = PlayerDisplayName;
-            }
+        {
+            PlayerDisplayName = name;
+            playername = PlayerDisplayName;
+        }
 
-            Debug.Log("Successful login!");
-        
-       
+        Debug.Log("Successful login!");
+
+
     }
 
     public void ResetPasswordButton()
@@ -173,7 +173,7 @@ public class PlayfabManager : MonoBehaviour
     #endregion
 
     // Store player language and profile pic in PlayFab
-    public void StorePlayerAvatarAndAmount(int playerprofile , int playerlanguage)
+    public void StorePlayerAvatarAndAmount(int playerprofile, int playerlanguage)
     {
         var request = new UpdateUserDataRequest
         {
@@ -211,7 +211,7 @@ public class PlayfabManager : MonoBehaviour
         {
             player_language_backend = 0;
             player_playerprofile_backend = 0;
-           
+
             Debug.LogError("No user data found.");
             return;
         }
@@ -220,7 +220,7 @@ public class PlayfabManager : MonoBehaviour
         {
             if (int.TryParse(result.Data["playerprofile"].Value, out int playerprofile))
             {
-                player_playerprofile_backend = playerprofile;  
+                player_playerprofile_backend = playerprofile;
             }
             else
             {
@@ -230,20 +230,20 @@ public class PlayfabManager : MonoBehaviour
 
             if (int.TryParse(result.Data["playerlanguage"].Value, out int playerlanguage))
             {
-                player_language_backend = playerlanguage;  
+                player_language_backend = playerlanguage;
             }
             else
             {
                 player_language_backend = 0;
-               
-            } 
+
+            }
         }
         else
         {
             Debug.LogWarning("'PlayerAmount' key not found.");
         }
     }
-   
+
     #region Error Handling
     void OnError(PlayFabError error)
     {

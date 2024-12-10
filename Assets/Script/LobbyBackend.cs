@@ -14,27 +14,27 @@ public class LobbyBackend : MonoBehaviour
 
     public int profilnumbackend;
     public int PlayerLanguageBackend;
-  
+
     private void Start()
     {
-     
+
         Instance = this;
-      
+
         PlayfabManager.instance.GetPlayerData();
-      
+
 
     }
     void Update()
     {
         profilnumbackend = Profile.instance.profilnum;
         PlayerName.text = PlayfabManager.instance.playername.ToString();
-        if(Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.A))
         {
-            PlayfabManager.instance.StorePlayerAvatarAndAmount( profilnumbackend, PlayerLanguageBackend);// when player change index time and when player change palyerklanguage time pleas call this thing
+            PlayfabManager.instance.StorePlayerAvatarAndAmount(profilnumbackend, PlayerLanguageBackend);// when player change index time and when player change palyerklanguage time pleas call this thing
 
             PlayfabManager.instance.GetPlayerData(); //this two
         }
-       
+
     }
     public void nemeopenpanel()
     {
@@ -51,7 +51,7 @@ public class LobbyBackend : MonoBehaviour
             {
                 PlayfabManager.instance.playername = enteredName;
                 PlayfabManager.instance.submintnameButton();
-               
+
                 PlayerName_input_panel.SetActive(false);
             }
             else
@@ -72,7 +72,7 @@ public class LobbyBackend : MonoBehaviour
     }
     public void backendCoinClaim()
     {
-      
+
         clime_panel.SetActive(false);
 
     }
