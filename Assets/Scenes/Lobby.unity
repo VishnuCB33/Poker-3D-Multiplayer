@@ -7165,7 +7165,8 @@ MonoBehaviour:
   profilepanel: {fileID: 1352472803}
   amountpanel: {fileID: 481668647}
   lobbyPanel: {fileID: 62597434}
-  languagePanel: {fileID: 256461310}
+  profilnum: 0
+  PR: 0
 --- !u!4 &538104140
 Transform:
   m_ObjectHideFlags: 0
