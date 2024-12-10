@@ -29,6 +29,8 @@ public class Profile : MonoBehaviour
     public GameObject profilepanel;
     public GameObject amountpanel;
     public GameObject lobbyPanel;
+    public GameObject languagePanel;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -152,6 +154,14 @@ public class Profile : MonoBehaviour
     public void MultiplayerButt()
     {
         lobbyPanel.SetActive(true);
+    }
+    public void LanguagePanelOn()
+    {
+        languagePanel.SetActive(true);
+    }
+    public void LanguagePanelOff()
+    {
+        languagePanel.SetActive(false);
     }
 }
  
