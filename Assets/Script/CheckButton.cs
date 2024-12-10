@@ -60,7 +60,8 @@ public class CheckButton : MonoBehaviour
     public List<int>player2Win=new List<int>(10);
     public List<int> player3Win = new List<int>(10);
     public List<int> player4Win = new List<int>(10);
-
+    [Header("UI")]
+    public GameObject settingsPanel;
     /*  [Header("IdentifyWinsCount")]
       public List<int>winnerCount = new List<int>();
       int countWinner = 0;*/
@@ -575,5 +576,13 @@ public class CheckButton : MonoBehaviour
             Debug.Log("Not a Full House.");
         }
     }
-
+    //UI
+    public void SettingsOn()
+    {
+        settingsPanel.SetActive(true);
+    }
+    public void SettingsOff()
+    {
+        settingsPanel.SetActive(false);
+    }
 }

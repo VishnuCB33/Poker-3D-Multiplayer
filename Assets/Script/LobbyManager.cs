@@ -48,7 +48,7 @@ public class LobbyManager : MonoBehaviour
     [Header("PlayersINdex")]
     public int playerIndex;
     int show = 0;
-
+    public TextMeshProUGUI warning4PlayerText;
     async void Start()
     {
         Instance = this;
@@ -506,6 +506,8 @@ public class LobbyManager : MonoBehaviour
         else
         {
             Debug.LogWarning("Cannot enter game. Exactly 4 players are required!");
+            warning4PlayerText.text = "Four Players Needed ";
+
         }
     }
 
