@@ -19,8 +19,7 @@ public class PlayfabManager : MonoBehaviour
     public GameObject Resent_panel;
 
     public static string PlayerDisplayName; // Global variable for display name
-    public int player_amount_backend; // Amount to be stored and retrieved from PlayFab
-    public int player_index_backend; // Amount to be stored and retrieved from PlayFab
+    public int player_playerprofile_backend; // Amount to be stored and retrieved from PlayFab
     public int player_language_backend; // Amount to be stored and retrieved from PlayFab
 
     void Start()
@@ -72,6 +71,7 @@ public class PlayfabManager : MonoBehaviour
         {
             PlayerDisplayName = name;
             playername = PlayerDisplayName;
+           /* LobbyBackend.Instance.PlayerName_input_panel.SetActive(false);*/
         }
 
         Debug.Log("Account information retrieved successfully.");
@@ -113,9 +113,10 @@ public class PlayfabManager : MonoBehaviour
             if (string.IsNullOrEmpty(name)) // Check if display name exists.
             {
                 messageText.text = "Set a display name.";
+            LobbyBackend.Instance.nemeopenpanel();
 
             }
-            else
+        else
             {
                 PlayerDisplayName = name;
                 playername = PlayerDisplayName;
@@ -171,16 +172,16 @@ public class PlayfabManager : MonoBehaviour
     }
     #endregion
 
-    // Store player amount in PlayFab
-    public void StorePlayerAvatarAndAmount(int playerAmount ,int Playerindex, int playerlanguage)
+    // Store player language and profile pic in PlayFab
+    public void StorePlayerAvatarAndAmount(int playerprofile , int playerlanguage)
     {
         var request = new UpdateUserDataRequest
         {
             Data = new Dictionary<string, string>
             {
-                { "PlayerAmount", playerAmount.ToString() } , // Convert player amount to string
-                { "Playerindex", Playerindex.ToString() }, // Convert player amount to string
-                { "playerlanguage", playerlanguage.ToString() }  // Convert player amount to string
+                { "playerprofile", playerprofile.ToString() } , // Convert player amount to string
+                { "playerlanguage", playerlanguage.ToString() } // Convert player playerlanguage to string
+                 
             }
         };
 
@@ -208,31 +209,24 @@ public class PlayfabManager : MonoBehaviour
     {
         if (result.Data == null || result.Data.Count == 0)
         {
+            player_language_backend = 0;
+            player_playerprofile_backend = 0;
+           
             Debug.LogError("No user data found.");
             return;
         }
 
-        if (result.Data.ContainsKey("PlayerAmount"))
+        if (result.Data.ContainsKey("playerprofile"))
         {
-            if (int.TryParse(result.Data["PlayerAmount"].Value, out int playerAmount))
+            if (int.TryParse(result.Data["playerprofile"].Value, out int playerprofile))
             {
-                player_amount_backend = playerAmount;  
+                player_playerprofile_backend = playerprofile;  
             }
             else
             {
-                player_amount_backend = 0;
+                player_playerprofile_backend = 0;
                 Debug.LogError("'PlayerAmount' value is not a valid integer.");
             }
-
-            if (int.TryParse(result.Data["Playerindex"].Value, out int Playerindex))
-            {
-                player_index_backend = Playerindex;  
-            }
-            else
-            {
-                player_index_backend = 0;
-               
-            } 
 
             if (int.TryParse(result.Data["playerlanguage"].Value, out int playerlanguage))
             {
@@ -242,14 +236,14 @@ public class PlayfabManager : MonoBehaviour
             {
                 player_language_backend = 0;
                
-            }
+            } 
         }
         else
         {
             Debug.LogWarning("'PlayerAmount' key not found.");
         }
     }
-
+   
     #region Error Handling
     void OnError(PlayFabError error)
     {

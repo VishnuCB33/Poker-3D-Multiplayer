@@ -12,47 +12,29 @@ public class LobbyBackend : MonoBehaviour
     public GameObject PlayerName_input_panel;
     public GameObject clime_panel;
 
-    public int indexnumBackend;
+    public int profilnumbackend;
     public int PlayerLanguageBackend;
-    public int player_amount ;
-    public int previous_player_amount ;
+  
     private void Start()
     {
+     
         Instance = this;
       
         PlayfabManager.instance.GetPlayerData();
-       // PlayfabManager.instance.StorePlayerAvatarAndAmount(player_amount);
+      
 
     }
     void Update()
     {
-        indexnumBackend = LobbyManager.Instance.playerIndex;
-       
-        if (player_amount != previous_player_amount)
-        {
-           
-            PlayfabManager.instance.StorePlayerAvatarAndAmount(player_amount, indexnumBackend, PlayerLanguageBackend);
-            
-            previous_player_amount = player_amount;
-
-         
-        }
+        profilnumbackend = Profile.instance.profilnum;
         PlayerName.text = PlayfabManager.instance.playername.ToString();
         if(Input.GetKeyDown(KeyCode.A))
         {
-            PlayfabManager.instance.StorePlayerAvatarAndAmount(player_amount, indexnumBackend, PlayerLanguageBackend);// when player change index time and when player change palyerklanguage time pleas call this thing
+            PlayfabManager.instance.StorePlayerAvatarAndAmount( profilnumbackend, PlayerLanguageBackend);// when player change index time and when player change palyerklanguage time pleas call this thing
 
             PlayfabManager.instance.GetPlayerData(); //this two
         }
-        PlayerAmount.text =PlayfabManager.instance.player_amount_backend.ToString()+"$" ;
-
-        
-
-       /* if (Input.GetKeyDown(KeyCode.Space))
-        {
-            player_amount += 100;
-
-        };*/
+       
     }
     public void nemeopenpanel()
     {
@@ -69,6 +51,7 @@ public class LobbyBackend : MonoBehaviour
             {
                 PlayfabManager.instance.playername = enteredName;
                 PlayfabManager.instance.submintnameButton();
+               
                 PlayerName_input_panel.SetActive(false);
             }
             else
@@ -89,8 +72,13 @@ public class LobbyBackend : MonoBehaviour
     }
     public void backendCoinClaim()
     {
-        player_amount = 10000;
+      
         clime_panel.SetActive(false);
 
+    }
+    private void OnApplicationQuit()
+    {
+        Debug.Log("player data saved & player quit");
+        PlayfabManager.instance.StorePlayerAvatarAndAmount(profilnumbackend, PlayerLanguageBackend);
     }
 }
