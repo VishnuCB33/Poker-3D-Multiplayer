@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2407040991228278233}
   - component: {fileID: 4220250195035320939}
   - component: {fileID: 6311965955554616655}
+  - component: {fileID: -292033855196924451}
   m_Layer: 9
   m_Name: Card_SpadeQueen
   m_TagString: 12
@@ -119,3 +120,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   properties: {fileID: 11400000, guid: 62f2242c9bac0c2428f7375e55685585, type: 2}
+--- !u!95 &-292033855196924451
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2391079486428546089}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 07f10c03c9458d7498f7a56d584e3d4d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

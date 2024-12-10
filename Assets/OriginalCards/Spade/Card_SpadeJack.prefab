@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2760665669769126390}
   - component: {fileID: 8191503553494410300}
   - component: {fileID: 190096794145105525}
+  - component: {fileID: -3801073324213236290}
   m_Layer: 9
   m_Name: Card_SpadeJack
   m_TagString: 11
@@ -119,3 +120,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   properties: {fileID: 11400000, guid: 32d3f70c261aada4d81dd28a789e3193, type: 2}
+--- !u!95 &-3801073324213236290
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3822168757426273429}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

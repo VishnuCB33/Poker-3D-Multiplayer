@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1687333032099998687}
   - component: {fileID: 7359590840830746211}
   - component: {fileID: 4370141908930796593}
+  - component: {fileID: -4472768935138428698}
   m_Layer: 9
   m_Name: Card_Spade2
   m_TagString: 2
@@ -119,3 +120,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   properties: {fileID: 11400000, guid: 0a58cfe0e078ad24ba33742ac3e305c1, type: 2}
+--- !u!95 &-4472768935138428698
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4360192663663368957}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

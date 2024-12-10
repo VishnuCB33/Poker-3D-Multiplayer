@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 9015112625759444050}
   - component: {fileID: 4722373082236933595}
   - component: {fileID: 5940789169548611350}
+  - component: {fileID: -4098477839807008633}
   m_Layer: 8
   m_Name: Card_Heart8
   m_TagString: 8
@@ -119,3 +120,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   properties: {fileID: 11400000, guid: fdd945a70a13a8a46b16b12f3b14e541, type: 2}
+--- !u!95 &-4098477839807008633
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8954088195609073353}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 07f10c03c9458d7498f7a56d584e3d4d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7509882583266512016}
   - component: {fileID: 6333926221932822144}
   - component: {fileID: 3492216877570984173}
+  - component: {fileID: 191246013490009742}
   m_Layer: 6
   m_Name: Card_Club9
   m_TagString: 9
@@ -119,3 +120,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   properties: {fileID: 11400000, guid: 59bb8047e669def48bc0ecbbda834014, type: 2}
+--- !u!95 &191246013490009742
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 365533638141246642}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 07f10c03c9458d7498f7a56d584e3d4d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
