@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine.UI;
 using static player_details;
 using System.Linq;
+using Unity.VisualScripting;
 
 public class Game_Basic_Code : MonoBehaviour
 {
@@ -136,6 +137,7 @@ public class Game_Basic_Code : MonoBehaviour
     public List<int> finalIndex= new List<int>();
     public TextMeshProUGUI playerName;
     public GameObject winnerPanel;
+    int popUp = 0;
     private void Awake()
     {
         dealer = Random.Range(1, 5);
@@ -175,9 +177,16 @@ public class Game_Basic_Code : MonoBehaviour
         {
             round_4_funtion();
         }
+        if (popUp == 1)
+        {
+            Invoke("PopUpFalse", 5);
+            popUp = 0;
+            Debug.Log("YY");
+        }
     }
 
     //V
+    
     public void RandomCards()
     {
 
@@ -211,9 +220,11 @@ public class Game_Basic_Code : MonoBehaviour
         player4GetNumCard[1] = randomCards[7];
         playerOneCards[0] = randomCardsGameObject[0];
         GameObject one = Instantiate(playerOneCards[0], cardPos[0].position, cardPos[0].transform.rotation);
+        one.transform.localScale=new Vector3(1,1,1);       
         //one.transform.rotation = new Quaternion(0, 180, 0, 0);
         playerOneCards[1] = randomCardsGameObject[1];
         GameObject two = Instantiate(playerOneCards[1], cardPos[1].position, cardPos[1].transform.rotation);
+        two.transform.localScale=new Vector3(1,1,1);
         // two.transform.rotation = new Quaternion(0, 180, 0, 0);
         playerTwoCards[0] = randomCardsGameObject[2];
         Instantiate(playerTwoCards[0], cardPos[2].position, cardPos[2].transform.rotation);
@@ -707,6 +718,10 @@ public class Game_Basic_Code : MonoBehaviour
                     if(lastStore[i] != 0)
                     {
                         Debug.Log("Winner is :" + lastStore[i]);
+                        winnerPanel.SetActive(true);
+                        popUp = 1;
+                        playerName.text = "player Two win" + LobbyBackend.Instance.PlayerName;
+                       
                     }
                 }
                
@@ -806,25 +821,33 @@ public class Game_Basic_Code : MonoBehaviour
             {
                 Debug.Log("player one win");
                 winnerPanel.SetActive(true);
+                popUp = 1;
                 playerName.text = "player one win"+LobbyBackend.Instance.PlayerName;
+               
             }
             else if (finalIndex[1] > finalIndex[0] && finalIndex[1] > finalIndex[2] && finalIndex[1] > finalIndex[3])
             {
                 Debug.Log("player two win");
                 winnerPanel.SetActive(true);
+                popUp = 1;
                 playerName.text = "player Two win"+LobbyBackend.Instance.PlayerName;
+                
             }
             else if (finalIndex[2] > finalIndex[0] && finalIndex[2] > finalIndex[1] && finalIndex[2] > finalIndex[3])
             {
                 Debug.Log("player three win");
                 winnerPanel.SetActive(true);
+                popUp = 1;
                 playerName.text = "player Three win" + LobbyBackend.Instance.PlayerName;
+               
             }
             else if (finalIndex[3] > finalIndex[0] && finalIndex[3] > finalIndex[1] && finalIndex[3] > finalIndex[2])
             {
                 Debug.Log("player four win");
                 winnerPanel.SetActive(true);
+                popUp = 1;
                 playerName.text = "player Four win"+ LobbyBackend.Instance.PlayerName;
+               
             }
         }
 
@@ -1161,7 +1184,10 @@ public class Game_Basic_Code : MonoBehaviour
 
         }
     }
-
+    public void PopUpFalse()
+    {
+        winnerPanel.SetActive(false);
+    }
 }
 [System.Serializable]
 public enum players
@@ -1191,6 +1217,6 @@ public class player_details
 
     }
     
-
+    
 }
 

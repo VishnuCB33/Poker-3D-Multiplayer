@@ -30,8 +30,8 @@ public class Profile : MonoBehaviour
     public GameObject profilepanel;
     public GameObject amountpanel;
     public GameObject lobbyPanel;
-    public int profilnum;//A
-    public int PR;//A
+    public GameObject languagePanel;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -191,68 +191,13 @@ public class Profile : MonoBehaviour
     {
         lobbyPanel.SetActive(true);
     }
-    public void profile_()
+    public void LanguagePanelOn()
     {
-        if(PlayfabManager.instance.player_playerprofile_backend == 0)
-        {
-            profprefab.GetComponent<Image>().sprite = prof1.GetComponent<Image>().sprite;
-            profilelobby.GetComponent<Image>().sprite = prof1.GetComponent<Image>().sprite;
-        }
-        if(PlayfabManager.instance.player_playerprofile_backend == 1)
-        {
-            profprefab.GetComponent<Image>().sprite = prof2.GetComponent<Image>().sprite;
-            profilelobby.GetComponent<Image>().sprite = prof2.GetComponent<Image>().sprite;
-        }
-        if(PlayfabManager.instance.player_playerprofile_backend == 2)
-        {
-            profprefab.GetComponent<Image>().sprite = prof3.GetComponent<Image>().sprite;
-            profilelobby.GetComponent<Image>().sprite = prof3.GetComponent<Image>().sprite;
-        }
-        if(PlayfabManager.instance.player_playerprofile_backend == 3)
-        {
-            profprefab.GetComponent<Image>().sprite = prof4.GetComponent<Image>().sprite;
-            profilelobby.GetComponent<Image>().sprite = prof4.GetComponent<Image>().sprite;
-        }
-        if(PlayfabManager.instance.player_playerprofile_backend == 4)
-        {
-            profprefab.GetComponent<Image>().sprite = prof5.GetComponent<Image>().sprite;
-            profilelobby.GetComponent<Image>().sprite = prof5.GetComponent<Image>().sprite;
-        }
-        if(PlayfabManager.instance.player_playerprofile_backend == 5)
-        {
-            profprefab.GetComponent<Image>().sprite = prof6.GetComponent<Image>().sprite;
-            profilelobby.GetComponent<Image>().sprite = prof6.GetComponent<Image>().sprite;
-        }
-        if(PlayfabManager.instance.player_playerprofile_backend == 6)
-        {
-            profprefab.GetComponent<Image>().sprite = prof7.GetComponent<Image>().sprite;
-            profilelobby.GetComponent<Image>().sprite = prof7.GetComponent<Image>().sprite;
-        }
-        if(PlayfabManager.instance.player_playerprofile_backend == 7)
-        {
-            profprefab.GetComponent<Image>().sprite = prof8.GetComponent<Image>().sprite;
-            profilelobby.GetComponent<Image>().sprite = prof8.GetComponent<Image>().sprite;
-        }
-        if(PlayfabManager.instance.player_playerprofile_backend == 8)
-        {
-            profprefab.GetComponent<Image>().sprite = prof9.GetComponent<Image>().sprite;
-            profilelobby.GetComponent<Image>().sprite = prof9.GetComponent<Image>().sprite;
-        }
-        if(PlayfabManager.instance.player_playerprofile_backend == 9)
-        {
-            profprefab.GetComponent<Image>().sprite = prof10.GetComponent<Image>().sprite;
-            profilelobby.GetComponent<Image>().sprite = prof10.GetComponent<Image>().sprite;
-        }
-        if(PlayfabManager.instance.player_playerprofile_backend == 10)
-        {
-            profprefab.GetComponent<Image>().sprite = prof11.GetComponent<Image>().sprite;
-            profilelobby.GetComponent<Image>().sprite = prof11.GetComponent<Image>().sprite;
-        }
-        if(PlayfabManager.instance.player_playerprofile_backend == 11)
-        {
-            profprefab.GetComponent<Image>().sprite = prof12.GetComponent<Image>().sprite;
-            profilelobby.GetComponent<Image>().sprite = prof12.GetComponent<Image>().sprite;
-        }
+        languagePanel.SetActive(true);
+    }
+    public void LanguagePanelOff()
+    {
+        languagePanel.SetActive(false);
     }
 }
  
