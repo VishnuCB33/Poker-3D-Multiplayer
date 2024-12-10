@@ -138,6 +138,8 @@ public class Game_Basic_Code : MonoBehaviour
     public TextMeshProUGUI playerName;
     public GameObject winnerPanel;
     int popUp = 0;
+    [Header("Animaton")]
+    public Animator anim;
     private void Awake()
     {
         dealer = Random.Range(1, 5);
@@ -220,7 +222,8 @@ public class Game_Basic_Code : MonoBehaviour
         player4GetNumCard[1] = randomCards[7];
         playerOneCards[0] = randomCardsGameObject[0];
         GameObject one = Instantiate(playerOneCards[0], cardPos[0].position, cardPos[0].transform.rotation);
-        one.transform.localScale=new Vector3(1,1,1);       
+        one.transform.localScale=new Vector3(1,1,1);
+       
         //one.transform.rotation = new Quaternion(0, 180, 0, 0);
         playerOneCards[1] = randomCardsGameObject[1];
         GameObject two = Instantiate(playerOneCards[1], cardPos[1].position, cardPos[1].transform.rotation);
