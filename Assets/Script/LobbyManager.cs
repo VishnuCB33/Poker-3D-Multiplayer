@@ -447,7 +447,7 @@ public class LobbyManager : MonoBehaviour
             try
             {
                 // Check if there are exactly 4 players
-                if (currentLobby.Players.Count != 4)
+                if (currentLobby.Players.Count != 2)
                 {
                     Debug.LogWarning("Game cannot start. Exactly 4 players are required!");
                     // Optionally, display a message to the host
@@ -499,7 +499,7 @@ public class LobbyManager : MonoBehaviour
     }
     private void EnterGame()
     {
-        if (currentLobby.Players.Count == 4)
+        if (currentLobby.Players.Count == 2)
         {
             SceneManager.LoadScene(2);
         }
