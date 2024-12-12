@@ -6,6 +6,8 @@ using UnityEngine.UI;
 using static player_details;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEditor;
+
 
 public class Game_Basic_Code : MonoBehaviour
 {
@@ -140,6 +142,8 @@ public class Game_Basic_Code : MonoBehaviour
     int popUp = 0;
     [Header("Animaton")]
     public Animator anim;
+    
+
     private void Awake()
     {
         dealer = Random.Range(1, 5);
@@ -152,7 +156,7 @@ public class Game_Basic_Code : MonoBehaviour
         DealerSelect();
         AllCardsAllocationFirst();
         instance = this;
-
+     
     }
     public void Update()
     {
@@ -223,24 +227,43 @@ public class Game_Basic_Code : MonoBehaviour
         playerOneCards[0] = randomCardsGameObject[0];
         GameObject one = Instantiate(playerOneCards[0], cardPos[0].position, cardPos[0].transform.rotation);
         one.transform.localScale=new Vector3(1,1,1);
-       
-        //one.transform.rotation = new Quaternion(0, 180, 0, 0);
+     one.GetComponent<Animator>().enabled=false;
+        //anim.runtimeAnimatorController = controlHandAnim.GetComponent<RuntimeAnimatorController>();
+
         playerOneCards[1] = randomCardsGameObject[1];
         GameObject two = Instantiate(playerOneCards[1], cardPos[1].position, cardPos[1].transform.rotation);
         two.transform.localScale=new Vector3(1,1,1);
-        // two.transform.rotation = new Quaternion(0, 180, 0, 0);
+        two.GetComponent<Animator>().enabled=false;
+     //  anim2.runtimeAnimatorController = controlHandAnim.GetComponent<RuntimeAnimatorController>();
+
         playerTwoCards[0] = randomCardsGameObject[2];
-        Instantiate(playerTwoCards[0], cardPos[2].position, cardPos[2].transform.rotation);
+        GameObject three=Instantiate(playerTwoCards[0], cardPos[2].position, cardPos[2].transform.rotation);
+        three.transform.localScale = new Vector3(1, 1, 1);
+        three.GetComponent<Animator>().enabled = false;
+
         playerTwoCards[1] = randomCardsGameObject[3];
-        Instantiate(playerTwoCards[1], cardPos[3].position, cardPos[3].transform.rotation);
+       GameObject four= Instantiate(playerTwoCards[1], cardPos[3].position, cardPos[3].transform.rotation);
+        four.transform.localScale = new Vector3(1, 1, 1);
+        four.GetComponent<Animator>().enabled = false;
+
         playerThreeCards[0] = randomCardsGameObject[4];
-        Instantiate(playerThreeCards[0], cardPos[4].position, cardPos[4].transform.rotation);
+       GameObject five= Instantiate(playerThreeCards[0], cardPos[4].position, cardPos[4].transform.rotation);
+        five.transform.localScale = new Vector3(1, 1, 1);
+        five.GetComponent<Animator>().enabled = false;
+
         playerThreeCards[1] = randomCardsGameObject[5];
-        Instantiate(playerThreeCards[1], cardPos[5].position, cardPos[5].transform.rotation);
+       GameObject six= Instantiate(playerThreeCards[1], cardPos[5].position, cardPos[5].transform.rotation);
+        six.transform.localScale = new Vector3(1, 1, 1);
+        six.GetComponent<Animator>().enabled = false;
+
         playerFourCards[0] = randomCardsGameObject[6];
-        Instantiate(playerFourCards[0], cardPos[6].position, cardPos[6].transform.rotation);
+      GameObject seven=  Instantiate(playerFourCards[0], cardPos[6].position, cardPos[6].transform.rotation);
+        seven.transform.localScale = new Vector3(1, 1, 1);
+        seven.GetComponent<Animator>().enabled = false;
         playerFourCards[1] = randomCardsGameObject[7];
-        Instantiate(playerFourCards[1], cardPos[7].position, cardPos[7].transform.rotation);
+       GameObject eight= Instantiate(playerFourCards[1], cardPos[7].position, cardPos[7].transform.rotation);
+        eight.transform.localScale = new Vector3(1, 1, 1);
+        eight.GetComponent<Animator>().enabled = false;
 
     }
     int round_refarance = 0;// need to reset to 0 after this round
@@ -275,7 +298,8 @@ public class Game_Basic_Code : MonoBehaviour
         randomCardsGameObject[10].transform.localScale = new Vector3(2, 2, 2);
         randomCardsGameObject[11].transform.localScale = new Vector3(2, 2, 2);
         randomCardsGameObject[12].transform.localScale = new Vector3(2, 2, 2);
-        Instantiate(randomCardsGameObject[8], referance[0].transform.position, referance[0].transform.rotation);
+       GameObject one = Instantiate(randomCardsGameObject[8], referance[0].transform.position, referance[0].transform.rotation);
+       
         CheckButton.Instance.finalCheckFiveCard[0]=randomCardsGameObject[8];
         Instantiate(randomCardsGameObject[9], referance[1].transform.position, referance[1].transform.rotation);
         CheckButton.Instance.finalCheckFiveCard[1] = randomCardsGameObject[9];
