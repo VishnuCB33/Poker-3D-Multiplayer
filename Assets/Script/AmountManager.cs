@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine;
 
 public class AmountManager : MonoBehaviour
-{
+{public static AmountManager Instance;
     [Header("UI")]
     public TextMeshProUGUI amount;
 
@@ -14,7 +14,10 @@ public class AmountManager : MonoBehaviour
     {
         Login();
     }
-
+    public void Awake()
+    {
+        Instance = this;
+    }
     public void Login()
     {
         var request = new LoginWithCustomIDRequest
@@ -50,7 +53,7 @@ public class AmountManager : MonoBehaviour
             amount.text = "0";
         }
     }
-
+  
     void OnError(PlayFabError error)
     {
         Debug.LogError("Error: " + error.ErrorMessage);
