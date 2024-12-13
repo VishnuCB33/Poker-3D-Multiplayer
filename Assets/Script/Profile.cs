@@ -36,6 +36,8 @@ public class Profile : MonoBehaviour
     void Start()
     {
         PR = 1;
+        PlayfabManager.instance.GetPlayerData();
+
         instance = this;
 
     }
@@ -45,10 +47,11 @@ public class Profile : MonoBehaviour
     {
         if (PR == 1)
         {
+         
+
             profile_();
 
         }
-
 
         profilelobby.onClick.AddListener(OpenProfilePage);
         profile.onClick.AddListener(OpenProfilePanel);
