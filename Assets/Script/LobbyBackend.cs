@@ -14,18 +14,25 @@ public class LobbyBackend : MonoBehaviour
 
     public int profilnumbackend;
     public int PlayerLanguageBackend;
+    private void Awake()
+    {
+        PlayfabManager.instance.StorePlayerAvatarAndAmount(profilnumbackend, PlayerLanguageBackend);
 
+        PlayfabManager.instance.GetPlayerData();
+
+    }
     private void Start()
     {
 
         Instance = this;
 
         PlayfabManager.instance.GetPlayerData();
-
+        PlayfabManager.instance.StorePlayerAvatarAndAmount(profilnumbackend, PlayerLanguageBackend);
 
     }
     void Update()
     {
+      
         profilnumbackend = Profile.instance.profilnum;
         PlayerName.text = PlayfabManager.instance.playername.ToString();
         if (Input.GetKeyDown(KeyCode.A))

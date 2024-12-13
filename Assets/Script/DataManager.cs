@@ -50,10 +50,23 @@ public class PlayfabManager : MonoBehaviour
 
     void OnRegisterSuccess(RegisterPlayFabUserResult result)
     {
+        GetPlayerData();
+        
+
         messageText.text = "Registered and logged in!";
         Debug.Log("Registration successful!");
         SceneManager.LoadScene(1); // Load next scene
+        if (string.IsNullOrEmpty(name)) // Check if display name exists.
+        {
+            messageText.text = "Set a display name.";
+            LobbyBackend.Instance.nemeopenpanel();
 
+        }
+        else
+        {
+            PlayerDisplayName = name;
+            playername = PlayerDisplayName;
+        }
         var request = new GetAccountInfoRequest(); // Request to get account information.
         PlayFabClientAPI.GetAccountInfo(request, OnAccountInfoReceived, OnError);
     }
@@ -69,6 +82,8 @@ public class PlayfabManager : MonoBehaviour
         }
         else
         {
+            GetPlayerData();
+
             PlayerDisplayName = name;
             playername = PlayerDisplayName;
             /* LobbyBackend.Instance.PlayerName_input_panel.SetActive(false);*/
@@ -112,6 +127,7 @@ public class PlayfabManager : MonoBehaviour
 
         if (string.IsNullOrEmpty(name)) // Check if display name exists.
         {
+            GetPlayerData();
             messageText.text = "Set a display name.";
             LobbyBackend.Instance.nemeopenpanel();
 
@@ -225,7 +241,7 @@ public class PlayfabManager : MonoBehaviour
             else
             {
                 player_playerprofile_backend = 0;
-                Debug.LogError("'PlayerAmount' value is not a valid integer.");
+                Debug.LogError("'playerprofile' value is not a valid integer.");
             }
 
             if (int.TryParse(result.Data["playerlanguage"].Value, out int playerlanguage))
