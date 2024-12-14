@@ -10,7 +10,10 @@ public class SeatArangement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        LobbyManager.Instance.playersNames[0] ="unknown";
+        LobbyManager.Instance.playersNames[1] = "unknown";
+        LobbyManager.Instance.playersNames[2] = "unknown";
+        LobbyManager.Instance.playersNames[3] = "unknown";
     }
 
     // Update is called once per frame
