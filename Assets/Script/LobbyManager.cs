@@ -403,7 +403,7 @@ public class LobbyManager : MonoBehaviour
                     //playersAmount[3] = allPlayersAmount;
                 }
                 //plYERS AMOUNTS
-                if (AmountManager.Instance.amount != null)
+               /* if (AmountManager.Instance.amount != null)
                 {
                     string amountPlayers = AmountManager.Instance.amount.ToString();
                     allPlayersAmount = int.Parse(amountPlayers);
@@ -412,7 +412,7 @@ public class LobbyManager : MonoBehaviour
                 else
                 {
                     Debug.LogError("AmountManager.Instance.amount is null.");
-                }
+                }*/
                 Debug.Log($"Player Index: {playerIndex}, Player Name: {playerName}");
              
                 // Show kick button for host (except for themselves)
