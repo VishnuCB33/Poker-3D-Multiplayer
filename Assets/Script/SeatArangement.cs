@@ -20,6 +20,7 @@ public class SeatArangement : MonoBehaviour
         ThePlayerName = LobbyBackend.Instance.PlayerName.text;
 
         SeatArangements();
+        nullname();
     }
     public void nullname()
     {
