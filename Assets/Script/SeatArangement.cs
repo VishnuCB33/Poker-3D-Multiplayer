@@ -10,10 +10,8 @@ public class SeatArangement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        LobbyManager.Instance.playersNames[0] ="unknown";
-        LobbyManager.Instance.playersNames[1] = "unknown";
-        LobbyManager.Instance.playersNames[2] = "unknown";
-        LobbyManager.Instance.playersNames[3] = "unknown";
+        nullname();
+        
     }
 
     // Update is called once per frame
@@ -21,7 +19,32 @@ public class SeatArangement : MonoBehaviour
     {
         ThePlayerName = LobbyBackend.Instance.PlayerName.text;
 
+        SeatArangements();
+    }
+    public void nullname()
+    {
+        if (LobbyManager.Instance.playersNames[0] == null)
+        {
+            LobbyManager.Instance.playersNames[0] = "unknown";
 
+        }
+        if (LobbyManager.Instance.playersNames[1] == null)
+        {
+            LobbyManager.Instance.playersNames[1] = "unknown";
+
+
+        }
+        if (LobbyManager.Instance.playersNames[2] == null)
+        {
+            LobbyManager.Instance.playersNames[2] = "unknown";
+
+        }
+        if (LobbyManager.Instance.playersNames[3] == null)
+        {
+            LobbyManager.Instance.playersNames[3] = "unknown";
+
+        }
+        
     }
     public void SeatArangements()
     {
