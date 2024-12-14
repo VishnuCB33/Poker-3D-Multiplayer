@@ -49,8 +49,12 @@ public class LobbyManager : MonoBehaviour
     public int playerIndex;
     int show = 0;
     public TextMeshProUGUI warning4PlayerText;
+    public int  allPlayersAmount;
+    public List<string> playersNames;
+    public List<int> playersAmount;
     async void Start()
     {
+        DontDestroyOnLoad(gameObject);
         Instance = this;
         //Initialize unity services,and add await keyword for wait for the initialize done,async automatically add
         await UnityServices.InitializeAsync();
@@ -373,13 +377,44 @@ public class LobbyManager : MonoBehaviour
             {
                 Player player = currentLobby.Players[playerIndex];
                 GameObject newPlayerInfo = Instantiate(playerInfoPrefab, playerInfoContent.transform);
-
+              
                 // Set the player name and display their index
                 string playerName = player.Data["PlayerName"].Value;
                 newPlayerInfo.GetComponentInChildren<TextMeshProUGUI>().text = $"{playerIndex + 1}. {playerName}";
                 show = 1;
+                if (playerIndex == 0)
+                {
+                    playersNames[0] = playerName;
+                   // playersAmount[0] = allPlayersAmount;
+                }
+                if (playerIndex == 1)
+                {
+                    playersNames[1] = playerName;
+                   // playersAmount[1] = allPlayersAmount;
+                }
+                if (playerIndex == 2)
+                {
+                    playersNames[2] = playerName;
+                   // playersAmount[2] = allPlayersAmount;
+                }
+                if (playerIndex == 3)
+                {
+                    playersNames[3] = playerName;
+                    //playersAmount[3] = allPlayersAmount;
+                }
+                //plYERS AMOUNTS
+                if (AmountManager.Instance.amount != null)
+                {
+                    string amountPlayers = AmountManager.Instance.amount.ToString();
+                    allPlayersAmount = int.Parse(amountPlayers);
+                    Debug.Log(allPlayersAmount);
+                }
+                else
+                {
+                    Debug.LogError("AmountManager.Instance.amount is null.");
+                }
                 Debug.Log($"Player Index: {playerIndex}, Player Name: {playerName}");
-
+             
                 // Show kick button for host (except for themselves)
                 if (isHost() && player.Id != playerId)
                 {
