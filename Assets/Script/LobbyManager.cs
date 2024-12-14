@@ -52,8 +52,12 @@ public class LobbyManager : MonoBehaviour
     public int  allPlayersAmount;
     public List<string> playersNames;
     public List<int> playersAmount;
+    int off = 0;
+    bool isStart = true;
     async void Start()
     {
+        off = 0;
+        isStart = true;
         DontDestroyOnLoad(gameObject);
         Instance = this;
         //Initialize unity services,and add await keyword for wait for the initialize done,async automatically add
@@ -364,80 +368,85 @@ public class LobbyManager : MonoBehaviour
     private void VisualizeRoomDetails()
     {
         // Clear previous player info
-        for (int i = 0; i < playerInfoContent.transform.childCount; i++)
+        if (off == 0)
         {
-            Destroy(playerInfoContent.transform.GetChild(i).gameObject);
-        }
-
-        // Check if player is still in the lobby
-        if (IsinLobby())
-        {
-            // Loop through players and visualize their details
-            for (playerIndex = 0; playerIndex < currentLobby.Players.Count; playerIndex++)
+            for (int i = 0; i < playerInfoContent.transform.childCount; i++)
             {
-                Player player = currentLobby.Players[playerIndex];
-                GameObject newPlayerInfo = Instantiate(playerInfoPrefab, playerInfoContent.transform);
-              
-                // Set the player name and display their index
-                string playerName = player.Data["PlayerName"].Value;
-                newPlayerInfo.GetComponentInChildren<TextMeshProUGUI>().text = $"{playerIndex + 1}. {playerName}";
-                show = 1;
-                if (playerIndex == 0)
+                Destroy(playerInfoContent.transform.GetChild(i).gameObject);
+            }
+
+
+
+            // Check if player is still in the lobby
+            if (IsinLobby())
+            {
+                // Loop through players and visualize their details
+                for (playerIndex = 0; playerIndex < currentLobby.Players.Count; playerIndex++)
                 {
-                    playersNames[0] = playerName;
-                   // playersAmount[0] = allPlayersAmount;
+                    Player player = currentLobby.Players[playerIndex];
+                    GameObject newPlayerInfo = Instantiate(playerInfoPrefab, playerInfoContent.transform);
+
+                    // Set the player name and display their index
+                    string playerName = player.Data["PlayerName"].Value;
+                    newPlayerInfo.GetComponentInChildren<TextMeshProUGUI>().text = $"{playerIndex + 1}. {playerName}";
+                    show = 1;
+                    if (playerIndex == 0)
+                    {
+                        playersNames[0] = playerName;
+                        // playersAmount[0] = allPlayersAmount;
+                    }
+                    if (playerIndex == 1)
+                    {
+                        playersNames[1] = playerName;
+                        // playersAmount[1] = allPlayersAmount;
+                    }
+                    if (playerIndex == 2)
+                    {
+                        playersNames[2] = playerName;
+                        // playersAmount[2] = allPlayersAmount;
+                    }
+                    if (playerIndex == 3)
+                    {
+                        playersNames[3] = playerName;
+                        //playersAmount[3] = allPlayersAmount;
+                    }
+                    //plYERS AMOUNTS
+                    /* if (AmountManager.Instance.amount != null)
+                     {
+                         string amountPlayers = AmountManager.Instance.amount.ToString();
+                         allPlayersAmount = int.Parse(amountPlayers);
+                         Debug.Log(allPlayersAmount);
+                     }
+                     else
+                     {
+                         Debug.LogError("AmountManager.Instance.amount is null.");
+                     }*/
+                    Debug.Log($"Player Index: {playerIndex}, Player Name: {playerName}");
+
+                    // Show kick button for host (except for themselves)
+                    if (isHost() && player.Id != playerId)
+                    {
+                        Button kickBtn = newPlayerInfo.GetComponentInChildren<Button>(true);
+                        kickBtn.onClick.AddListener(() => KickPlayer(player.Id));
+                        kickBtn.gameObject.SetActive(true);
+                    }
                 }
-                if (playerIndex == 1)
+                if (isHost())
                 {
-                    playersNames[1] = playerName;
-                   // playersAmount[1] = allPlayersAmount;
-                }
-                if (playerIndex == 2)
-                {
-                    playersNames[2] = playerName;
-                   // playersAmount[2] = allPlayersAmount;
-                }
-                if (playerIndex == 3)
-                {
-                    playersNames[3] = playerName;
-                    //playersAmount[3] = allPlayersAmount;
-                }
-                //plYERS AMOUNTS
-               /* if (AmountManager.Instance.amount != null)
-                {
-                    string amountPlayers = AmountManager.Instance.amount.ToString();
-                    allPlayersAmount = int.Parse(amountPlayers);
-                    Debug.Log(allPlayersAmount);
+                    startGameButton.onClick.RemoveAllListeners();
+                    startGameButton.onClick.AddListener(StartGame);
+                    startGameButton.gameObject.SetActive(true);
                 }
                 else
                 {
-                    Debug.LogError("AmountManager.Instance.amount is null.");
-                }*/
-                Debug.Log($"Player Index: {playerIndex}, Player Name: {playerName}");
-             
-                // Show kick button for host (except for themselves)
-                if (isHost() && player.Id != playerId)
-                {
-                    Button kickBtn = newPlayerInfo.GetComponentInChildren<Button>(true);
-                    kickBtn.onClick.AddListener(() => KickPlayer(player.Id));
-                    kickBtn.gameObject.SetActive(true);
+                    // Non-host players just wait for the host to start the game
+                    startGameButton.gameObject.SetActive(false);
                 }
-            }
-            if (isHost())
-            {
-                startGameButton.onClick.RemoveAllListeners();
-                startGameButton.onClick.AddListener(StartGame);
-                startGameButton.gameObject.SetActive(true);
             }
             else
             {
-                // Non-host players just wait for the host to start the game
-                startGameButton.gameObject.SetActive(false);
+                ExitRoomButt();
             }
-        }
-        else
-        {
-            ExitRoomButt();
         }
     }
 
@@ -534,9 +543,11 @@ public class LobbyManager : MonoBehaviour
     }
     private void EnterGame()
     {
-        if (currentLobby.Players.Count == 2)
+        if (currentLobby.Players.Count == 2&&isStart==true)
         {
             SceneManager.LoadScene(2);
+            off = 1;
+            isStart = false;
         }
         else
         {
