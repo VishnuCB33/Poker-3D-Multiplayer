@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -18633,6 +18633,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: profile
       objectReference: {fileID: 0}
+    - target: {fileID: 1723043902351746258, guid: da87c386dbbb7e34ca4507c7f41dfaec, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6936935598710595377, guid: da87c386dbbb7e34ca4507c7f41dfaec, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -26363,7 +26367,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1941135647532661664
 RectTransform:
   m_ObjectHideFlags: 0
@@ -30256,7 +30260,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!222 &4513331471995964206
 CanvasRenderer:
   m_ObjectHideFlags: 0

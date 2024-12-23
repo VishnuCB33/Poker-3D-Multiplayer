@@ -10,6 +10,7 @@ public class AmountManager : MonoBehaviour
     public static AmountManager Instance;
     [Header("UI")]
     public TextMeshProUGUI amount;
+    public int amountInt;
     
     void Start()
     {
@@ -61,8 +62,8 @@ public class AmountManager : MonoBehaviour
     {
         if (result.VirtualCurrency != null && result.VirtualCurrency.ContainsKey("CN"))
         {
-            int coins = result.VirtualCurrency["CN"];
-            amount.text = coins.ToString();
+            amountInt = result.VirtualCurrency["CN"];
+            amount.text = amountInt.ToString();
         }
         else
         {
