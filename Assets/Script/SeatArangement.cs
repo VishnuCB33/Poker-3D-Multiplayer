@@ -64,16 +64,25 @@ public class SeatArangement : MonoBehaviour
             Game_Basic_Code.instance.player_name_backend_3 = LobbyManager.Instance.playersNames[3];
             Game_Basic_Code.instance.player_name_backend_4 = LobbyManager.Instance.playersNames[0];
 
-        }
-       /* if (ThePlayerIndex == 2)
+        } 
+        if (ThePlayerName == LobbyManager.Instance.playersNames[2])
         {
-            Game_Basic_Code.instance.player_name_backend_1 = ThePlayerName;
+
+            Game_Basic_Code.instance.player_name_backend_1 = LobbyManager.Instance.playersNames[2];
+            Game_Basic_Code.instance.player_name_backend_2 = LobbyManager.Instance.playersNames[3];
+            Game_Basic_Code.instance.player_name_backend_3 = LobbyManager.Instance.playersNames[0];
+            Game_Basic_Code.instance.player_name_backend_4 = LobbyManager.Instance.playersNames[1];
 
         }
-        if (ThePlayerIndex == 3)
+        if (ThePlayerName == LobbyManager.Instance.playersNames[3])
         {
-            Game_Basic_Code.instance.player_name_backend_1 = ThePlayerName;
 
-        }*/
+            Game_Basic_Code.instance.player_name_backend_1 = LobbyManager.Instance.playersNames[3];
+            Game_Basic_Code.instance.player_name_backend_2 = LobbyManager.Instance.playersNames[0];
+            Game_Basic_Code.instance.player_name_backend_3 = LobbyManager.Instance.playersNames[1];
+            Game_Basic_Code.instance.player_name_backend_4 = LobbyManager.Instance.playersNames[2];
+
+        }
+      
     }
 }
