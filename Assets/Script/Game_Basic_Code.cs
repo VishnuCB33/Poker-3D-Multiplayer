@@ -196,25 +196,28 @@ public class Game_Basic_Code : MonoBehaviour
 
     public void RandomCards()
     {
-        if (LobbyManager.Instance.isHost())
-        {
-            while (randomCards.Count < 13)
+         while (randomCards.Count < 13)
             {
                 int store = Random.Range(0, 52);
+
 
                 if (!randomCards.Contains(store))
                 {
                     randomCards.Add(store);
                     randomCardsGameObject.Add(Cards[store]);
+
+
                 }
             }
-        }
-    }
+        
 
+
+
+    }
+    //vishnu CB
     public void AllCardsAllocationFirst()
     {
         RandomCards();
-
         player1GetNumCard[0] = randomCards[0];
         player1GetNumCard[1] = randomCards[1];
         player2GetNumCard[0] = randomCards[2];
@@ -223,54 +226,48 @@ public class Game_Basic_Code : MonoBehaviour
         player3GetNumCard[1] = randomCards[5];
         player4GetNumCard[0] = randomCards[6];
         player4GetNumCard[1] = randomCards[7];
+        playerOneCards[0] = randomCardsGameObject[0];
+        GameObject one = Instantiate(playerOneCards[0], cardPos[0].position, cardPos[0].transform.rotation);
+        one.transform.localScale = new Vector3(1, 1, 1);
+        one.GetComponent<Animator>().enabled = false;
 
-        // Instantiate and spawn cards using Netcode
-        SpawnCardForPlayer(randomCardsGameObject[0], cardPos[0].position, 0);
-        SpawnCardForPlayer(randomCardsGameObject[1], cardPos[1].position, 0);
 
-        SpawnCardForPlayer(randomCardsGameObject[2], cardPos[2].position, 1);
-        SpawnCardForPlayer(randomCardsGameObject[3], cardPos[3].position, 1);
+        playerOneCards[1] = randomCardsGameObject[1];
+        GameObject two = Instantiate(playerOneCards[1], cardPos[1].position, cardPos[1].transform.rotation);
+        two.transform.localScale = new Vector3(1, 1, 1);
+        two.GetComponent<Animator>().enabled = false;
 
-        SpawnCardForPlayer(randomCardsGameObject[4], cardPos[4].position, 2);
-        SpawnCardForPlayer(randomCardsGameObject[5], cardPos[5].position, 2);
 
-        SpawnCardForPlayer(randomCardsGameObject[6], cardPos[6].position, 3);
-        SpawnCardForPlayer(randomCardsGameObject[7], cardPos[7].position, 3);
+        playerTwoCards[0] = randomCardsGameObject[2];
+        GameObject three = Instantiate(playerTwoCards[0], cardPos[2].position, cardPos[2].transform.rotation);
+        three.transform.localScale = new Vector3(1, 1, 1);
+        three.GetComponent<Animator>().enabled = false;
+
+        playerTwoCards[1] = randomCardsGameObject[3];
+        GameObject four = Instantiate(playerTwoCards[1], cardPos[3].position, cardPos[3].transform.rotation);
+        four.transform.localScale = new Vector3(1, 1, 1);
+        four.GetComponent<Animator>().enabled = false;
+
+        playerThreeCards[0] = randomCardsGameObject[4];
+        GameObject five = Instantiate(playerThreeCards[0], cardPos[4].position, cardPos[4].transform.rotation);
+        five.transform.localScale = new Vector3(1, 1, 1);
+        five.GetComponent<Animator>().enabled = false;
+
+        playerThreeCards[1] = randomCardsGameObject[5];
+        GameObject six = Instantiate(playerThreeCards[1], cardPos[5].position, cardPos[5].transform.rotation);
+        six.transform.localScale = new Vector3(1, 1, 1);
+        six.GetComponent<Animator>().enabled = false;
+
+        playerFourCards[0] = randomCardsGameObject[6];
+        GameObject seven = Instantiate(playerFourCards[0], cardPos[6].position, cardPos[6].transform.rotation);
+        seven.transform.localScale = new Vector3(1, 1, 1);
+        seven.GetComponent<Animator>().enabled = false;
+        playerFourCards[1] = randomCardsGameObject[7];
+        GameObject eight = Instantiate(playerFourCards[1], cardPos[7].position, cardPos[7].transform.rotation);
+        eight.transform.localScale = new Vector3(1, 1, 1);
+        eight.GetComponent<Animator>().enabled = false;
+
     }
-
-    private void SpawnCardForPlayer(GameObject cardPrefab, Vector3 position, int playerIndex)
-    {
-        if (LobbyManager.Instance.isHost())
-        {
-            GameObject cardInstance = Instantiate(cardPrefab, position, Quaternion.identity);
-            cardInstance.transform.localScale = Vector3.one;
-
-            // Ensure the card has a NetworkObject component
-            var networkObject = cardInstance.GetComponent<NetworkObject>();
-            if (networkObject != null)
-            {
-                networkObject.Spawn();
-            }
-
-            // Store references if necessary
-            switch (playerIndex)
-            {
-                case 0:
-                    playerOneCards.Add(cardInstance);
-                    break;
-                case 1:
-                    playerTwoCards.Add(cardInstance);
-                    break;
-                case 2:
-                    playerThreeCards.Add(cardInstance);
-                    break;
-                case 3:
-                    playerFourCards.Add(cardInstance);
-                    break;
-            }
-        }
-    }
-
     int round_refarance = 0;// need to reset to 0 after this round
     public void Round_selection_funtion()
     {
