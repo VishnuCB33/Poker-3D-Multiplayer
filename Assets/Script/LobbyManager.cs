@@ -411,16 +411,22 @@ public class LobbyManager : MonoBehaviour
                     if (playerIndex == 1)
                     {
                         playersNames[1] = playerName;
+                        playersAmount[1] = AmountManager.Instance.amountInt;
+
                         // playersAmount[1] = allPlayersAmount;
                     }
                     if (playerIndex == 2)
                     {
                         playersNames[2] = playerName;
+                        playersAmount[2] = AmountManager.Instance.amountInt;
+
                         // playersAmount[2] = allPlayersAmount;
                     }
                     if (playerIndex == 3)
                     {
                         playersNames[3] = playerName;
+                        playersAmount[3] = AmountManager.Instance.amountInt;
+
                         //playersAmount[3] = allPlayersAmount;
                     }
                     //plYERS AMOUNTS
