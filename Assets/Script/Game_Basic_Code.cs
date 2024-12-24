@@ -196,7 +196,9 @@ public class Game_Basic_Code : MonoBehaviour
 
     public void RandomCards()
     {
-         while (randomCards.Count < 13)
+        if (LobbyManager.Instance.isHost())
+        {
+            while (randomCards.Count < 13)
             {
                 int store = Random.Range(0, 52);
 
@@ -209,6 +211,8 @@ public class Game_Basic_Code : MonoBehaviour
 
                 }
             }
+        }
+           
         
 
 
