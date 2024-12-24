@@ -3,37 +3,50 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 
-public class NeyCodeVariable : NetworkBehaviour
+public class InspectorSyncVariable : NetworkBehaviour
 {
-    public NetworkVariable<int> PlayerAmount = new NetworkVariable<int>(0); // Networked variable to sync across players
+    // Networked variable to sync across systems
+    public NetworkVariable<int> SyncedValue = new NetworkVariable<int>(
+        0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server
+    );
 
-    private int previousAmount = -1; // Local variable to track changes
+    [SerializeField]
+    private int inspectorValue; // This is the value displayed in the inspector
 
-    void Update()
+    private int previousInspectorValue; // To track changes in the inspector
+
+    void Start()
     {
-        // Handle spacebar press to increment the amount
-        if (IsOwner && Input.GetKeyDown(KeyCode.Space))
+        // Initialize the local value with the networked value
+        if (IsServer)
         {
-            IncrementAmount();
-        }
-
-        // Sync the local backend amount to the NetworkVariable only if it changes
-        if (IsOwner && Game_Basic_Code.instance.amount_backend_1 != previousAmount)
-        {
-            previousAmount = Game_Basic_Code.instance.amount_backend_1;
-            PlayerAmount.Value = previousAmount; // Synchronize the new amount
+            inspectorValue = SyncedValue.Value;
+            previousInspectorValue = inspectorValue;
         }
     }
 
-    private void IncrementAmount()
+    void Update()
     {
-        Game_Basic_Code.instance.amount_backend_1++; // Update the backend value
-        PlayerAmount.Value = Game_Basic_Code.instance.amount_backend_1; // Sync with the network
+        if (IsServer)
+        {
+            // Check if the inspector value changes
+            if (inspectorValue != previousInspectorValue)
+            {
+                // Update the network variable
+                SyncedValue.Value = inspectorValue;
+                previousInspectorValue = inspectorValue;
+            }
+        }
+        else
+        {
+            // Update the local inspector value when the network variable changes
+            inspectorValue = SyncedValue.Value;
+        }
     }
 
     private void OnGUI()
     {
-        // Display the current PlayerAmount for debugging
-        GUILayout.Label("Player Amount: " + PlayerAmount.Value);
+        // Display the current synced value for debugging
+        GUILayout.Label("Synced Value: " + SyncedValue.Value);
     }
 }
