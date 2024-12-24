@@ -406,7 +406,9 @@ public class LobbyManager : MonoBehaviour
                     if (playerIndex == 0)
                     {
                         playersNames[0] = playerName;
-                        
+                        playersAmount[0] = AmountManager.Instance.amountInt;
+
+
                     }
                     if (playerIndex == 1)
                     {
