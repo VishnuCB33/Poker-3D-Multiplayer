@@ -54,6 +54,7 @@ public class LobbyManager : MonoBehaviour
     public List<int> playersAmount;
     int off = 0;
     bool isStart = true;
+    public int host = 0;
     async void Start()
     {
         off = 0;
@@ -266,7 +267,7 @@ public class LobbyManager : MonoBehaviour
         }
     }
     //Host canonly send HeartBEat so royalFlushVar the player host or not
-    private bool isHost()
+    public bool isHost()
     {
         //We royalFlushVar host id and player id are same or not
         if (currentLobby != null && currentLobby.HostId == playerId)
@@ -274,6 +275,7 @@ public class LobbyManager : MonoBehaviour
             return true;
         }
         return false;
+       
     }
     //Visualize the Lobby List Prefab
     private void VisualizeLobbyList(List<Lobby> _publicLobbies)
@@ -322,6 +324,7 @@ public class LobbyManager : MonoBehaviour
         catch (LobbyServiceException e)
         {
             Debug.Log(e);
+           
         }
     }
     //JoinLobby With code
@@ -393,7 +396,7 @@ public class LobbyManager : MonoBehaviour
                     if (playerIndex == 0)
                     {
                         playersNames[0] = playerName;
-                        // playersAmount[0] = allPlayersAmount;
+                        
                     }
                     if (playerIndex == 1)
                     {
@@ -488,6 +491,7 @@ public class LobbyManager : MonoBehaviour
     {
         if (currentLobby != null && isHost())
         {
+
             try
             {
                 // Check if there are exactly 4 players

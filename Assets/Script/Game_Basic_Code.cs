@@ -147,6 +147,7 @@ public class Game_Basic_Code : MonoBehaviour
     private void Awake()
     {
         dealer = Random.Range(1, 5);
+       
     }
     public void Start()
     {
@@ -195,21 +196,24 @@ public class Game_Basic_Code : MonoBehaviour
     
     public void RandomCards()
     {
-
-
-        while (randomCards.Count < 13)
+        if (LobbyManager.Instance.isHost())
         {
-            int store = Random.Range(0, 52);
-
-
-            if (!randomCards.Contains(store))
+            while (randomCards.Count < 13)
             {
-                randomCards.Add(store);
-                randomCardsGameObject.Add(Cards[store]);
+                int store = Random.Range(0, 52);
 
 
+                if (!randomCards.Contains(store))
+                {
+                    randomCards.Add(store);
+                    randomCardsGameObject.Add(Cards[store]);
+
+
+                }
             }
         }
+      
+       
 
     }
     //vishnu CB
@@ -228,13 +232,13 @@ public class Game_Basic_Code : MonoBehaviour
         GameObject one = Instantiate(playerOneCards[0], cardPos[0].position, cardPos[0].transform.rotation);
         one.transform.localScale=new Vector3(1,1,1);
      one.GetComponent<Animator>().enabled=false;
-        //anim.runtimeAnimatorController = controlHandAnim.GetComponent<RuntimeAnimatorController>();
+       
 
         playerOneCards[1] = randomCardsGameObject[1];
         GameObject two = Instantiate(playerOneCards[1], cardPos[1].position, cardPos[1].transform.rotation);
         two.transform.localScale=new Vector3(1,1,1);
         two.GetComponent<Animator>().enabled=false;
-     //  anim2.runtimeAnimatorController = controlHandAnim.GetComponent<RuntimeAnimatorController>();
+     
 
         playerTwoCards[0] = randomCardsGameObject[2];
         GameObject three=Instantiate(playerTwoCards[0], cardPos[2].position, cardPos[2].transform.rotation);
