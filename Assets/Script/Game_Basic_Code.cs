@@ -142,8 +142,10 @@ public class Game_Basic_Code : MonoBehaviour
     int popUp = 0;
     [Header("Animaton")]
     public Animator anim;
-    
 
+    //v
+    public AudioSource audios;
+    public AudioClip card;
     private void Awake()
     {
         dealer = Random.Range(1, 5);
@@ -308,7 +310,7 @@ public class Game_Basic_Code : MonoBehaviour
         Instantiate(randomCardsGameObject[10], referance[2].transform.position, referance[2].transform.rotation);
         CheckButton.Instance.finalCheckFiveCard[2] = randomCardsGameObject[10];
         round_refarance = 2;
-
+        audios.PlayOneShot(card);
         Debug.Log("R1");
     }
     public void round_2_funtion()
@@ -321,7 +323,7 @@ public class Game_Basic_Code : MonoBehaviour
         round_refarance = 3;
         Instantiate(randomCardsGameObject[11], referance[3].transform.position, referance[3].transform.rotation);
         CheckButton.Instance.finalCheckFiveCard[3] = randomCardsGameObject[11];
-
+        audios.PlayOneShot(card);
     }
     public void round_3_funtion()
     {
@@ -334,6 +336,7 @@ public class Game_Basic_Code : MonoBehaviour
 
         Instantiate(randomCardsGameObject[12], referance[4].transform.position, referance[4].transform.rotation);
         CheckButton.Instance.finalCheckFiveCard[4] = randomCardsGameObject[12];
+        audios.PlayOneShot(card);
     }
    
     

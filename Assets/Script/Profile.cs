@@ -32,6 +32,9 @@ public class Profile : MonoBehaviour
     public GameObject lobbyPanel;
     public int profilnum;//A
     public int PR;//A
+    //v
+    public AudioSource audios;
+    public AudioClip butt;
     // Start is called before the first frame update
     void Start()
     {
@@ -76,12 +79,15 @@ public class Profile : MonoBehaviour
     public void OpenSettingsPage()
     {
         settingspage.SetActive(true);
+        audios.PlayOneShot(butt);
 
 
     }
     public void SettingsBack()
     {
         settingspage.SetActive(false);
+        audios.PlayOneShot(butt);
+
     }
     public void OpenProfilePage()
     {
@@ -89,22 +95,30 @@ public class Profile : MonoBehaviour
         profilepanel.SetActive(true);
         amountpanel.SetActive(false);
         PR = 2;
+        audios.PlayOneShot(butt);
+
     }
     public void OpenProfilePanel()
     {
         profilepage.SetActive(true);
         profilepanel.SetActive(true);
         amountpanel.SetActive(false);
+        audios.PlayOneShot(butt);
+
     }
     public void OpenAmountPanel()
     {
         profilepage.SetActive(true);
         profilepanel.SetActive(false);
         amountpanel.SetActive(true);
+        audios.PlayOneShot(butt);
+
     }
     public void Back()
     {
         profilepage.SetActive(false);
+        audios.PlayOneShot(butt);
+
 
     }
     public void Prof1()
@@ -112,6 +126,8 @@ public class Profile : MonoBehaviour
         profilnum = 0;
         profprefab.GetComponent<Image>().sprite = prof1.GetComponent<Image>().sprite;
         profilelobby.GetComponent<Image>().sprite = prof1.GetComponent<Image>().sprite;
+        audios.PlayOneShot(butt);
+
     }
     public void Prof2()
     {
@@ -119,6 +135,8 @@ public class Profile : MonoBehaviour
 
         profprefab.GetComponent<Image>().sprite = prof2.GetComponent<Image>().sprite;
         profilelobby.GetComponent<Image>().sprite = prof2.GetComponent<Image>().sprite;
+        audios.PlayOneShot(butt);
+
     }
     public void Prof3()
     {
@@ -126,6 +144,8 @@ public class Profile : MonoBehaviour
 
         profprefab.GetComponent<Image>().sprite = prof3.GetComponent<Image>().sprite;
         profilelobby.GetComponent<Image>().sprite = prof3.GetComponent<Image>().sprite;
+        audios.PlayOneShot(butt);
+
     }
     public void Prof4()
     {
@@ -133,6 +153,8 @@ public class Profile : MonoBehaviour
 
         profprefab.GetComponent<Image>().sprite = prof4.GetComponent<Image>().sprite;
         profilelobby.GetComponent<Image>().sprite = prof4.GetComponent<Image>().sprite;
+        audios.PlayOneShot(butt);
+
     }
     public void Prof5()
     {
@@ -140,6 +162,8 @@ public class Profile : MonoBehaviour
 
         profprefab.GetComponent<Image>().sprite = prof5.GetComponent<Image>().sprite;
         profilelobby.GetComponent<Image>().sprite = prof5.GetComponent<Image>().sprite;
+        audios.PlayOneShot(butt);
+
     }
     public void Prof6()
     {
@@ -147,6 +171,8 @@ public class Profile : MonoBehaviour
 
         profprefab.GetComponent<Image>().sprite = prof6.GetComponent<Image>().sprite;
         profilelobby.GetComponent<Image>().sprite = prof6.GetComponent<Image>().sprite;
+        audios.PlayOneShot(butt);
+
     }
     public void Prof7()
     {
@@ -154,6 +180,8 @@ public class Profile : MonoBehaviour
 
         profprefab.GetComponent<Image>().sprite = prof7.GetComponent<Image>().sprite;
         profilelobby.GetComponent<Image>().sprite = prof7.GetComponent<Image>().sprite;
+        audios.PlayOneShot(butt);
+
     }
     public void Prof8()
     {
@@ -161,6 +189,8 @@ public class Profile : MonoBehaviour
 
         profprefab.GetComponent<Image>().sprite = prof8.GetComponent<Image>().sprite;
         profilelobby.GetComponent<Image>().sprite = prof8.GetComponent<Image>().sprite;
+        audios.PlayOneShot(butt);
+
     }
     public void Prof9()
     {
@@ -168,6 +198,8 @@ public class Profile : MonoBehaviour
 
         profprefab.GetComponent<Image>().sprite = prof9.GetComponent<Image>().sprite;
         profilelobby.GetComponent<Image>().sprite = prof9.GetComponent<Image>().sprite;
+        audios.PlayOneShot(butt);
+
     }
     public void Prof10()
     {
@@ -175,6 +207,8 @@ public class Profile : MonoBehaviour
 
         profprefab.GetComponent<Image>().sprite = prof10.GetComponent<Image>().sprite;
         profilelobby.GetComponent<Image>().sprite = prof10.GetComponent<Image>().sprite;
+        audios.PlayOneShot(butt);
+
     }
     public void Prof11()
     {
@@ -182,6 +216,8 @@ public class Profile : MonoBehaviour
 
         profprefab.GetComponent<Image>().sprite = prof11.GetComponent<Image>().sprite;
         profilelobby.GetComponent<Image>().sprite = prof11.GetComponent<Image>().sprite;
+        audios.PlayOneShot(butt);
+
     }
     public void Prof12()
     {
@@ -189,10 +225,14 @@ public class Profile : MonoBehaviour
 
         profprefab.GetComponent<Image>().sprite = prof12.GetComponent<Image>().sprite;
         profilelobby.GetComponent<Image>().sprite = prof12.GetComponent<Image>().sprite;
+        audios.PlayOneShot(butt);
+
     }
     public void MultiplayerButt()
     {
         lobbyPanel.SetActive(true);
+        audios.PlayOneShot(butt);
+
     }
     public void profile_()
     {

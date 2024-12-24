@@ -55,6 +55,9 @@ public class LobbyManager : MonoBehaviour
     int off = 0;
     bool isStart = true;
     public int host = 0;
+    //v
+    public AudioSource audios;
+    public AudioClip butt;
     async void Start()
     {
         off = 0;
@@ -124,7 +127,7 @@ public class LobbyManager : MonoBehaviour
         {
             Debug.Log(e);
         }
-
+        audios.PlayOneShot(butt);
     }
     private void EnterRoom()
     {
@@ -196,21 +199,25 @@ public class LobbyManager : MonoBehaviour
     {
         roomPanel.SetActive(false);
         createRoomPanel.SetActive(true);
+        audios.PlayOneShot(butt);
     }
     public void JoinRoomCodePanel()
     {
         JoinRoomPanel.SetActive(true);
         createRoomPanel.SetActive(false);
+        audios.PlayOneShot(butt);
     }
     public void BackJoinRoomCodePanel()
     {
         JoinRoomPanel.SetActive(false);
         createRoomPanel.SetActive(true);
+        audios.PlayOneShot(butt);
     }
     public void ListLobbiesBack()
     {
         listOfLobbyPanel.SetActive(false);
         createRoomPanel.SetActive(true);
+        audios.PlayOneShot(butt);
     }
     //To display all available public Lobbies
     public async void ListPublicLobbies()
@@ -234,6 +241,7 @@ public class LobbyManager : MonoBehaviour
         {
             Debug.Log(e);
         }
+        audios.PlayOneShot(butt);
     }
     //Update the lobbies refresh timer
     private float updateLobbiesListTimer = 2f;
@@ -326,6 +334,7 @@ public class LobbyManager : MonoBehaviour
             Debug.Log(e);
            
         }
+        audios.PlayOneShot(butt);
     }
     //JoinLobby With code
     public async void JoinLobbyWithCode()
@@ -349,6 +358,7 @@ public class LobbyManager : MonoBehaviour
         {
             Debug.Log(e);
         }
+        audios.PlayOneShot(butt);
     }
     //Others Visibility  Remain
     private Player GetPlayer()
@@ -467,6 +477,7 @@ public class LobbyManager : MonoBehaviour
         {
             Debug.Log(e);
         }
+        audios.PlayOneShot(butt);
     }
     //Kick Button
     private async void KickPlayer(string _playerId)
@@ -485,6 +496,7 @@ public class LobbyManager : MonoBehaviour
     {
         createRoomPanel.SetActive(true);
         roomPanel.SetActive(false);
+        audios.PlayOneShot(butt);
     }
     //when host will click start game the value will updated
     private async void StartGame()
@@ -530,6 +542,7 @@ public class LobbyManager : MonoBehaviour
                 Debug.LogError($"Failed to start the game: {e}");
             }
         }
+        audios.PlayOneShot(butt);
     }
 
     //Check the host was started the game or not

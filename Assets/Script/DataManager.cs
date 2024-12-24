@@ -21,7 +21,9 @@ public class PlayfabManager : MonoBehaviour
     public static string PlayerDisplayName; // Global variable for display name
     public int player_playerprofile_backend; // Amount to be stored and retrieved from PlayFab
     public int player_language_backend; // Amount to be stored and retrieved from PlayFab
-
+    //v
+    public AudioSource audios;
+    public AudioClip butt;
     void Start()
     {
         instance = this;
@@ -46,6 +48,8 @@ public class PlayfabManager : MonoBehaviour
         login_panel.SetActive(true);
 
         PlayFabClientAPI.RegisterPlayFabUser(request, OnRegisterSuccess, OnError); // Sends the request to PlayFab server.
+        //v
+        audios.PlayOneShot(butt);
     }
 
     void OnRegisterSuccess(RegisterPlayFabUserResult result)
@@ -114,6 +118,8 @@ public class PlayfabManager : MonoBehaviour
 
 
         PlayFabClientAPI.LoginWithEmailAddress(request, OnLoginSuccess, OnError);
+        //v
+        audios.PlayOneShot(butt);
 
     }
 
@@ -152,6 +158,8 @@ public class PlayfabManager : MonoBehaviour
         };
 
         PlayFabClientAPI.SendAccountRecoveryEmail(request, OnPasswordReset, OnError);
+        //v
+        audios.PlayOneShot(butt);
     }
 
     void OnPasswordReset(SendAccountRecoveryEmailResult result)
