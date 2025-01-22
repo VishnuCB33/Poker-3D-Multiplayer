@@ -7,9 +7,9 @@ using static player_details;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor;
-using Unity.Netcode;
 
-public class Game_Basic_Code : MonoBehaviour
+using Unity.Netcode;
+public class Game_Basic_Code : NetworkBehaviour
 {
     public static Game_Basic_Code instance;
     [Header("player one")]
@@ -146,6 +146,7 @@ public class Game_Basic_Code : MonoBehaviour
     //v
     public AudioSource audios;
     public AudioClip card;
+    public CardSplits splits;
     private void Awake()
     {
         dealer = Random.Range(1, 5);
@@ -198,23 +199,65 @@ public class Game_Basic_Code : MonoBehaviour
 
     public void RandomCards()
     {
-         while (randomCards.Count < 13)
+        // Check if the current instance is the host
+        if (!IsHost)
+        {
+            Debug.LogWarning("Only the host can execute this function.");
+            return;
+        }
+
+        // Clear previous selections
+        randomCards.Clear();
+        randomCardsGameObject.Clear();
+
+        // Select random cards
+        while (randomCards.Count < 13)
+        {
+            int store = Random.Range(0, 52);
+
+            if (!randomCards.Contains(store))
             {
-                int store = Random.Range(0, 52);
-
-
-                if (!randomCards.Contains(store))
-                {
-                    randomCards.Add(store);
-                    randomCardsGameObject.Add(Cards[store]);
-
-
-                }
+                randomCards.Add(store);
+                randomCardsGameObject.Add(Cards[store]);
             }
-        
+        }
 
+        // Broadcast the result to clients
+        NotifyClientsRandomCardsServerRpc(randomCards.ToArray());
+    }
 
+    [ServerRpc(RequireOwnership = false)]
+    private void NotifyClientsRandomCardsServerRpc(int[] selectedCards)
+    {
+        NotifyClientsRandomCardsClientRpc(selectedCards);
+    }
 
+    [ClientRpc]
+    private void NotifyClientsRandomCardsClientRpc(int[] selectedCards)
+    {
+        // Clear previous client-side card selections
+        randomCards.Clear();
+        randomCardsGameObject.Clear();
+
+        // Update client-side data
+        foreach (int cardIndex in selectedCards)
+        {
+            randomCards.Add(cardIndex);
+            randomCardsGameObject.Add(Cards[cardIndex]);
+        }
+
+        Debug.Log("Cards have been updated on all clients.");
+    }
+
+    // Method to broadcast the random cards to all clients
+    [ServerRpc(RequireOwnership = false)]
+    private void BroadcastRandomCardsServerRpc()
+    {
+        foreach (var client in NetworkManager.Singleton.ConnectedClients)
+        {
+            Debug.Log("Broadcasting random cards to client: " + client.Key);
+            // Send the randomCards list to clients (implement your logic here)
+        }
     }
     //vishnu CB
     public void AllCardsAllocationFirst()
@@ -224,11 +267,13 @@ public class Game_Basic_Code : MonoBehaviour
         player1GetNumCard[1] = randomCards[1];
         player2GetNumCard[0] = randomCards[2];
         player2GetNumCard[1] = randomCards[3];
-        player3GetNumCard[0] = randomCards[4];
+       /* player3GetNumCard[0] = randomCards[4];
         player3GetNumCard[1] = randomCards[5];
         player4GetNumCard[0] = randomCards[6];
         player4GetNumCard[1] = randomCards[7];
-        playerOneCards[0] = randomCardsGameObject[0];
+        playerOneCards[0] = randomCardsGameObject[0];*/
+
+
         GameObject one = Instantiate(playerOneCards[0], cardPos[0].position, cardPos[0].transform.rotation);
         one.transform.localScale = new Vector3(1, 1, 1);
         one.GetComponent<Animator>().enabled = false;
@@ -240,7 +285,7 @@ public class Game_Basic_Code : MonoBehaviour
         two.GetComponent<Animator>().enabled = false;
 
 
-        playerTwoCards[0] = randomCardsGameObject[2];
+      /*  playerTwoCards[0] = randomCardsGameObject[2];
         GameObject three = Instantiate(playerTwoCards[0], cardPos[2].position, cardPos[2].transform.rotation);
         three.transform.localScale = new Vector3(1, 1, 1);
         three.GetComponent<Animator>().enabled = false;
@@ -268,7 +313,7 @@ public class Game_Basic_Code : MonoBehaviour
         GameObject eight = Instantiate(playerFourCards[1], cardPos[7].position, cardPos[7].transform.rotation);
         eight.transform.localScale = new Vector3(1, 1, 1);
         eight.GetComponent<Animator>().enabled = false;
-
+*/
     }
     int round_refarance = 0;// need to reset to 0 after this round
     public void Round_selection_funtion()
